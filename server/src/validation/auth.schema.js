@@ -8,13 +8,13 @@ export const phone = string().matches(
   'Please provide valid phone number',
 );
 
-const name = string().max(100);
-const address = string().max(200);
-const fields = array().of(string().length(24).required());
-const overview = string().max(1000);
-const account_type = string().oneOf(['personal', 'business']).required();
+export const name = string().max(100);
+export const address = string().max(200);
+export const fields = array().of(string().length(24).required());
+export const overview = string().max(1000);
+export const account_type = string().oneOf(['personal', 'business']).required();
 
-const password = string()
+export const password = string()
   .matches(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%#*?&]{8,}$/,
     'password should contain at least 1 uppercase, 1 lowercase, 1 number & 1 special character (@$!%*?&)  ',
@@ -35,7 +35,7 @@ const registerUserSchema = object({
 
 const signInSchema = object({
   email,
-  password,
+  password: string().min(8, 'password should be at least 8 characters'),
 });
 
 const updateCurrentUserSchema = object({

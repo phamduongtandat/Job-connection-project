@@ -1,6 +1,6 @@
 const handleUniqueFieldError = (error) => {
   const duplicateField = Object.keys(error.keyValue)[0];
-  return `${duplicateField} must be unique`;
+  return `${duplicateField} already existed`;
 };
 
 const globalErrorHandler = (error, req, res, next) => {

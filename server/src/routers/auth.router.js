@@ -1,7 +1,7 @@
 import express from 'express';
 import authController from '../controllers/auth.controller.js';
 import requireLogin from '../middleware/requireLogin.js';
-import validateRequestBody from '../middleware/validateRequest.js';
+import validateReqBody from '../middleware/validateReqBody.js';
 import {
   createResetPasswordTokenSchema,
   registerUserSchema,
@@ -15,13 +15,13 @@ const authRouter = express.Router();
 
 authRouter.post(
   '/register',
-  validateRequestBody(registerUserSchema),
+  validateReqBody(registerUserSchema),
   authController.registerUser,
 );
 
 authRouter.post(
   '/sign-in',
-  validateRequestBody(signInSchema),
+  validateReqBody(signInSchema),
   authController.signIn,
 );
 
@@ -35,26 +35,26 @@ authRouter.get(
 authRouter.put(
   '/current-user',
   requireLogin(),
-  validateRequestBody(updateCurrentUserSchema),
+  validateReqBody(updateCurrentUserSchema),
   authController.updateCurrentUser,
 );
 
 authRouter.put(
   '/update-password',
   requireLogin(),
-  validateRequestBody(updatePasswordSchema),
+  validateReqBody(updatePasswordSchema),
   authController.updatePassword,
 );
 
 authRouter.post(
   '/reset-password-token',
-  validateRequestBody(createResetPasswordTokenSchema),
+  validateReqBody(createResetPasswordTokenSchema),
   authController.createResetPasswordToken,
 );
 
 authRouter.put(
   '/reset-password/:token',
-  validateRequestBody(resetPasswordWithTokenSchema),
+  validateReqBody(resetPasswordWithTokenSchema),
   authController.resetPasswordWithToken,
 );
 

@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { sendResetPasswordToken } from '../emails/index.js';
 import { User } from '../models/user.model.js';
 
-const hashPassword = async (password) => await bcrypt.hash(password, 10);
+export const hashPassword = async (password) => await bcrypt.hash(password, 10);
 
 const resAuthTokenByCookie = (req, res, user) => {
   const authToken = jwt.sign(

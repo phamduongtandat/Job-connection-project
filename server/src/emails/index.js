@@ -10,4 +10,13 @@ const sendResetPasswordToken = async ({ token, email, name }) => {
   });
 };
 
-export { sendResetPasswordToken };
+// send email when admin create new user
+const sendNewUserCredentials = async ({ email, password, name }) => {
+  await sendEmail({
+    subject: 'Your credentials to login at ...',
+    text: `Hi ${name}, here is your credentials. Email: ${email}. Password:${password}. Change your password after you login.`,
+    to: email,
+  });
+};
+
+export { sendResetPasswordToken, sendNewUserCredentials };

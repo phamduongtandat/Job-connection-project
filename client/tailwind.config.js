@@ -4,12 +4,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '',
-        secondary: '',
-        error: '',
-        success: '',
-        dark: '',
-        'dark-content': '',
+        primary: '#3b82f6',
+        secondary: '#fbbf24',
+        error: '#f87171',
+        success: '#22c55e',
+        dark: '#334155',
+        'dark-content': '#fff',
       },
     },
   },

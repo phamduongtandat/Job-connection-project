@@ -55,7 +55,7 @@ const signIn = async (req, res) => {
   res.status(200).json({
     status: 'success',
     message: 'Logged in successfully',
-    data: user,
+    data:user
   });
 };
 

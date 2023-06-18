@@ -1,3 +1,15 @@
+import { Route, Routes } from 'react-router-dom';
+import Layout from './components/layout/Layout';
+import ProfilePage from './pages/profile/ProfilePage';
+
 export default function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return (
+    <main>
+      <Layout>
+        <Routes>
+          <Route path="/profile/*" element={<ProfilePage />} />
+        </Routes>
+      </Layout>
+    </main>
+  );
 }

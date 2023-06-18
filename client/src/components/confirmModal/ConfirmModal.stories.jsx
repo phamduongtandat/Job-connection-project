@@ -51,7 +51,7 @@ const OpenModal = () => {
 };
 
 const meta = {
-  title: 'modals/ConfirmModal',
+  title: 'components/ConfirmModal',
   component: Component,
   decorators: [
     (ConfirmModal) => {
@@ -63,6 +63,15 @@ const meta = {
       );
     },
   ],
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Để sử dụng ConfirmModal thì phải dùng useConfirmModal hook. Import useConfirmModal ở src/hooks.',
+      },
+    },
+  },
 };
 
 // stories

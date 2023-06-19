@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '../../components/button/Button';
 import ErrorMessage from '../../components/form/ErrorMessage';
@@ -7,31 +8,46 @@ import Input from '../../components/inputs/Input';
 import ListBox from '../../components/inputs/ListBox';
 import Textarea from '../../components/inputs/Textarea';
 import useGetAuthInfo from '../../hooks/useGetAuthInfo';
+import useUpdateCurrentUser from '../../react-query/auth/useUpdateCurrentUser';
 import { getErrorMessage } from '../../utils/getErrorMessage';
 import { updateCurrentUserSchema } from '../../validation/auth.schema';
 
 const UpdateCurrentUserInfo = () => {
-  const { isPersonalAccount, isBusinessAccount } = useGetAuthInfo();
+  const { isPersonalAccount, user } = useGetAuthInfo();
+  const { updateCurrentUser, isLoading, updatedUser, isSuccess } =
+    useUpdateCurrentUser();
 
   const {
     handleSubmit,
     register,
     control,
-    formState: { errors },
+    reset,
+    formState: { errors, isDirty },
   } = useForm({
     resolver: yupResolver(updateCurrentUserSchema),
+    defaultValues: user,
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    updateCurrentUser(data);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      reset(updatedUser);
+    }
+  }, [isSuccess]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 px-2">
       <div>
         <Label htmlFor="email">Email:</Label>
+        <Input value={user?.email} disabled id="email" placeholder="Email" />
+      </div>
+      <div>
+        <Label htmlFor="email">Loại tài khoản:</Label>
         <Input
-          value="admin@admin.com"
+          value={user?.account_type}
           disabled
           id="email"
           placeholder="Email"
@@ -61,15 +77,14 @@ const UpdateCurrentUserInfo = () => {
           options={[
             {
               displayText: 'Thiết kế website',
-              value: 'thisis24characters111111',
+              value: '507f191e810c19729de860ea',
             },
             {
               displayText: 'Lập trình website',
-              value: 'thisis24charactess111111',
+              value: '507f1f77bcf86cd799439011',
             },
           ]}
           placeholder="Click để lựa chọn lĩnh vực kinh doanh"
-          hasError={!!getErrorMessage(errors, 'fields')}
         />
         <ErrorMessage errorMessage={getErrorMessage(errors, 'fields')} />
       </div>
@@ -106,7 +121,11 @@ const UpdateCurrentUserInfo = () => {
         <Input id="phone" {...register('phone')} placeholder="09755295633" />
         <ErrorMessage errorMessage={getErrorMessage(errors, 'phone')} />
       </div>
-      <Button type="submit" className="w-full">
+      <Button
+        type="submit"
+        className={`w-full ${isLoading || !isDirty ? 'opacity-70' : ''}`}
+        disabled={isLoading || !isDirty}
+      >
         Cập nhật
       </Button>
     </form>

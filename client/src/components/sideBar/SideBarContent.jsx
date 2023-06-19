@@ -30,7 +30,7 @@ const SideBarContent = () => {
           to={isAdminAccount ? '/admin/users' : '/profile/user-info'}
           className="flex items-center gap-x-4 mb-6"
         >
-          <Avatar className="w-14 text-2xl" />
+          <Avatar className="w-16 text-2xl" />
           <span className="font-medium text-text">
             {user.name || user.email}
           </span>

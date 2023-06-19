@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../config/axios';
+import useAuthModal from '../../hooks/useAuthModal';
 import useConfirmModal from '../../hooks/useConfirmModal';
 import { logUserOut } from '../../store/authSlice';
 
@@ -9,6 +10,7 @@ const useSignOut = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isConfirmed } = useConfirmModal();
+  const { handleOpenSignInModal } = useAuthModal();
   const mutationFn = async () => {
     await axios({
       method: 'delete',
@@ -16,9 +18,13 @@ const useSignOut = () => {
     });
   };
 
-  const onSuccess = () => {
-    dispatch(logUserOut());
+  const onSuccess = async () => {
+    navigate('/');
+    setTimeout(() => {
+      dispatch(logUserOut());
+    }, 300);
   };
+
   const onError = async () => {
     await isConfirmed({
       cancelButtonText: 'Đóng',
@@ -34,20 +40,8 @@ const useSignOut = () => {
     onError,
   });
 
-  const signOut = async () => {
-    const confirm = await isConfirmed({
-      confirmButtonText: 'Đăng xuất',
-      cancelButtonText: 'Thôi',
-      title: 'Xác nhận',
-      subTitle: 'Bạn có muốn đăng xuất tài khoản?',
-    });
-    if (confirm) {
-      mutation.mutate();
-    }
-  };
-
   return {
-    signOut,
+    signOut: mutation.mutate,
     isLoading: mutation.isLoading,
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,

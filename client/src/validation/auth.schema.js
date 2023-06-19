@@ -30,8 +30,8 @@ export const account_type = string()
 
 export const password = string()
   .matches(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%#*?&]{4,}$/,
-    'Mật khẩu ít nhất phải bao gồm 1 ký tự in hoa, 1 ký tự in thường, 1 chữ số và 1 ký tự đặc biệt (@$!%*?&)',
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{4,}$/,
+    'Mật khẩu ít nhất phải bao gồm 1 ký tự in hoa, 1 ký tự in thường, 1 chữ số và 1 ký tự đặc biệt (!@#$%^&*)',
   )
   .min(8, 'Mật khẩu ít nhất phải dài 8 ký tự')
   .max(100, 'Mật khẩu không thể vượt qua 100 ký tự')
@@ -82,10 +82,10 @@ const resetPasswordWithTokenSchema = object({
 });
 
 export {
+  createResetPasswordTokenSchema,
   registerUserSchema,
+  resetPasswordWithTokenSchema,
+  signInSchema,
   updateCurrentUserSchema,
   updatePasswordSchema,
-  signInSchema,
-  createResetPasswordTokenSchema,
-  resetPasswordWithTokenSchema,
 };

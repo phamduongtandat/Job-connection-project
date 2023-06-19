@@ -50,9 +50,9 @@ export default function ConfirmModal() {
             >
               <Dialog.Panel className="w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle mb-12 shadow-xl transition-all">
                 <div className="flex gap-x-3">
-                  <div className="mt-1">
+                  <div className="mt-0.5">
                     {theme === 'error_modal' && (
-                      <RiErrorWarningFill className="text-error" />
+                      <RiErrorWarningFill size={20} className="text-error" />
                     )}
                     {theme === 'success_modal' && (
                       <AiFillCheckCircle className="text-success" />
@@ -60,18 +60,18 @@ export default function ConfirmModal() {
                   </div>
                   <div className="flex-grow">
                     <div>
-                      <h3 className="font-medium leading-6 text-gray-900">
+                      <h3 className="font-medium text-md leading-6 text-text">
                         {title}
                       </h3>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">{subTitle}</p>
+                        <p className="text-text-light">{subTitle}</p>
                       </div>
                     </div>
                     <div className="mt-6 pb-0.5 flex justify-between">
                       {confirmButtonText && (
                         <button
                           type="button"
-                          className="inline-flex justify-center rounded-md border border-transparent bg-primary px-4 py-1.5 text-sm font-medium text-white hover:bg-primary-focus focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                          className="inline-flex justify-center rounded-md border border-transparent bg-primary hover:brightness-95 px-4 py-1.5 text-sm font-medium text-white hover:bg-primary-focus"
                           onClick={resolve}
                         >
                           {confirmButtonText}
@@ -79,7 +79,7 @@ export default function ConfirmModal() {
                       )}
                       <button
                         type="button"
-                        className="ml-auto inline-flex justify-center rounded-md border border-transparent bg-slate-100 px-4 py-1.5 text-sm font-medium hover:bg-slate-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        className="ml-auto inline-flex justify-center rounded-md border border-transparent bg-slate-100 px-4 py-1.5 text-sm font-medium hover:bg-slate-200"
                         onClick={reject}
                       >
                         {cancelButtonText}

@@ -8,7 +8,7 @@ const NavItem = ({ children, className, to = '/', isShowing = true }) => {
       <NavLink
         to={to}
         className={({ isActive }) =>
-          `block px-4 py-2 hover:bg-base cursor-pointer rounded-sm ${
+          `block px-4 py-2.5 hover:bg-base cursor-pointer rounded-sm ${
             isActive ? 'font-medium bg-base' : ''
           }`
         }

@@ -1,19 +1,85 @@
+import { Link } from 'react-router-dom';
+import useGetAuthInfo from '../../hooks/useGetAuthInfo';
+import useSideBar from '../../hooks/useSideBar';
+import useSignOut from '../../react-query/auth/useSignOut';
 import OpenSignInFormBtn from '../auth/OpenSignInFormBtn';
 import OpenSignUpFormBtn from '../auth/OpenSignUpFormBtn';
+import Avatar from '../avatar/Avatar';
 import SideBarDropDown from './SideBarDropdown';
-import SidebarDropdownItem from './SidebarDropdownItem';
+import SideBarItem from './SideBarItem';
 
 const SideBarContent = () => {
+  const {
+    isLoggedIn,
+    isAdminAccount,
+    isBusinessAccount,
+    isPersonalAccount,
+    user,
+  } = useGetAuthInfo();
+
+  const { handleCloseSideBar } = useSideBar();
+  const { signOut } = useSignOut();
+
   return (
-    <div className="w-72 p-6 flex flex-col gap-y-1 items-start text-text-light">
-      <OpenSignUpFormBtn className="mb-5">Tạo tài khoản mới</OpenSignUpFormBtn>
-      <OpenSignInFormBtn className="bg-transparent py-2 px-0 font-normal text-inherit hover:text-text" />
-      <SideBarDropDown>
-        <SidebarDropdownItem></SidebarDropdownItem>
-        <SidebarDropdownItem></SidebarDropdownItem>
-        <SidebarDropdownItem></SidebarDropdownItem>
-        <SidebarDropdownItem></SidebarDropdownItem>
+    <div
+      onClick={handleCloseSideBar}
+      className="w-72 p-6 flex flex-col gap-y-1 items-start text-text-light h-full"
+    >
+      {isLoggedIn && (
+        <Link
+          to={isAdminAccount ? '/admin/users' : '/profile/user-info'}
+          className="flex items-center gap-x-4 mb-6"
+        >
+          <Avatar className="w-14 text-2xl" />
+          <span className="font-medium text-text">
+            {user.name || user.email}
+          </span>
+        </Link>
+      )}
+      {!isLoggedIn && (
+        <>
+          <OpenSignUpFormBtn className="mb-5">
+            Tạo tài khoản mới
+          </OpenSignUpFormBtn>
+          <OpenSignInFormBtn className="bg-transparent py-2 !px-0 font-normal text-text-light hover:text-text" />
+        </>
+      )}
+      <SideBarDropDown isShowing={!isAdminAccount}>
+        <SideBarItem to="/sd">Lập trình website</SideBarItem>
+        <SideBarItem to="/sd">Marketing</SideBarItem>
+        <SideBarItem to="/sd">Thiết kế</SideBarItem>
+        <SideBarItem to="/sd">Chạy quảng cáo</SideBarItem>
+        <SideBarItem to="/sd">Wordpress</SideBarItem>
       </SideBarDropDown>
+      <SideBarItem
+        to="/profile/user-info"
+        isShowing={isPersonalAccount || isBusinessAccount}
+      >
+        Thông tin tài khoản
+      </SideBarItem>
+      <SideBarItem to="/profile/applied-jobs" isShowing={isPersonalAccount}>
+        Công việc đã ứng tuyển
+      </SideBarItem>
+      <SideBarItem to="/profile/posted-jobs" isShowing={isBusinessAccount}>
+        Tin tuyển dụng đã đăng
+      </SideBarItem>
+      <SideBarItem to="/admin/users" isShowing={isAdminAccount}>
+        Quản lý người dùng
+      </SideBarItem>
+      <SideBarItem to="/admin/fields" isShowing={isAdminAccount}>
+        Quản lý lĩnh vực
+      </SideBarItem>
+      <SideBarItem to="/admin/jobs" isShowing={isAdminAccount}>
+        Quản lý tin tuyển dụng
+      </SideBarItem>
+      <SideBarItem to="/profile/update-password">Đổi mật khẩu</SideBarItem>
+
+      <button
+        className="block bg-primary w-full py-2 text-white rounded-md mt-auto"
+        onClick={signOut}
+      >
+        Đăng xuất
+      </button>
     </div>
   );
 };

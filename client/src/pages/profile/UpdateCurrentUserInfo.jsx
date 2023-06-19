@@ -6,10 +6,13 @@ import Label from '../../components/form/Label';
 import Input from '../../components/inputs/Input';
 import ListBox from '../../components/inputs/ListBox';
 import Textarea from '../../components/inputs/Textarea';
+import useGetAuthInfo from '../../hooks/useGetAuthInfo';
 import { getErrorMessage } from '../../utils/getErrorMessage';
 import { updateCurrentUserSchema } from '../../validation/auth.schema';
 
 const UpdateCurrentUserInfo = () => {
+  const { isPersonalAccount, isBusinessAccount } = useGetAuthInfo();
+
   const {
     handleSubmit,
     register,
@@ -35,8 +38,18 @@ const UpdateCurrentUserInfo = () => {
         />
       </div>
       <div>
-        <Label htmlFor="name">Họ và tên:</Label>
-        <Input {...register('name')} id="name" placeholder="Họ và tên" />
+        <Label htmlFor="name">
+          {isPersonalAccount ? 'Họ và tên:' : 'Tên doanh nghiệp:'}
+        </Label>
+        <Input
+          {...register('name')}
+          id="name"
+          placeholder={
+            isPersonalAccount
+              ? 'Họ và tên của bạn có dấu'
+              : 'Tên doanh nghiệp đầy đủ có dấu'
+          }
+        />
         <ErrorMessage errorMessage={getErrorMessage(errors, 'name')} />
       </div>
       <div>
@@ -62,23 +75,35 @@ const UpdateCurrentUserInfo = () => {
       </div>
       <div>
         <Label htmlFor="overview">
-          Mô tả thông tin cá nhân hoặc doanh nghiệp:
+          {isPersonalAccount
+            ? 'Mô tả thông tin cá nhân:'
+            : 'Mô tả thông tin doanh nghiệp:'}
         </Label>
         <Textarea
           {...register('overview')}
           id="overview"
-          placeholder="Giới thiệu tóm tắt về  bản thân hoặc thông tin của doanh nghiệp"
+          placeholder={
+            isPersonalAccount
+              ? 'Giới thiệu tóm tắt về  bản thân của bạn'
+              : 'Giới thiệu tóm tắt về doanh nghiệp của bạn'
+          }
         />
         <ErrorMessage errorMessage={getErrorMessage(errors, 'overview')} />
       </div>
       <div>
-        <Label htmlFor="address">Địa chỉ:</Label>
+        <Label htmlFor="address">
+          {isPersonalAccount ? 'Địa chỉ thường trú:' : 'Địa chỉ doanh nghiệp:'}
+        </Label>
         <Input {...register('address')} id="address" placeholder="Địa chỉ" />
         <ErrorMessage errorMessage={getErrorMessage(errors, 'address')} />
       </div>
       <div>
-        <Label htmlFor="phone">Số điện thoại:</Label>
-        <Input id="phone" {...register('phone')} placeholder="Số điện thoại" />
+        <Label htmlFor="phone">
+          {isPersonalAccount
+            ? 'Số điện thoại cá nhân:'
+            : 'Số điện thoại doanh nghiệp:'}
+        </Label>
+        <Input id="phone" {...register('phone')} placeholder="09755295633" />
         <ErrorMessage errorMessage={getErrorMessage(errors, 'phone')} />
       </div>
       <Button type="submit" className="w-full">

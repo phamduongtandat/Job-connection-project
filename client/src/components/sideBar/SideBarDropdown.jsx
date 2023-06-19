@@ -2,13 +2,15 @@ import { Transition } from '@headlessui/react';
 import { useState } from 'react';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
-function SideBarDropDown({ children }) {
+function SideBarDropDown({ children, isShowing }) {
   const [isShow, setIsShow] = useState(false);
 
   const toggleDropDown = () => setIsShow((prev) => !prev);
 
+  if (!isShowing) return null;
+
   return (
-    <div className="w-full py-2">
+    <div className="w-full py-2" onClick={(e) => e.stopPropagation()}>
       <div
         onClick={toggleDropDown}
         className="flex items-center justify-between cursor-pointer hover:text-text"

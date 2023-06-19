@@ -1,11 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isLoggedIn: true,
-  user: {
-    role: 'admin',
-    account_type: 'business',
-  },
+  isLoggedIn: null,
+  user: {},
   isOpen: false,
   currentForm: 'sign_in',
 };
@@ -20,6 +17,7 @@ export const authSlice = createSlice({
     },
     logUserOut: (state) => {
       state.isLoggedIn = false;
+      state.user = null;
     },
     openSignInModal: (state) => {
       state.isOpen = true;

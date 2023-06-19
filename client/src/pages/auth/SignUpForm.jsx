@@ -1,9 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '../../components/button/Button';
 import ErrorMessage from '../../components/form/ErrorMessage';
 import Input from '../../components/inputs/Input';
 import Select from '../../components/inputs/Select';
+import useSignUp from '../../react-query/auth/useSignUp';
 import { getErrorMessage } from '../../utils/getErrorMessage';
 import { registerUserSchema } from '../../validation/auth.schema';
 
@@ -11,14 +13,31 @@ const SignUpForm = () => {
   const {
     register,
     formState: { errors },
+    setError,
     handleSubmit,
   } = useForm({
     resolver: yupResolver(registerUserSchema),
+    defaultValues: {
+      email: 'test@test.com',
+      confirmPassword: 'Matkhau1@',
+      password: 'Matkhau1@',
+      account_type: 'personal',
+    },
   });
 
+  const { signUp, error, isSuccess, isLoading } = useSignUp();
+
   const onSubmit = (data) => {
-    console.log(data);
+    signUp(data);
   };
+
+  useEffect(() => {
+    if (error === 'email already existed') {
+      setError('email', {
+        message: 'Địa chỉ email đã tồn tại',
+      });
+    }
+  }, [error]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
@@ -54,7 +73,14 @@ const SignUpForm = () => {
         </Select>
         <ErrorMessage errorMessage={getErrorMessage(errors, 'account_type')} />
       </div>
-      <Button className="w-full">Đăng ký</Button>
+      <Button
+        disabled={isLoading}
+        className={`w-full hover:bg-primary-focus ${
+          isLoading ? 'opacity-50' : ''
+        }`}
+      >
+        Đăng ký
+      </Button>
     </form>
   );
 };

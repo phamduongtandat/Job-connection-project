@@ -9,14 +9,18 @@ import ContextProvider from './contexts/index.jsx';
 import './index.css';
 import { store } from './store/index.js';
 
+import { QueryClientProvider, queryClient } from './config/react-query.js';
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <Provider store={store}>
-      <ContextProvider>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
-      </ContextProvider>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <ContextProvider>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </ContextProvider>
+      </Provider>
+    </QueryClientProvider>
   </BrowserRouter>,
 );

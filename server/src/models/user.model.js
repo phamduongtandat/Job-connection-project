@@ -47,7 +47,6 @@ const schema = mongoose.Schema(
     toJSON: {
       transform(doc, ret) {
         delete ret.__v;
-        if (ret.role === 'user') delete ret.role;
         delete ret.password;
       },
     },

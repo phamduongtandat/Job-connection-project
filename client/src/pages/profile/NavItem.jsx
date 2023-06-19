@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom';
 
-const NavItem = ({ children, className, to = '/' }) => {
+const NavItem = ({ children, className, to = '/', isShowing = true }) => {
+  if (!isShowing) return null;
+
   return (
     <li className={` ${className}`}>
       <NavLink

@@ -27,12 +27,17 @@ const SignUpForm = () => {
         <ErrorMessage errorMessage={getErrorMessage(errors, 'email')} />
       </div>
       <div>
-        <Input placeholder="Mật khẩu" {...register('password')} />
+        <Input
+          placeholder="Mật khẩu"
+          {...register('password')}
+          type="password"
+        />
         <ErrorMessage errorMessage={getErrorMessage(errors, 'password')} />
       </div>
       <div>
         <Input
           placeholder="Xác nhận mật khẩu"
+          type="password"
           {...register('confirmPassword')}
         />
         <ErrorMessage

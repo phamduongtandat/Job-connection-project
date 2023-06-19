@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/Layout';
+import UIContainer from './components/uiContainer/UIContainer';
 import ProfilePage from './pages/profile/ProfilePage';
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
           <Route path="/profile/*" element={<ProfilePage />} />
         </Routes>
       </Layout>
+      <UIContainer />
     </main>
   );
 }

@@ -26,7 +26,11 @@ const SignInForm = () => {
         <ErrorMessage errorMessage={getErrorMessage(errors, 'email')} />
       </div>
       <div>
-        <Input placeholder="Mật khẩu" {...register('password')} />
+        <Input
+          placeholder="Mật khẩu"
+          {...register('password')}
+          type="password"
+        />
         <ErrorMessage errorMessage={getErrorMessage(errors, 'password')} />
       </div>
       <Button className="font-semibold w-full">Đăng nhập</Button>

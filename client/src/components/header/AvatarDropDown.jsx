@@ -1,7 +1,8 @@
-import { Menu, Transition } from '@headlessui/react';
+import { Menu } from '@headlessui/react';
 import useGetAuthInfo from '../../hooks/useGetAuthInfo';
 import useSignOut from '../../react-query/auth/useSignOut';
 import Avatar from '../avatar/Avatar';
+import DropDownMenu from '../dropdownMenu/DropDownMenu';
 import AvatarDropDownItem from './AvatarDropDownItem';
 
 function AvatarDropDown() {
@@ -15,15 +16,7 @@ function AvatarDropDown() {
       <Menu.Button>
         <Avatar className="w-9" />
       </Menu.Button>
-      <Transition
-        as={'div'}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
+      <DropDownMenu>
         <Menu.Items
           as="div"
           className="absolute right-0 -bottom-3 translate-y-full border bg-white w-60 rounded-sm shadow-sm px-6 py-2 text-text-light"
@@ -61,7 +54,7 @@ function AvatarDropDown() {
             Đăng xuất
           </Menu.Item>
         </Menu.Items>
-      </Transition>
+      </DropDownMenu>
     </Menu>
   );
 }

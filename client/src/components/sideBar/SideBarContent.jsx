@@ -5,6 +5,7 @@ import useSignOut from '../../react-query/auth/useSignOut';
 import OpenSignInFormBtn from '../auth/OpenSignInFormBtn';
 import OpenSignUpFormBtn from '../auth/OpenSignUpFormBtn';
 import Avatar from '../avatar/Avatar';
+import Button from '../button/Button';
 import SideBarDropDown from './SideBarDropdown';
 import SideBarItem from './SideBarItem';
 
@@ -17,20 +18,21 @@ const SideBarContent = () => {
     user,
   } = useGetAuthInfo();
 
-  const { handleCloseSideBar } = useSideBar();
+  const { handleCloseSideBar, isStaticSideBarOpen, handleToggleStaticSideBar } =
+    useSideBar();
   const { signOut } = useSignOut();
 
   return (
     <div
       onClick={handleCloseSideBar}
-      className="w-72 p-6 flex flex-col gap-y-1 items-start text-text-light h-full"
+      className="w-72 p-6 flex flex-col h-screen gap-y-1 items-start text-text-light"
     >
       {isLoggedIn && (
         <Link
           to={isAdminAccount ? '/admin/users' : '/profile/user-info'}
           className="flex items-center gap-x-4 mb-6"
         >
-          <Avatar className="w-16 text-2xl" />
+          <Avatar className="!w-14 text-2xl" />
           <span className="font-medium text-text">
             {user.name || user.email}
           </span>
@@ -73,13 +75,22 @@ const SideBarContent = () => {
         Quản lý tin tuyển dụng
       </SideBarItem>
       <SideBarItem to="/profile/update-password">Đổi mật khẩu</SideBarItem>
+      {!isAdminAccount && (
+        <Button className="w-full mt-auto" onClick={signOut}>
+          Đăng xuất
+        </Button>
+      )}
 
-      <button
-        className="block bg-primary w-full py-2 text-white rounded-md mt-auto"
-        onClick={signOut}
-      >
-        Đăng xuất
-      </button>
+      {isAdminAccount && (
+        <Button
+          className={`w-full mt-auto sticky bottom-4 ${
+            isStaticSideBarOpen ? '!bg-dark' : ''
+          }`}
+          onClick={handleToggleStaticSideBar}
+        >
+          {isStaticSideBarOpen ? 'Ẩn sidebar' : 'Hiện sidebar'}
+        </Button>
+      )}
     </div>
   );
 };

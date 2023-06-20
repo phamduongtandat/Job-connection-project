@@ -21,10 +21,12 @@
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-highlight-words": "^0.20.0",
     "react-hook-form": "^7.44.3",
     "react-icons": "^4.9.0",
     "react-redux": "^8.1.0",
     "react-router-dom": "^6.12.1",
+    "react-tooltip": "^5.14.0",
     "yup": "^1.2.0"
   },
   "devDependencies": {

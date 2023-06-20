@@ -76,11 +76,11 @@ const UpdateCurrentUserInfo = () => {
           multiple
           options={[
             {
-              displayText: 'Thiết kế website',
+              name: 'Thiết kế website',
               value: '507f191e810c19729de860ea',
             },
             {
-              displayText: 'Lập trình website',
+              name: 'Lập trình website',
               value: '507f1f77bcf86cd799439011',
             },
           ]}

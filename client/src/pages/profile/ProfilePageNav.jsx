@@ -10,7 +10,7 @@ const ProfilePageNav = () => {
   const { signOut } = useSignOut();
 
   return (
-    <div className="py-6 bg-white w-80 px-6 min-h-[400px] rounded-sm">
+    <div className="py-6 bg-white w-80 px-6 min-h-[400px] rounded-sm hidden lg:block">
       <div className="my-6 mb-8">
         <Avatar />
       </div>
@@ -23,7 +23,7 @@ const ProfilePageNav = () => {
           {isPersonalAccount && 'Thông tin cá nhân'}
         </NavItem>
         <NavItem isShowing={isAdminAccount} to="/admin/users">
-          Quản lý tài khoản
+          Quản lý người dùng
         </NavItem>
         <NavItem isShowing={isAdminAccount} to="/admin/fields">
           Quản lý lĩnh vực

@@ -20,7 +20,7 @@ export default function ListBox({
 
   const defaultValue = multiple ? [] : '';
   const selectedOption = options.find((option) => option.value === field.value);
-  const displayText = selectedOption?.displayText;
+  const name = selectedOption?.name;
 
   return (
     <div className={wrapperClassName}>
@@ -38,7 +38,7 @@ export default function ListBox({
             <span className="truncate">
               {field.value && Array.isArray(field.value)
                 ? `Đã lựa chọn (${field.value.length})`
-                : displayText || field.value}
+                : name || field.value}
               {!field.value && placeholder}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
@@ -73,7 +73,7 @@ export default function ListBox({
                           selected ? 'font-medium' : 'font-normal'
                         }`}
                       >
-                        {option.displayText || option.value}
+                        {option.name || option.value}
                       </span>
                       {selected ? (
                         <span className="absolute text-primary inset-y-0 left-0 flex items-center pl-3">

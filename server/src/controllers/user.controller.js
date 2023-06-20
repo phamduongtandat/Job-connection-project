@@ -20,6 +20,12 @@ const getUserById = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
+  const body = req.body;
+
+  if (body.role === 'admin') {
+    body.account_type = 'admin';
+  }
+
   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
@@ -66,12 +72,32 @@ const createNewUser = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-  const users = await User.find();
+  const {
+    fields,
+    page,
+    pageSize,
+    skip = 0,
+    limit = 10,
+    sort,
+    filter = {},
+  } = req.query;
+  const matchingResults = await User.countDocuments(filter);
+  const totalPages = Math.ceil(matchingResults / limit);
+
+  const users = await User.find(filter)
+    .skip(skip)
+    .limit(limit)
+    .select(fields)
+    .sort(sort);
 
   res.status(200).json({
     status: 'success',
     pagination: {
+      matchingResults,
       returnedResults: users.length,
+      totalPages,
+      currentPage: page,
+      pageSize: limit,
     },
     data: users,
   });

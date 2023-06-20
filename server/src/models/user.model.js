@@ -17,7 +17,7 @@ const schema = mongoose.Schema(
     },
     account_type: {
       type: String,
-      enum: ['personal', 'business'],
+      enum: ['personal', 'business', 'admin'],
       default: 'personal',
     },
     password: {
@@ -27,6 +27,7 @@ const schema = mongoose.Schema(
     status: {
       type: String,
       enum: ['active', 'blocked'],
+      default: 'active',
     },
     phone: {
       type: String,

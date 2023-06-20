@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import { isAfter } from 'date-fns';
 import jwt from 'jsonwebtoken';
 import { sendResetPasswordToken } from '../emails/index.js';
 import { User } from '../models/user.model.js';
@@ -55,7 +56,7 @@ const signIn = async (req, res) => {
   res.status(200).json({
     status: 'success',
     message: 'Logged in successfully',
-    data:user
+    data: user,
   });
 };
 
@@ -105,9 +106,21 @@ const resetPasswordWithToken = async (req, res) => {
 
   const token = req.params.token;
 
-  const { email } = jwt.verify(token, process.env.JWT_SECRET);
+  const { email, iat } = jwt.verify(token, process.env.JWT_SECRET);
 
-  const user = await User.findOneAndUpdate(
+  // check if the token is expired'
+  const user = await User.findOne({ email });
+  if (
+    user.passwordChangedAt &&
+    isAfter(new Date(user.passwordChangedAt), new Date(iat * 1000))
+  ) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'The token is expired',
+    });
+  }
+
+  await User.findOneAndUpdate(
     { email },
     { password: hashedPassword, passwordChangedAt: new Date() },
   );

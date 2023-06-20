@@ -1,6 +1,10 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import {
   closeAuthModal,
+  openForgotPasswordModal,
+  openResetPasswordModal,
   openSignInModal,
   openSignUpModal,
   toggleAuthForm,
@@ -10,6 +14,8 @@ const useAuthModal = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.auth.isOpen);
   const currentForm = useSelector((state) => state.auth.currentForm);
+  const [searchParams] = useSearchParams();
+  const resetPasswordToken = searchParams.get('resetPasswordToken');
 
   const handleCloseAuthModal = () => {
     dispatch(closeAuthModal());
@@ -23,9 +29,19 @@ const useAuthModal = () => {
     dispatch(openSignUpModal());
   };
 
+  const handleOpenForgotPasswordModal = () => {
+    dispatch(openForgotPasswordModal());
+  };
+
   const handleToggleAuthForm = () => {
     dispatch(toggleAuthForm());
   };
+
+  useEffect(() => {
+    if (resetPasswordToken) {
+      dispatch(openResetPasswordModal());
+    }
+  }, [resetPasswordToken]);
 
   return {
     isOpen,
@@ -34,6 +50,7 @@ const useAuthModal = () => {
     handleOpenSignInModal,
     handleOpenSignUpModal,
     handleToggleAuthForm,
+    handleOpenForgotPasswordModal,
   };
 };
 

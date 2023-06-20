@@ -27,12 +27,21 @@ export const authSlice = createSlice({
       state.isOpen = true;
       state.currentForm = 'sign_up';
     },
+    openForgotPasswordModal: (state) => {
+      state.isOpen = true;
+      state.currentForm = 'forgot_password';
+    },
+    openResetPasswordModal: (state) => {
+      state.isOpen = true;
+      state.currentForm = 'reset_password';
+    },
     closeAuthModal: (state) => {
       state.isOpen = false;
     },
     toggleAuthForm: (state) => {
       if (state.currentForm === 'sign_in') state.currentForm = 'sign_up';
       else if (state.currentForm === 'sign_up') state.currentForm = 'sign_in';
+      else state.currentForm = 'sign_in';
     },
   },
 });
@@ -44,6 +53,8 @@ export const {
   openSignUpModal,
   closeAuthModal,
   toggleAuthForm,
+  openForgotPasswordModal,
+  openResetPasswordModal,
 } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;

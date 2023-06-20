@@ -2,7 +2,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../config/axios';
-import useAuthModal from '../../hooks/useAuthModal';
 import useConfirmModal from '../../hooks/useConfirmModal';
 import { logUserOut } from '../../store/authSlice';
 
@@ -10,7 +9,6 @@ const useSignOut = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isConfirmed } = useConfirmModal();
-  const { handleOpenSignInModal } = useAuthModal();
   const mutationFn = async () => {
     await axios({
       method: 'delete',

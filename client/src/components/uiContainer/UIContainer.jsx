@@ -1,3 +1,5 @@
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Tooltip } from 'react-tooltip';
 import AuthModal from '../../pages/auth/AuthModal';
 import useGetCurrentUser from '../../react-query/auth/useGetCurrentUser';
@@ -13,6 +15,7 @@ const UIContainer = () => {
       <SideBarContainer />
       <ConfirmModal />
       <Tooltip id="tooltip" />
+      <ToastContainer />
     </>
   );
 };

@@ -17,4 +17,8 @@ const updateUserByIdSchema = object({
   role: role.required(),
 });
 
-export { createNewUserSchema, updateUserByIdSchema };
+const updateUserStatusSchema = object({
+  status: string().oneOf(['active', 'blocked']).required(),
+});
+
+export { createNewUserSchema, updateUserByIdSchema, updateUserStatusSchema };

@@ -11,9 +11,22 @@ import getAccountType from '../../../utils/getAccountType';
 import ToggleUserStatusBtn from './ToggleUserStatusBtn';
 
 const UsersTable = () => {
-  const { users, pagination, isLoading, isError } = useGetUsers();
   const [searchParams, setSearchParams] = useSearchParams();
+  const pageSize = searchParams.get('pageSize');
+  const page = searchParams.getAll('page');
   const keyword = searchParams.get('keyword');
+  const account_type = searchParams.get('account_type');
+
+  const query = {
+    page,
+    pageSize,
+    keyword,
+    account_type,
+    searchBy: ['name', 'email'],
+    pageSize: 5,
+  };
+
+  const { users, pagination, isLoading, isError } = useGetUsers(query);
 
   return (
     <div>
@@ -62,10 +75,15 @@ const UsersTable = () => {
                 </td>
                 <td>{user.phone}</td>
                 <td>{getAccountType(user.role, user.account_type)}</td>
-                <td className="text-center">{user.status}</td>
+                <td className="">
+                  <ToggleUserStatusBtn
+                    status={user.status}
+                    userId={user._id}
+                    role={user.role}
+                  />
+                </td>
                 <td>
                   <div className="flex items-center justify-center gap-x-6">
-                    <ToggleUserStatusBtn status={user.status} />
                     <EditButton />
                   </div>
                 </td>

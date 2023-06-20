@@ -7,6 +7,7 @@ import validateReqBody from '../middleware/validateReqBody.js';
 import {
   createNewUserSchema,
   updateUserByIdSchema,
+  updateUserStatusSchema,
 } from '../validation/user.schema.js';
 
 const userRouter = express.Router();
@@ -27,6 +28,11 @@ userRouter.put(
   '/:id',
   validateReqBody(updateUserByIdSchema),
   userController.updateUser,
+);
+userRouter.put(
+  '/:id/user-status',
+  validateReqBody(updateUserStatusSchema),
+  userController.updateUserStatus,
 );
 
 export default userRouter;

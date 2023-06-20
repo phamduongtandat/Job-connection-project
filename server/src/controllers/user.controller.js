@@ -43,6 +43,31 @@ const updateUser = async (req, res) => {
   });
 };
 
+const updateUserStatus = async (req, res) => {
+  const { status } = req.body;
+  const id = req.params.id;
+  const user = await User.findById(id);
+
+  if (!user)
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Can not find user with provided id',
+    });
+
+  if (user.role === 'admin' && status === 'blocked')
+    return res.status(403).json({
+      status: 'fail',
+      message: 'You can not block admin user',
+    });
+
+  await User.findByIdAndUpdate(id, { status });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'The user has been blocked',
+  });
+};
+
 const createNewUser = async (req, res) => {
   const { name, email, phone, role } = req.body;
 
@@ -103,6 +128,12 @@ const getUsers = async (req, res) => {
   });
 };
 
-const userController = { getUsers, createNewUser, getUserById, updateUser };
+const userController = {
+  getUsers,
+  createNewUser,
+  getUserById,
+  updateUser,
+  updateUserStatus,
+};
 
 export default userController;

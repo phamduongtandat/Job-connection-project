@@ -12,6 +12,4 @@ const queryClient = new QueryClient({
   },
 });
 
-const withDefaultOnError = () => {};
-
 export { QueryClientProvider, queryClient };

@@ -5,6 +5,7 @@ const initialState = {
   user: {},
   isOpen: false,
   currentForm: 'sign_in',
+  resetPasswordToken: null,
 };
 
 export const authSlice = createSlice({
@@ -31,9 +32,10 @@ export const authSlice = createSlice({
       state.isOpen = true;
       state.currentForm = 'forgot_password';
     },
-    openResetPasswordModal: (state) => {
+    openResetPasswordModal: (state, action) => {
       state.isOpen = true;
       state.currentForm = 'reset_password';
+      state.resetPasswordToken = action.payload;
     },
     closeAuthModal: (state) => {
       state.isOpen = false;

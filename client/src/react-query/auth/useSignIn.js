@@ -3,10 +3,12 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../config/axios';
 import useAuthModal from '../../hooks/useAuthModal';
+import useConfirmModal from '../../hooks/useConfirmModal';
 import { logUserIn } from '../../store/authSlice';
 
 const useSignIn = () => {
-  const { handleCloseAuthModal } = useAuthModal();
+  const { handleCloseAuthModal, handleOpenSignInModal } = useAuthModal();
+  const { isConfirmed } = useConfirmModal();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const mutationFn = async (data) => {
@@ -31,8 +33,22 @@ const useSignIn = () => {
     }
   };
 
-  const onError = (error) => {
-    console.log(error?.response?.data?.message);
+  const onError = async (error) => {
+    const message = error?.response?.data?.message;
+    if (message === 'Invalid email or password') return;
+
+    handleCloseAuthModal();
+    const confirm = await isConfirmed({
+      title: 'Đăng nhập thất bại',
+      subTitle: 'Đã có lỗi xảy ra khi đăng nhập. Hãy thử lại.',
+      confirmButtonText: 'Thử lại',
+      cancelButtonText: 'Thôi',
+      theme: 'error_modal',
+    });
+
+    if (confirm) {
+      handleOpenSignInModal();
+    }
   };
 
   const mutation = useMutation({ mutationFn, onError, onSuccess });

@@ -17,13 +17,14 @@ const useCreateResetPasswordToken = () => {
 
   const onError = async (error) => {
     const message = error.response?.data?.message;
-
     if (message === 'Can not find user with provided email') return;
 
+    handleCloseAuthModal();
     await isConfirmed({
       cancelButtonText: 'Ok',
       title: 'Có lỗi đã xảy ra',
-      subTitle: 'Không thể gửi email để đổi mật khẩu',
+      subTitle:
+        'Không thể gửi email để đổi mật khẩu. Hãy thử lại một lần nữa hoặc liên hệ với support.',
       theme: 'error_modal',
     });
   };

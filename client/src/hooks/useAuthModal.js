@@ -14,7 +14,7 @@ const useAuthModal = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.auth.isOpen);
   const currentForm = useSelector((state) => state.auth.currentForm);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const resetPasswordToken = searchParams.get('resetPasswordToken');
 
   const handleCloseAuthModal = () => {
@@ -39,7 +39,9 @@ const useAuthModal = () => {
 
   useEffect(() => {
     if (resetPasswordToken) {
-      dispatch(openResetPasswordModal());
+      dispatch(openResetPasswordModal(resetPasswordToken));
+      searchParams.delete('resetPasswordToken');
+      setSearchParams(searchParams);
     }
   }, [resetPasswordToken]);
 

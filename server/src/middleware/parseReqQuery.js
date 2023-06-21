@@ -1,4 +1,4 @@
-const parseReqQuery = (req, res, next) => {
+const parseReqQuery = () => (req, res, next) => {
   let {
     fields,
     page = 1,

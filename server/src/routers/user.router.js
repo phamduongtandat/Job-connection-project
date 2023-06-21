@@ -17,7 +17,7 @@ userRouter.use(requireLogin());
 userRouter.use(requireRole('admin'));
 
 // routes
-userRouter.get('/', parseReqQuery, userController.getUsers);
+userRouter.get('/', parseReqQuery(), userController.getUsers);
 userRouter.post(
   '/',
   validateReqBody(createNewUserSchema),

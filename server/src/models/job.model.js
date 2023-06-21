@@ -1,28 +1,32 @@
 import mongoose from "mongoose";
-const candidateSchema = new mongoose.Schema({
-  no: {
-    type: Number,
-    required: true,
+import { string } from "yup";
+const candidateSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
+    name: {
+      type: mongoose.Schema.Types.String,
+      ref: "user",
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["awaiting", "confirmed", "rejected"],
+      required: true,
+    },
+    file: {
+      type: String,
+      required: true,
+    },
   },
-  name: {
-    type: String,
-    required: true,
-  },
-  submissionDate: {
-    type: Date,
-    required: true,
-  },
-  status: {
-    type: String,
-    enum: ["sent", "confirmed", "rejected"],
-    required: true,
-  },
-  file: {
-    type: String,
-    required: true,
-  },
-});
-const recruitmentSchema = new mongoose.Schema(
+  {
+    timestamps: true,
+  }
+);
+const jobSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -33,7 +37,7 @@ const recruitmentSchema = new mongoose.Schema(
       required: true,
     },
     field: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.String,
       ref: "field",
       required: true,
     },
@@ -63,8 +67,11 @@ const recruitmentSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["opened", "closed", "outofdate", "addtional", "removed"],
+      enum: ["opened", "closed", "outofdated", "extended", "removed"],
       required: true,
+    },
+    removalReason: {
+      type: String,
     },
     candidateList: {
       type: [candidateSchema],
@@ -74,6 +81,6 @@ const recruitmentSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-const Recruitment = mongoose.model("recruitment", recruitmentSchema);
+const Job = mongoose.model("job", jobSchema);
 
-export { Recruitment };
+export { Job };

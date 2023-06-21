@@ -1,20 +1,20 @@
-import { sendNewUserCredentials } from '../emails/index.js';
-import { User } from '../models/user.model.js';
-import randomString from '../utils/randomString.js';
-import { hashPassword } from './auth.controller.js';
+import { sendNewUserCredentials } from "../emails/index.js";
+import { User } from "../models/user.model.js";
+import randomString from "../utils/randomString.js";
+import { hashPassword } from "./auth.controller.js";
 
 const getUserById = async (req, res) => {
   const user = await User.findById(req.params.id);
 
   if (!user) {
     return res.status(404).json({
-      status: 'fail',
-      message: 'Can not find user with provided id',
+      status: "fail",
+      message: "Can not find user with provided id",
     });
   }
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: user,
   });
 };
@@ -26,13 +26,13 @@ const updateUser = async (req, res) => {
 
   if (!user) {
     return res.status(404).json({
-      status: 'fail',
-      message: 'Can not find user with provided id',
+      status: "fail",
+      message: "Can not find user with provided id",
     });
   }
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: user,
   });
 };
@@ -58,9 +58,9 @@ const createNewUser = async (req, res) => {
   });
 
   res.status(201).json({
-    status: 'success',
+    status: "success",
     message:
-      'The account has been created. An email with credentials has been sent to user mailbox',
+      "The account has been created. An email with credentials has been sent to user mailbox",
     data: user,
   });
 };
@@ -69,7 +69,7 @@ const getUsers = async (req, res) => {
   const users = await User.find();
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     pagination: {
       returnedResults: users.length,
     },

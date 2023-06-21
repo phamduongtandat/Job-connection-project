@@ -2,7 +2,7 @@ import React from 'react';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 
 const Select = React.forwardRef((props, ref) => {
-  const { className, errorMessage, hasError, ...selectProps } = props;
+  const { className, hasError, ...selectProps } = props;
 
   return (
     <div className="relative">

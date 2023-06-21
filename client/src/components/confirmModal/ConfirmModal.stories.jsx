@@ -23,6 +23,10 @@ const OpenModal = () => {
 
   return (
     <div className="flex flex-col items-start gap-y-4">
+      <p>
+        Để sử dụng ConfirmModal thì phải dùng useConfirmModal hook. Import
+        useConfirmModal ở src/hooks.
+      </p>
       <button
         onClick={() => handleConfirm('confirm_modal')}
         className="px-4 py-1.5 bg-dark text-dark-content"
@@ -63,15 +67,6 @@ const meta = {
       );
     },
   ],
-  tags: ['autodocs'],
-  parameters: {
-    docs: {
-      description: {
-        component:
-          'Để sử dụng ConfirmModal thì phải dùng useConfirmModal hook. Import useConfirmModal ở src/hooks.',
-      },
-    },
-  },
 };
 
 // stories

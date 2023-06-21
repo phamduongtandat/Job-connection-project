@@ -1,42 +1,25 @@
-import Component from './Select';
+import Select from './Select';
 
 const meta = {
-  component: Component,
+  component: Select,
   title: 'inputs/Select',
   tags: ['autodocs'],
 };
 
-const children = (
-  <>
-    <option value="" disabled>
-      Loại tài khoản
-    </option>
-    <option value="personal">Cá nhân</option>
-    <option value="business">Doanh nghiệp</option>
-  </>
-);
-
-export const ValidSelect = {
-  args: {
-    defaultValue: '',
-    children,
-  },
+export const Primary = {
+  render: () => (
+    <>
+      <p className="mb-6">
+        // Giống như html select nhưng thêm một số className vào
+      </p>
+      <Select className="" hasError={false}>
+        <option value="" disabled>
+          Loại tài khoản
+        </option>
+        <option value="personal">Cá nhân</option>
+        <option value="business">Doanh nghiệp</option>
+      </Select>
+    </>
+  ),
 };
-
-export const InvalidSelect = {
-  args: {
-    defaultValue: '',
-    children,
-    hasError: true,
-  },
-};
-
-export const CustomClassName = {
-  args: {
-    defaultValue: '',
-    children,
-    className: 'bg-red-400 text-white',
-  },
-};
-
 export default meta;

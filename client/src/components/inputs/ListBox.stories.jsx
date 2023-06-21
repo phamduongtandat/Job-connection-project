@@ -24,36 +24,25 @@ const Template = (args) => {
 export const SingleSelect = Template.bind({});
 SingleSelect.args = {
   options: [
-    { displayText: 'Cá nhân', value: 'personal' },
-    { displayText: 'Doanh nghiệp', value: 'business' },
+    { name: 'Cá nhân', value: 'personal' },
+    { name: 'Doanh nghiệp', value: 'business' },
   ],
   fieldName: 'fields',
   placeholder: 'Chọn loại tài khoản',
+  hasError: false,
 };
 
 // multiple select
 export const MultipleSelect = Template.bind({});
 MultipleSelect.args = {
   options: [
-    { displayText: 'Lập trình website', value: 'code' },
-    { displayText: 'Viết content marketing', value: 'copywritting' },
+    { name: 'Lập trình website', value: 'code' },
+    { name: 'Viết content marketing', value: 'copywritting' },
   ],
   fieldName: 'fields',
   placeholder: 'Chọn một hoặc nhiều lĩnh vực',
   multiple: true,
-};
-
-// multiple select
-export const InvalidInput = Template.bind({});
-InvalidInput.args = {
-  options: [
-    { displayText: 'Lập trình website', value: 'code' },
-    { displayText: 'Viết content marketing', value: 'copywritting' },
-  ],
-  fieldName: 'fields',
-  placeholder: 'Chọn một hoặc nhiều lĩnh vực',
-  multiple: true,
-  hasError: true,
+  hasError: false,
 };
 
 export default meta;

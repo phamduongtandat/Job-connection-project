@@ -1,6 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import Avatar from '../../../components/avatar/Avatar';
 import Button from '../../../components/button/Button';
+import CreateOrUpdateModal from '../../../components/createOrUpdateModal/CreateOrUpdateModal';
 import KeywordHighlighter from '../../../components/keywordHighlighter/KeywordHighlighter';
 import EditButton from '../../../components/table/EditButton';
 import Pagination from '../../../components/table/Pagination';
@@ -8,6 +9,7 @@ import MultipleSelectFilter from '../../../components/table/multipleSelectFilter
 import SearchBar from '../../../components/table/searchBar/SearchBar';
 import useGetUsers from '../../../react-query/users/useGetUsers';
 import getAccountType from '../../../utils/getAccountType';
+import CreateOrUpdateUser from './CreateOrUpdateUser';
 import ToggleUserStatusBtn from './ToggleUserStatusBtn';
 
 const UsersTable = () => {
@@ -30,6 +32,10 @@ const UsersTable = () => {
 
   return (
     <div>
+      <CreateOrUpdateModal>
+        <CreateOrUpdateUser />
+      </CreateOrUpdateModal>
+
       <Button className="ml-auto block mb-6">Tạo mới tài khoản</Button>
       <div className="bg-white">
         <div className="p-5 flex items-center justify-between">

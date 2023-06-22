@@ -1,21 +1,21 @@
 import { object, string } from 'yup';
-import { email, name, phone } from './auth.schema.js';
+import { account_type, email, name, phone } from './auth.schema.js';
 
-const role = string()
-  .oneOf(['admin', 'user'], 'User role must be admin')
-  .required();
-
-const createNewUserSchema = object({
+const createNewAdminSchema = object({
   name: name.required(),
   email: email.required(),
   phone: phone.required(),
-  role: role.required(),
 });
 
 const updateUserByIdSchema = object({
   name: name.required(),
   phone: phone.required(),
-  role: role.required(),
+  role: string().oneOf(['admin', 'user']).required(),
+  account_type: account_type.default('personal'),
 });
 
-export { createNewUserSchema, updateUserByIdSchema };
+const updateUserStatusSchema = object({
+  status: string().oneOf(['active', 'blocked']).required(),
+});
+
+export { createNewAdminSchema, updateUserByIdSchema, updateUserStatusSchema };

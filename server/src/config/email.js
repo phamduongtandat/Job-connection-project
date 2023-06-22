@@ -18,7 +18,6 @@ const sendEmail = async ({ subject, text, to, html }) => {
   if (!transporter) {
     return console.log('Email transporter is undefined!');
   }
-  console.log(process.env.MAILTRAP_HOST);
   try {
     transporter.sendMail({
       from: {

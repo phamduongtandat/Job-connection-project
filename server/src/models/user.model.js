@@ -17,7 +17,7 @@ const schema = mongoose.Schema(
     },
     account_type: {
       type: String,
-      enum: ['personal', 'business'],
+      enum: ['personal', 'business', 'admin'],
       default: 'personal',
     },
     password: {
@@ -27,6 +27,7 @@ const schema = mongoose.Schema(
     status: {
       type: String,
       enum: ['active', 'blocked'],
+      default: 'active',
     },
     phone: {
       type: String,
@@ -47,7 +48,6 @@ const schema = mongoose.Schema(
     toJSON: {
       transform(doc, ret) {
         delete ret.__v;
-        if (ret.role === 'user') delete ret.role;
         delete ret.password;
       },
     },

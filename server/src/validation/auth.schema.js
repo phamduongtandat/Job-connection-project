@@ -16,7 +16,7 @@ export const account_type = string().oneOf(['personal', 'business']).required();
 
 export const password = string()
   .matches(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%#*?&]{8,}$/,
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{4,}$/,
     'password should contain at least 1 uppercase, 1 lowercase, 1 number & 1 special character (@$!%*?&)  ',
   )
   .min(8, 'password need to be at least 8 character')
@@ -47,7 +47,7 @@ const updateCurrentUserSchema = object({
 });
 
 const updatePasswordSchema = object({
-  oldPassword: password,
+  oldPassword: string().min(8).max(100),
   newPassword: password,
   newPasswordConfirm: string()
     .oneOf([ref('newPassword')], 'new password confirm is not correct')
@@ -66,10 +66,10 @@ const resetPasswordWithTokenSchema = object({
 });
 
 export {
+  createResetPasswordTokenSchema,
   registerUserSchema,
+  resetPasswordWithTokenSchema,
+  signInSchema,
   updateCurrentUserSchema,
   updatePasswordSchema,
-  signInSchema,
-  createResetPasswordTokenSchema,
-  resetPasswordWithTokenSchema,
 };

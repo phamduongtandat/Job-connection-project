@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from '../../config/axios';
 
-const useGetUsers = ({ query }) => {
+const useGetUser = ({ id, query }) => {
   const queryFn = async () => {
     const res = await axios({
       method: 'get',
-      url: '/api/v1/users',
+      url: `/api/v1/users/${id}`,
       params: query,
     });
 
@@ -14,17 +14,16 @@ const useGetUsers = ({ query }) => {
 
   const res = useQuery({
     queryFn,
-    queryKey: ['users', query],
-    keepPreviousData: true,
+    enabled: !!id,
+    queryKey: ['users', id],
   });
 
   return {
-    users: res.data?.data,
-    pagination: res.data?.pagination,
+    user: res.data?.data,
     isLoading: res.isLoading,
-    isSuccess: res.isSuccess,
     isError: res.isError,
+    isSuccess: res.isSuccess,
   };
 };
 
-export default useGetUsers;
+export default useGetUser;

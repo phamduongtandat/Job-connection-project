@@ -1,15 +1,16 @@
 import { useSearchParams } from 'react-router-dom';
 import Avatar from '../../../components/avatar/Avatar';
 import Button from '../../../components/button/Button';
-import CreateOrUpdateModal from '../../../components/createOrUpdateModal/CreateOrUpdateModal';
 import KeywordHighlighter from '../../../components/keywordHighlighter/KeywordHighlighter';
+import Modal from '../../../components/modal/Modal';
 import EditButton from '../../../components/table/EditButton';
 import Pagination from '../../../components/table/Pagination';
 import MultipleSelectFilter from '../../../components/table/multipleSelectFilter/MultipleSelectFilter';
 import SearchBar from '../../../components/table/searchBar/SearchBar';
+import useModal from '../../../hooks/useModal';
 import useGetUsers from '../../../react-query/users/useGetUsers';
 import getAccountType from '../../../utils/getAccountType';
-import CreateOrUpdateUser from './CreateOrUpdateUser';
+import CreateOrUpdateUserForm from './CreateOrUpdateUserForm';
 import ToggleUserStatusBtn from './ToggleUserStatusBtn';
 
 const UsersTable = () => {
@@ -21,22 +22,32 @@ const UsersTable = () => {
 
   const query = {
     page,
-    pageSize,
+    pageSize: pageSize || 7,
     keyword,
     account_type,
     searchBy: ['name', 'email'],
-    pageSize: 5,
   };
 
-  const { users, pagination, isLoading, isError } = useGetUsers(query);
+  const { users, pagination, isLoading, isError } = useGetUsers({ query });
+  const { openCreateOrUpdateUserModal } = useModal();
+
+  const openUpdateUserModal = (id) => {
+    searchParams.set('id', id);
+    setSearchParams(searchParams);
+    openCreateOrUpdateUserModal();
+  };
+
+  const openCreateUserModal = () => openCreateOrUpdateUserModal();
 
   return (
     <div>
-      <CreateOrUpdateModal>
-        <CreateOrUpdateUser />
-      </CreateOrUpdateModal>
+      <Modal modalName="create_or_update_user">
+        <CreateOrUpdateUserForm />
+      </Modal>
 
-      <Button className="ml-auto block mb-6">Tạo mới tài khoản</Button>
+      <Button onClick={openCreateUserModal} className="ml-auto block mb-6">
+        Tạo mới tài khoản
+      </Button>
       <div className="bg-white">
         <div className="p-5 flex items-center justify-between">
           <MultipleSelectFilter
@@ -90,7 +101,7 @@ const UsersTable = () => {
                 </td>
                 <td>
                   <div className="flex items-center justify-center gap-x-6">
-                    <EditButton />
+                    <EditButton onClick={() => openUpdateUserModal(user._id)} />
                   </div>
                 </td>
               </tr>

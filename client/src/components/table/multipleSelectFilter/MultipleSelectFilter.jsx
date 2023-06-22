@@ -39,12 +39,14 @@ const MultipleSelectFilter = ({ fieldName, options = [] }) => {
           <Menu.Item
             disabled={!hasParam}
             as="button"
-            className={`w-full mt-4 text-sm text-primary hover:underline ${
+            className={`w-full mt-4 text-sm text-primary hover: ${
               !hasParam ? '!text-text-light pointer-events-none' : ''
             }`}
             onClick={removeFilter}
           >
-            Xóa bộ lọc
+            {({ active }) => (
+              <span className={active ? 'underline' : ''}>Xóa bộ lọc</span>
+            )}
           </Menu.Item>
         </Menu.Items>
       </DropDownMenu>

@@ -10,7 +10,7 @@ const Select = React.forwardRef((props, ref) => {
         {...selectProps}
         className={`h-10 w-full rounded-md px-2 bg-transparent border border-border outline-dark cursor-pointer appearance-none ${className} ${
           hasError ? 'border-error' : ''
-        }`}
+        } ${selectProps.disabled ? '!bg-gray-200' : ''}`}
         ref={ref}
       >
         {props.children}

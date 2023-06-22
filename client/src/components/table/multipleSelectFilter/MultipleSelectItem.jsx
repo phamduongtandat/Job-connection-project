@@ -27,19 +27,23 @@ const MultipleSelectItem = ({ fieldName, value, name }) => {
   };
 
   return (
-    <Menu.Item
-      as="li"
-      className="py-2 cursor-pointer flex items-center gap-x-4 pl-4 pr-12 group"
-      onClick={handleSelectItem}
-    >
-      <div
-        className={`border w-5 aspect-square flex items-center justify-center text-white group-hover:border-gray-300 ${
-          checked ? 'bg-primary' : ''
-        }`}
-      >
-        <FaCheck size={12} />
-      </div>
-      <span className="whitespace-nowrap">{name}</span>
+    <Menu.Item as="li" onClick={handleSelectItem}>
+      {({ active }) => (
+        <div
+          className={`py-2 cursor-pointer flex items-center gap-x-4 pl-4 pr-12 group ${
+            active ? 'bg-gray-50' : ''
+          }`}
+        >
+          <div
+            className={`border w-5 aspect-square flex items-center justify-center text-white group-hover:border-gray-300 ${
+              checked ? 'bg-primary' : ''
+            }`}
+          >
+            <FaCheck size={12} />
+          </div>
+          <span className="whitespace-nowrap">{name}</span>
+        </div>
+      )}
     </Menu.Item>
   );
 };

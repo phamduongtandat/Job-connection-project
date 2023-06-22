@@ -75,11 +75,9 @@ const SideBarContent = () => {
         Quản lý tin tuyển dụng
       </SideBarItem>
       <SideBarItem to="/profile/update-password">Đổi mật khẩu</SideBarItem>
-      {!isAdminAccount && (
-        <Button className="w-full mt-auto" onClick={signOut}>
-          Đăng xuất
-        </Button>
-      )}
+      <button className="py-2 hover:text-text" onClick={signOut}>
+        Đăng xuất
+      </button>
 
       {isAdminAccount && (
         <Button

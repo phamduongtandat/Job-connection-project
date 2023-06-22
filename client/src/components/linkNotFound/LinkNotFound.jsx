@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useConfirmModal from '../../hooks/useConfirmModal';
+import useGetAuthInfo from '../../hooks/useGetAuthInfo';
 
 const LinkNotFound = () => {
   const navigate = useNavigate();
   const { isConfirmed } = useConfirmModal();
+  const { isAdminAccount } = useGetAuthInfo();
 
   const openErrorModal = async () => {
     await isConfirmed({
@@ -16,7 +18,8 @@ const LinkNotFound = () => {
   };
 
   useEffect(() => {
-    navigate('/');
+    if (isAdminAccount) navigate('/admin/users');
+    else navigate('/');
     openErrorModal();
   }, []);
 

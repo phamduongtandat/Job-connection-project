@@ -5,7 +5,7 @@ import requireLogin from '../middleware/requireLogin.js';
 import requireRole from '../middleware/requireRole.js';
 import validateReqBody from '../middleware/validateReqBody.js';
 import {
-  createNewUserSchema,
+  createNewAdminSchema,
   updateUserByIdSchema,
   updateUserStatusSchema,
 } from '../validation/user.schema.js';
@@ -20,8 +20,8 @@ userRouter.use(requireRole('admin'));
 userRouter.get('/', parseReqQuery(), userController.getUsers);
 userRouter.post(
   '/',
-  validateReqBody(createNewUserSchema),
-  userController.createNewUser,
+  validateReqBody(createNewAdminSchema),
+  userController.createNewAdmin,
 );
 userRouter.get('/:id', userController.getUserById);
 userRouter.put(

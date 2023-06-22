@@ -74,6 +74,6 @@ const recruitmentSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-const Recruitment = mongoose.model("recruitment", recruitmentSchema);
+const Recruitment = mongoose.model("Job", recruitmentSchema);
 
 export { Recruitment };

@@ -7,7 +7,7 @@ function Pagination({ pagination }) {
   let pageSize = pagination?.pageSize || 10;
   let currentPage = pagination?.currentPage;
   let matchingResults = pagination?.matchingResults;
-  let returnResults = pagination?.returnedResults || 0;
+  let returnedResults = pagination?.returnedResults || 0;
 
   if (!totalPages || !currentPage) return null;
 
@@ -30,7 +30,8 @@ function Pagination({ pagination }) {
       <div>
         <p className="text-gray-500 text-md">
           Kết quả: {pageSize * (currentPage - 1) + 1}-
-          {pageSize * (currentPage - 1) + returnResults} trong {matchingResults}
+          {pageSize * (currentPage - 1) + returnedResults} trong{' '}
+          {matchingResults}
         </p>
       </div>
     </div>

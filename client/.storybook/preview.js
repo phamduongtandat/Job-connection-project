@@ -1,3 +1,4 @@
+import 'react-toastify/dist/ReactToastify.css';
 import '../src/index.css';
 
 /** @type { import('@storybook/react').Preview } */

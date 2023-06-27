@@ -1,11 +1,15 @@
 import { sendEmail } from '../config/email.js';
 
 const sendResetPasswordToken = async ({ token, email, name }) => {
-  const receiverName = name || email;
+  const reset_password_link = `http://localhost:5173?resetPasswordToken=${token}`;
 
   await sendEmail({
-    subject: 'You requested to reset your password.',
-    text: `Hi ${receiverName}, to reset your password, please click on this link: http://localhost:5173?resetPasswordToken=${token} to reset your token. The token will be invalid in 15 mins`,
+    fileName: 'reset-password.mjml',
+    payload: {
+      reset_password_link,
+      name: name || email,
+    },
+    subject: 'Bạn đã yêu cầu đổi mật khẩu',
     to: email,
   });
 };
@@ -13,8 +17,14 @@ const sendResetPasswordToken = async ({ token, email, name }) => {
 // send email when admin create new user
 const sendNewUserCredentials = async ({ email, password, name }) => {
   await sendEmail({
-    subject: 'Your credentials to login at ...',
-    text: `Hi ${name}, here is your credentials. Email: ${email}. Password:${password}. Change your password after you login.`,
+    fileName: 'new-admin-credential.mjml',
+    payload: {
+      name: name || email,
+      email,
+      password,
+      login_link: process.env.FRONTEND_HOST,
+    },
+    subject: 'Bạn đã được thêm làm quản trị viên tại vjobs',
     to: email,
   });
 };

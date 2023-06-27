@@ -34,7 +34,7 @@ const Header = () => {
       <SectionContainer wrapperClassName="border-b hidden md:block">
         <FieldsSlider />
       </SectionContainer>
-    </header>
+  </header>
   );
 };
 

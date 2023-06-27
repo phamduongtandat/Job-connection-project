@@ -3,7 +3,7 @@ import Field from './Field';
 const Fields = () => {
   return (
     <div className="px-4 xl:px-0 overflow-hidden">
-      <div className="flex gap-x-5 overflow-auto py-4 small-scrollbar">
+      <div className="flex gap-x-5 overflow-auto py-4 small-scrollbar w-full">
         <Field>Lập trình website</Field>
         <Field>Marketing</Field>
         <Field>Thiết kế phần mềm</Field>

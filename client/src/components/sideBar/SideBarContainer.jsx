@@ -6,7 +6,10 @@ function SideBarContainer({ children }) {
   const { isOpen, handleCloseSideBar } = useSideBar();
 
   return (
-    <Transition show={isOpen} className="fixed top-0 left-0 w-screen h-screen">
+    <Transition
+      show={isOpen}
+      className="fixed top-0 left-0 w-screen h-screen z-50"
+    >
       <Transition.Child
         enter="transition-opacity ease-linear duration-300"
         enterFrom="opacity-0"

@@ -9,7 +9,7 @@ export default {
         primary: '#1dbf73',
         'primary-focus': '#19a463',
         'primary-content': '#fff',
-        secondary: '#fbbf24',
+        accent: '#fbbf24',
         error: '#f87171',
         success: '#22c55e',
         base: '#f7f7f7',

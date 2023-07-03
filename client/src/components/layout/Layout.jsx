@@ -13,21 +13,19 @@ const Layout = (props) => {
   const { isStaticSideBarOpen } = useSideBar();
 
   return (
-    <div className="flex">
-      <div className="flex-grow">
-        {!isAdminAccount && <Header />}
-        <div className="flex">
-          {isAdminAccount && isStaticSideBarOpen && <SideBarContent />}
-          {!isStaticSideBarOpen && (
-            <OpenSideBarBtn className="fixed top-3 left-3">
-              <AiOutlineMenu size={24} />
-            </OpenSideBarBtn>
-          )}
+    <div className="max-w-full overflow-hidden">
+      {!isAdminAccount && <Header />}
+      <div className="flex">
+        {isAdminAccount && isStaticSideBarOpen && <SideBarContent />}
+        {!isStaticSideBarOpen && (
+          <OpenSideBarBtn className="fixed top-3 left-3">
+            <AiOutlineMenu size={24} />
+          </OpenSideBarBtn>
+        )}
 
-          <div className="min-h-screen flex-grow">{props.children}</div>
-        </div>
-        {!isAdminAccount && <Footer />}
+        <div className="min-h-screen flex-grow">{props.children}</div>
       </div>
+      {!isAdminAccount && <Footer />}
     </div>
   );
 };

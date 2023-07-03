@@ -1,7 +1,17 @@
+import FeatureSection from './FeatureSection';
+import FieldsSection from './FieldsSection';
+import HeroSection from './HeroSection';
+import HotestJobs from './HotestJobs';
+import TestimonialSection from './TestimonialSection';
+
 const Home = () => {
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="space-y-24">
+      <HeroSection />
+      <HotestJobs />
+      <FieldsSection />
+      <FeatureSection />
+      <TestimonialSection />
     </div>
   );
 };

@@ -12,7 +12,7 @@ function AvatarDropDown() {
   const { isLoading, signOut } = useSignOut();
 
   return (
-    <Menu as="div" className="relative">
+    <Menu as="div" className="relative z-20">
       <Menu.Button>
         <Avatar className="w-9" />
       </Menu.Button>

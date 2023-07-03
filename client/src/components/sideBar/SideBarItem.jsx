@@ -1,6 +1,9 @@
 import { NavLink } from 'react-router-dom';
+import useSideBar from '../../hooks/useSideBar';
 
 const SideBarItem = ({ children, isShowing = true, to }) => {
+  const { handleCloseSideBar } = useSideBar();
+
   if (!isShowing) return null;
 
   return (
@@ -11,6 +14,7 @@ const SideBarItem = ({ children, isShowing = true, to }) => {
         }`
       }
       to={to}
+      onClick={handleCloseSideBar}
     >
       {children}
     </NavLink>

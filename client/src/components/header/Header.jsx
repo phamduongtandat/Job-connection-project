@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <header>
       <SectionContainer
-        className="px-4 xl:px-0 flex gap-x-4 items-center justify-between"
+        className=" flex gap-x-4 items-center justify-between"
         wrapperClassName="py-4 border-b"
       >
         <OpenSideBarBtn className="mr-4">
@@ -34,7 +34,7 @@ const Header = () => {
       <SectionContainer wrapperClassName="border-b hidden md:block">
         <FieldsSlider />
       </SectionContainer>
-  </header>
+    </header>
   );
 };
 

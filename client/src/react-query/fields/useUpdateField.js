@@ -20,7 +20,7 @@ const useUpdateField = ({ id }) => {
     };
 
     const onError = (data) => {
-        toastError(`Lĩnh vực này đã có rồi!!`);
+        toastError(`Lĩnh vực này đã tồn tại!!`);
     };
 
     const onSuccess = async (data) => {
@@ -32,18 +32,7 @@ const useUpdateField = ({ id }) => {
             subTitle: `Đã cập nhật lĩnh vực: ${data.name}`,
             theme: 'success_modal',
         });
-        // if (data.role === 'admin') {
-        //   await isConfirmed({
-        //     cancelButtonText: 'Ok',
-        //     title: 'Thành công',
-        //     subTitle: `Đã cập nhật quản trị viên: ${data.email}`,
-        //     theme: 'success_modal',
-        //   });
-        // }
 
-        // if (data.role === 'user') {
-        //   toastSuccess('Đã cập nhật người dùng');
-        // }
     };
 
     const mutation = useMutation({

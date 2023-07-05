@@ -35,7 +35,7 @@ const useCreateNewField = () => {
     const onError = (error) => {
         const message = error.response?.data?.message;
         if (message !== 'email already existed')
-            toastError(`Đã có lĩnh vực này rồi!!`);
+            toastError(`Đã tồn tại lĩnh vực này!!`);
     };
 
     const mutation = useMutation({

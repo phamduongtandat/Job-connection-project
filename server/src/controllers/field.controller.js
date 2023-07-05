@@ -30,9 +30,9 @@ const getFields = async (req, res) => {
 
 const createField = async (req, res) => {
     const { name } = req.body;
-    const { _id } = req.user
+    //const { email, username = name } = req.user
 
-    const { code, ...data } = await fieldService.createField(name, _id)
+    const { code, ...data } = await fieldService.createField(req.user.name, req.user.email, name)
 
     res.status(code).json(data);
 };
@@ -42,10 +42,10 @@ const createField = async (req, res) => {
 
 const updateField = async (req, res) => {
     const reqBody = req.body
-    const { _id } = req.user
+    //const { email } = req.user
     const { id } = req.params
 
-    const { code, ...data } = await fieldService.updateField(id, reqBody, _id)
+    const { code, ...data } = await fieldService.updateField(id, reqBody, req.user.email, req.user.name)
 
     res.status(code).json(data);
 };

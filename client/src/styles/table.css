@@ -26,6 +26,13 @@
   text-transform: lowercase;
 }
 
+.ext td {
+  text-align: center;
+  border-bottom: 1px solid hsla(0, 0%, 86%, 0.87);
+  padding: 24px 10px;
+  text-transform: lowercase;
+}
+
 .shared-table tr.selected-row {
   background: #f9fafb;
 }

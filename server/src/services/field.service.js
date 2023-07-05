@@ -47,10 +47,11 @@ const getFields = async (page, pageSize, skip = 0, limit = 10, filter = {}) => {
 
 //       _____ CREATE A NEW _____
 
-const createField = async (name, _id) => {
+const createField = async (username, email, name) => {
+    const creator = username ? `${username} - ${email}` : email
     const result = await Field.create({
         name,
-        creator: _id
+        creator
     });
 
     return {
@@ -64,8 +65,9 @@ const createField = async (name, _id) => {
 
 //       _____ UPDATE _____ 
 
-const updateField = async (_id, reqBody, email) => {
-    const result = await Field.findByIdAndUpdate(_id, { ...reqBody, creator: email }, {
+const updateField = async (_id, reqBody, email, username) => {
+    const creator = username ? `${username} - ${email}` : email
+    const result = await Field.findByIdAndUpdate(_id, { ...reqBody, creator }, {
         new: true,
     });
 

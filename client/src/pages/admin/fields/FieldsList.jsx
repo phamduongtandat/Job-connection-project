@@ -8,6 +8,7 @@ import SearchBar from '../../../components/table/searchBar/SearchBar';
 import useModal from '../../../hooks/useModal';
 import useGetFields from '../../../react-query/fields/useGetFields';
 import CreateOrUpdateFieldForm from './CreateOrUpdateFieldForm';
+import formatDate from './../../../utils/formatDate';
 
 
 
@@ -37,21 +38,21 @@ const FieldsTable = () => {
   const openCreateUserModal = () => openCreateOrUpdateUserModal();
 
   return (
-    <div>
+    <div className="px-16 py-6">
 
       <Modal modalName="create_or_update_user">
         <CreateOrUpdateFieldForm />
       </Modal>
 
       <Button onClick={openCreateUserModal} className="ml-auto block mb-6">
-        Tạo mới tài khoản
+        Tạo mới lĩnh vực
       </Button>
       <div className="bg-white">
         <div className="p-5 flex items-center justify-between">
-          <h1 className="text-secondary"><b>DANH SÁCH LĨNH VỰC</b></h1>          
+          <h1 className="text-accent"><b>DANH SÁCH LĨNH VỰC</b></h1>          
           <SearchBar placeholder="Tìm lĩnh vực" />
         </div>
-        <table className="shared-table border">
+        <table className="shared-table ext border">
           <thead>
             <tr>
               <th>Tên lĩnh vực</th>
@@ -78,7 +79,7 @@ const FieldsTable = () => {
                 </td>
                 <td>
                   <KeywordHighlighter
-                    textToHighlight={`${new Date(field.updatedAt)}`}
+                    textToHighlight={formatDate(field.updatedAt)}
                     searchWords={[keyword]}
                   />
                 </td>                

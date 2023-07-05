@@ -29,9 +29,7 @@ const CreateOrUpdateFieldForm = () => {
   const {
     handleSubmit,
     register,
-    reset,
-    //setError,
-    //watch,
+    reset,    
     formState: { errors, isDirty },
   } = useForm({
     //resolver: yupResolver(id ? updateUserByIdSchema : createNewAdminSchema),
@@ -40,7 +38,7 @@ const CreateOrUpdateFieldForm = () => {
     },
   });
 
-  //useCreateOrUpdateModal({ isDirty });
+  useCreateOrUpdateModal({ isDirty });
 
   useEffect(() => {
     if (isSuccess) {
@@ -53,10 +51,7 @@ const CreateOrUpdateFieldForm = () => {
   const { updateField } = useUpdateField({ id });
 
   const onSubmit = async (data) => {
-    // if (data.role === 'user' && id) {
-    //     updateField(data);
-    //   return;
-    // }
+    
 
     const confirm = await isConfirmed({
       confirmButtonText: 'Hoàn tất',
@@ -74,13 +69,7 @@ const CreateOrUpdateFieldForm = () => {
     }
   };
 
-//   useEffect(() => {
-//     if (error === 'email already existed') {
-//       setError('email', {
-//         message: 'Email đã tồn tại',
-//       });
-//     }
-//   }, [error]);
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

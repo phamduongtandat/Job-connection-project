@@ -1,16 +1,43 @@
 import { Field } from "../models/field.model.js";
 
+//       _____ GET BY ID _____
 
-//       _____ GET ALL _____
+const getFieldById = async (id) => {
+    const result = await Field.findById(id);
 
-const getFields = async () => {
-
-    const result = await Field.find();
+    if (!result) {
+        return {
+            code: 404,
+            status: 'fail',
+            message: 'Can not find field with provided id'
+        }
+    }
 
     return {
         code: 200,
         status: 'success',
+        data: result,
+    }
+}
+
+//       _____ GET ALL _____
+
+const getFields = async (page, pageSize, skip = 0, limit = 10, filter = {}) => {
+    const matchingResults = await Field.countDocuments(filter);
+    const totalPages = Math.ceil(matchingResults / limit);
+
+
+    const result = await Field.find(filter)
+        .skip(skip)
+        .limit(limit);
+    return {
+        code: 200,
+        status: 'success',
         pagination: {
+            matchingResults,
+            totalPages,
+            currentPage: page,
+            pageSize: limit,
             returnedResults: result.length,
         },
         data: result,
@@ -57,5 +84,5 @@ const updateField = async (_id, reqBody, email) => {
     }
 }
 
-const fieldService = { getFields, createField, updateField }
+const fieldService = { getFields, createField, updateField, getFieldById }
 export default fieldService

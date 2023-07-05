@@ -4,15 +4,17 @@ import requireLogin from '../middleware/requireLogin.js';
 import requireRole from '../middleware/requireRole.js';
 import validateReqBody from '../middleware/validateReqBody.js';
 import fieldSchema from '../validation/field.schema.js';
+import parseReqQuery from './../middleware/parseReqQuery.js';
 const fieldRouter = express.Router();
 
 
-fieldRouter.get('/', fieldController.getFields);
+fieldRouter.get('/', parseReqQuery(), fieldController.getFields);
 
 // admin only router
 fieldRouter.use(requireLogin());
 fieldRouter.use(requireRole('admin'));
 
+fieldRouter.get('/:id', fieldController.getFieldById);
 
 
 fieldRouter.post(

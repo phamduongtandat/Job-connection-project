@@ -1,9 +1,9 @@
-import { Recruitment } from "../models/recruitment.model.js";
+import { Job } from "../models/job.model.js";
 import mongoose from 'mongoose'
 
 const getAppliedJobsByUserId = async (userID) => {
 
-    const result = await Recruitment.find({ 'candidateList.user': new mongoose.Types.ObjectId(userID) });
+    const result = await Job.find({ 'candidateList.user': new mongoose.Types.ObjectId(userID) });
 
     if (!result) {
         return {

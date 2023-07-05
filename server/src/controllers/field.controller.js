@@ -1,11 +1,26 @@
 import fieldService from "../services/field.service.js";
+//       _____ GET BY ID _____
 
+const getFieldById = async (req, res) => {
+    const { id } = req.params
+
+    const { code, ...data } = await fieldService.getFieldById(id)
+
+    res.status(code).json(data);
+};
 
 //       _____ GET ALL _____
 
 const getFields = async (req, res) => {
+    const {
+        page,
+        pageSize,
+        skip = 0,
+        limit = 10,
+        filter = {},
+    } = req.query;
 
-    const { code, ...data } = await fieldService.getFields()
+    const { code, ...data } = await fieldService.getFields(page, pageSize, skip, limit, filter)
 
     res.status(code).json(data);
 };
@@ -36,5 +51,5 @@ const updateField = async (req, res) => {
 };
 
 
-const fieldController = { getFields, createField, updateField }
+const fieldController = { getFields, createField, updateField, getFieldById }
 export default fieldController

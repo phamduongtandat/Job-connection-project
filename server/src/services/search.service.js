@@ -1,5 +1,5 @@
 import { Field } from "../models/field.model.js";
-import { Recruitment } from "../models/recruitment.model.js";
+import { Job } from "../models/job.model.js";
 
 //       _____ FIELDS _____ 
 
@@ -30,7 +30,7 @@ const searchField = async (name) => {
 const searchJobs = async (filter, field = null, sort = ['deadlineDate', 'desc']) => {
 
     if (!field) {
-        const result = await Recruitment
+        const result = await Job
             .find({ '$or': [{ title: { '$regex': filter } }, { position: { '$regex': filter } }] })
             .sort([sort])
         return {
@@ -42,7 +42,7 @@ const searchJobs = async (filter, field = null, sort = ['deadlineDate', 'desc'])
             data: result,
         }
     } else {
-        const result = await Recruitment
+        const result = await Job
             .find({ '$or': [{ title: { '$regex': filter } }, { position: { '$regex': filter } }] })
             .find({ field })
             .sort([sort])

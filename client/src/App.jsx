@@ -1,3 +1,4 @@
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import LinkNotFound from './components/linkNotFound/LinkNotFound';
@@ -18,6 +19,7 @@ export default function App() {
         </Routes>
       </Layout>
       <UIContainer />
+      <ReactQueryDevtools />
     </main>
   );
 }

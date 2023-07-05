@@ -6,6 +6,7 @@ import OpenSignInFormBtn from '../auth/OpenSignInFormBtn';
 import OpenSignUpFormBtn from '../auth/OpenSignUpFormBtn';
 import Avatar from '../avatar/Avatar';
 import Button from '../button/Button';
+import NotificationCount from '../notification/NotificationCount';
 import SideBarDropDown from './SideBarDropdown';
 import SideBarItem from './SideBarItem';
 
@@ -25,7 +26,7 @@ const SideBarContent = () => {
   return (
     <div
       onClick={handleCloseSideBar}
-      className="w-72 p-6 flex flex-col h-screen gap-y-1 items-start text-text-light"
+      className="w-72 p-6 flex flex-col h-screen gap-y-1 items-start text-text-light "
     >
       {isLoggedIn && (
         <Link
@@ -64,6 +65,22 @@ const SideBarContent = () => {
       </SideBarItem>
       <SideBarItem to="/profile/posted-jobs" isShowing={isBusinessAccount}>
         Tin tuyển dụng đã đăng
+      </SideBarItem>
+      <SideBarItem
+        className="flex items-center gap-x-2 justify-between"
+        to="/admin/messages/direct"
+        isShowing={isAdminAccount}
+      >
+        Tin nhắn
+        <NotificationCount quantity={101} />
+      </SideBarItem>
+      <SideBarItem
+        className="flex items-center gap-x-2 justify-between"
+        to="/admin/messages/pending"
+        isShowing={isAdminAccount}
+      >
+        Tin nhắn chờ
+        <NotificationCount quantity={101} />
       </SideBarItem>
       <SideBarItem to="/admin/users" isShowing={isAdminAccount}>
         Quản lý người dùng

@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import DirectChatContainer from '../../components/chat/DirectChatContainer';
 import RequireAdmin from '../../components/hoc/RequireAdmin';
 import RequireLogin from '../../components/hoc/RequireLogin';
 import LinkNotFound from '../../components/linkNotFound/LinkNotFound';
@@ -10,12 +11,20 @@ const ProfilePage = () => {
   return (
     <RequireLogin>
       <RequireAdmin>
-        <div className="bg-base py-6 min-h-screen px-16">
+        <div className="bg-base min-h-screen">
           <div className="flex-grow rounded-sm">
             <Routes>
               <Route path="users" element={<UsersList />} />
               <Route path="fields" element={<FieldsList />} />
               <Route path="jobs" element={<JobsList />} />
+              <Route
+                path="messages/direct/*"
+                element={<DirectChatContainer />}
+              />
+              <Route
+                path="messages/pending/*"
+                element={<DirectChatContainer />}
+              />
               <Route path="*" element={<LinkNotFound />} />
             </Routes>
           </div>

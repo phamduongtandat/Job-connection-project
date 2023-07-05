@@ -15,14 +15,17 @@
 
   .small-scrollbar::-webkit-scrollbar {
     display: initial;
-    width: 4px;
+    width: 8px;
     height: 4px;
-    background: white;
   }
 
   .small-scrollbar::-webkit-scrollbar-thumb {
     background: #dedede;
     border-radius: 100vh;
+  }
+
+  .small-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #cecece;
   }
 }
 

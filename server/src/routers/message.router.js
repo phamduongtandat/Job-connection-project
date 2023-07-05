@@ -13,15 +13,25 @@ messageRouter.post(
   validateReqBody(createMessageSchema),
   messageController.createMessage,
 );
-messageRouter.get('/last-messages', messageController.getLastMessages);
+messageRouter.get('/last-messages', messageController.getLastDirectMessages);
 
 messageRouter.get(
   '/pending-messages',
   requireRole('admin'),
-  messageController.getPendingMessages,
+  messageController.getLastPendingMessages,
 );
 
 messageRouter.get('/users/:userId', messageController.getMessagesWithOne);
+
+messageRouter.get(
+  '/pending/users/:userId',
+  messageController.getUserPendingMessages,
+);
+
+messageRouter.get(
+  '/support-messages',
+  messageController.getUserSupportMessages,
+);
 
 messageRouter.put(
   '/start-support-chat/:userId',

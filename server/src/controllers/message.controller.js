@@ -14,6 +14,16 @@ const createMessage = async (req, res) => {
     messageType,
   });
 
+  const populatedMessage = await Message.findById(message._id)
+    .populate({
+      path: 'from',
+      select: 'email name profileImage',
+    })
+    .populate({
+      path: 'to',
+      select: 'email name profileImage',
+    });
+
   // remove isLastMessage:true from old message
   await Message.findOneAndUpdate(
     {
@@ -32,24 +42,36 @@ const createMessage = async (req, res) => {
   res.status(200).json({
     status: 'success',
     message: 'Your message has been sent',
-    data: message,
+    data: populatedMessage,
   });
 };
 
-const getLastMessages = async (req, res) => {
+const getLastDirectMessages = async (req, res) => {
   const currentUser = req.user._id;
 
   const messages = await Message.find({
     $or: [
       {
         from: currentUser,
+        to: {
+          $ne: undefined,
+        },
       },
       {
         to: currentUser,
       },
     ],
+
     isLastMessage: true,
-  });
+  })
+    .populate({
+      path: 'from',
+      select: 'name email',
+    })
+    .populate({
+      path: 'to',
+      select: 'name email',
+    });
 
   res.status(200).json({
     status: 'success',
@@ -79,11 +101,59 @@ const getMessagesWithOne = async (req, res) => {
   });
 };
 
+const getUserSupportMessages = async (req, res) => {
+  const messages = await Message.find({
+    messageType: 'support',
+    $or: [
+      {
+        from: req.user._id,
+      },
+      {
+        to: req.user._id,
+      },
+    ],
+  })
+    .populate({
+      path: 'from',
+      select: 'name email profileImage',
+    })
+    .populate({
+      path: 'to',
+      select: 'name email profileImage',
+    });
+
+  res.status(200).json({
+    status: 'success',
+    data: messages,
+  });
+};
+
+//
+const getUserPendingMessages = async (req, res) => {
+  const userId = req.params.userId;
+
+  const messages = await Message.find({
+    from: userId,
+    to: undefined,
+  }).populate({
+    path: 'from',
+    select: 'name email',
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: messages,
+  });
+};
+
 // pending message is a support message that is not replied
-const getPendingMessages = async (req, res) => {
+const getLastPendingMessages = async (req, res) => {
   const messages = await Message.find({
     to: undefined,
     isLastMessage: true,
+  }).populate({
+    path: 'from',
+    select: 'name email',
   });
 
   res.status(200).json({
@@ -131,9 +201,11 @@ const endSupportChat = async (req, res) => {
 
 const messageController = {
   createMessage,
-  getLastMessages,
+  getUserPendingMessages,
+  getLastDirectMessages,
   getMessagesWithOne,
-  getPendingMessages,
+  getLastPendingMessages,
+  getUserSupportMessages,
   startSupportChat,
   endSupportChat,
 };

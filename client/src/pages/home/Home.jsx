@@ -6,7 +6,7 @@ import TestimonialSection from './TestimonialSection';
 
 const Home = () => {
   return (
-    <div className="space-y-24">
+    <div className="space-y-24 pb-24">
       <HeroSection />
       <HotestJobs />
       <FieldsSection />

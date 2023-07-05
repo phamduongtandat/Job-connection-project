@@ -18,7 +18,7 @@ const LinkNotFound = () => {
   };
 
   useEffect(() => {
-    if (isAdminAccount) navigate('/admin/users');
+    if (isAdminAccount) navigate('/admin/messages/direct');
     else navigate('/');
     openErrorModal();
   }, []);

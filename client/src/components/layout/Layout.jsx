@@ -2,6 +2,7 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { useLocation } from 'react-router-dom';
 import useGetAuthInfo from '../../hooks/useGetAuthInfo';
 import useSideBar from '../../hooks/useSideBar';
+import SupportChatContainer from '../chat/SupportChatContainer';
 import Footer from '../footer/Footer';
 import Header from '../header/Header';
 import OpenSideBarBtn from '../sideBar/OpenSideBarBtn';
@@ -14,6 +15,8 @@ const Layout = (props) => {
 
   return (
     <div className="max-w-full overflow-hidden">
+      {/* {!isAdminAccount && <SupportChatContainer />} */}
+      <SupportChatContainer />
       {!isAdminAccount && <Header />}
       <div className="flex">
         {isAdminAccount && isStaticSideBarOpen && <SideBarContent />}

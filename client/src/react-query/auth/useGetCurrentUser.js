@@ -24,7 +24,7 @@ const useGetCurrentUser = () => {
   const onSuccess = (data) => {
     const user = data.data;
     dispatch(logUserIn(user));
-    if (user?.role === 'admin') navigate('/admin/users');
+    if (user?.role === 'admin') navigate('/admin/messages/direct');
   };
 
   const {} = useQuery({

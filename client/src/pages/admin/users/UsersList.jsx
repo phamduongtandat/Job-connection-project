@@ -40,7 +40,7 @@ const UsersTable = () => {
   const openCreateUserModal = () => openCreateOrUpdateUserModal();
 
   return (
-    <div>
+    <div className="px-16 py-6">
       <Modal modalName="create_or_update_user">
         <CreateOrUpdateUserForm />
       </Modal>

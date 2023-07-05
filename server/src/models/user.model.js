@@ -7,6 +7,10 @@ const schema = mongoose.Schema(
       unique: true,
       required: true,
     },
+    profileImage: {
+      type: String,
+      default: 'https://cdn-icons-png.flaticon.com/512/552/552721.png',
+    },
     name: {
       type: String,
     },

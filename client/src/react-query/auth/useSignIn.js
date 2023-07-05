@@ -27,7 +27,7 @@ const useSignIn = () => {
     dispatch(logUserIn(user));
 
     if (user?.role === 'admin') {
-      navigate('/admin/users');
+      navigate('/admin/messages/direct');
     } else {
       navigate('/profile/user-info');
     }

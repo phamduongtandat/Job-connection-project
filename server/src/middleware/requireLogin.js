@@ -1,6 +1,6 @@
-import { isAfter } from "date-fns";
-import jwt from "jsonwebtoken";
-import { User } from "../models/user.model.js";
+import { isAfter } from 'date-fns';
+import jwt from 'jsonwebtoken';
+import { User } from '../models/user.model.js';
 
 const requireLogin = () => {
   return async (req, res, next) => {
@@ -8,8 +8,8 @@ const requireLogin = () => {
 
     if (!cookie) {
       return res.status(401).json({
-        status: "fail",
-        message: "You need to login to perform the action",
+        status: 'fail',
+        message: 'You need to login to perform the action',
       });
     }
 
@@ -19,13 +19,13 @@ const requireLogin = () => {
       const payload = jwt.verify(cookie, jwtSecret);
 
       const user = await User.findById(payload._id).select(
-        "_id passwordChangedAt password email role account_type name"
+        '_id passwordChangedAt password email role account_type name supportId',
       );
 
       if (!user) {
         return res.status(404).json({
-          status: "fail",
-          message: "User with provided token no longer exist",
+          status: 'fail',
+          message: 'User with provided token no longer exist',
         });
       }
 
@@ -34,8 +34,8 @@ const requireLogin = () => {
         isAfter(new Date(user.passwordChangedAt), new Date(payload.iat * 1000))
       ) {
         return res.status(400).json({
-          status: "fail",
-          message: "You recently changed your password. Try to login again.",
+          status: 'fail',
+          message: 'You recently changed your password. Try to login again.',
         });
       }
 
@@ -43,8 +43,8 @@ const requireLogin = () => {
       next();
     } catch (err) {
       res.status(401).json({
-        status: "fail",
-        message: "Your token is expired or invalid",
+        status: 'fail',
+        message: 'Your token is expired or invalid',
       });
     }
   };

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 const schema = mongoose.Schema(
   {
@@ -43,6 +43,9 @@ const schema = mongoose.Schema(
       type: String,
     },
     passwordChangedAt: Date,
+    supportId: {
+      type: Schema.Types.ObjectId,
+    },
   },
   {
     toJSON: {

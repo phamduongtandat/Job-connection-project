@@ -1,7 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
+import { useLocation } from 'react-router-dom';
 import axios from '../../config/axios';
 
 const useGetMessagesWithOne = (receiverId) => {
+  const { pathname } = useLocation();
+
   const queryFn = async () => {
     const res = await axios({
       method: 'get',
@@ -13,8 +16,11 @@ const useGetMessagesWithOne = (receiverId) => {
 
   const res = useQuery({
     queryFn,
-    queryKey: ['messages', receiverId],
-    enabled: receiverId && receiverId.length === 24,
+    queryKey: ['messages', 'direct', receiverId],
+    enabled:
+      receiverId &&
+      receiverId.length === 24 &&
+      pathname.startsWith('/admin/messages/direct'),
   });
 
   return {

@@ -5,13 +5,7 @@ import { MdSend } from 'react-icons/md';
 import { getErrorMessage } from '../../utils/getErrorMessage';
 import { createMessageSchema } from '../../validation/message.schema';
 
-const SendMessageForm = ({
-  onSubmit,
-  isSuccess,
-  isLoading,
-  className,
-  disabled,
-}) => {
+const SendMessageForm = ({ onSubmit, isLoading, className, disabled }) => {
   const {
     register,
     handleSubmit,
@@ -26,8 +20,8 @@ const SendMessageForm = ({
   const errorMessage = getErrorMessage(errors, 'content');
 
   useEffect(() => {
-    reset();
-  }, [isSuccess]);
+    if (isLoading) reset();
+  }, [isLoading]);
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {

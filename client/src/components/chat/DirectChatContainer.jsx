@@ -1,5 +1,9 @@
 import { useLocation } from 'react-router-dom';
+import useCreateMessage from '../../react-query/messages/useCreateMessage';
+import useEndSupportChat from '../../react-query/messages/useEndSupportChat';
+import useGetMessagesWithOne from '../../react-query/messages/useGetMessagesWithOne';
 import useGetUserPendingMessages from '../../react-query/messages/useGetUserPendingMessages';
+import useStartSupportChat from '../../react-query/messages/useStartSupportChat';
 import Button from '../button/Button';
 import Messages from './Messages';
 import ReceiverList from './ReceiverList';
@@ -8,7 +12,40 @@ import SendMessageForm from './SendMessageForm';
 const DirectChatContainer = () => {
   const receiverId = useLocation().pathname.split('/').pop();
   const pathname = useLocation().pathname;
-  const { data } = useGetUserPendingMessages(receiverId);
+  const { data: pendingMessages } = useGetUserPendingMessages(receiverId);
+  const { data: directMessages } = useGetMessagesWithOne(receiverId);
+
+  const { startSupportChat, isLoading: isStartingSupportChat } =
+    useStartSupportChat();
+
+  const { endSupportChat, isLoading: isEndingSupportChat } =
+    useEndSupportChat();
+
+  const handleStartSupportChat = () => {
+    if (receiverId.length > 0) startSupportChat(receiverId);
+  };
+
+  const handleEndSupportChat = () => {
+    if (receiverId.length > 0) endSupportChat(receiverId);
+  };
+
+  const messages = pathname.startsWith('/admin/messages/direct')
+    ? directMessages
+    : pendingMessages;
+
+  // send message
+  const { createMessage, isLoading: isSendingMessage } = useCreateMessage({
+    sender: 'admin',
+  });
+
+  const onSubmit = (data) => {
+    if (receiverId.length === 24) {
+    }
+    createMessage({
+      ...data,
+      to: receiverId,
+    });
+  };
 
   return (
     <div className="flex">
@@ -23,22 +60,35 @@ const DirectChatContainer = () => {
                   bạn chấp nhận tin nhắn chờ này, chỉ bạn có thể thấy những tin
                   nhắn sau đó của tài khoản này..
                 </p>
-                <Button>Bắt đầu cuộc hội thoại</Button>
+                <Button onClick={handleStartSupportChat}>
+                  Bắt đầu cuộc hội thoại
+                </Button>
               </div>
             )}
 
-            {pathname.startsWith('admin/messages/direct') && (
+            {pathname.startsWith('/admin/messages/direct') && (
               <div className="py-4 px-10 border-b space-y-2 bg-gray-50">
                 <p>
                   Sau khi kết thúc hội thoại, những tin nhắn tiếp theo của tài
                   khoản này sẽ được gửi vào tin nhắn chờ. Tất cả quản trị viên
                   có thể đọc được tin nhắn chờ.
                 </p>
-                <Button className="bg-red-400">Kết thúc hội thoại</Button>
+                <Button onClick={handleEndSupportChat} className="bg-red-400">
+                  Kết thúc hội thoại
+                </Button>
               </div>
             )}
-            <Messages messages={data} className="!px-10" />
-            <SendMessageForm className="!px-10" disabled={true} />
+            <Messages
+              isSending={isSendingMessage}
+              messages={messages}
+              className="!px-10"
+            />
+            <SendMessageForm
+              className="!px-10"
+              disabled={pathname.startsWith('/admin/messages/pending')}
+              isLoading={isSendingMessage}
+              onSubmit={onSubmit}
+            />
           </div>
         )}
       </div>

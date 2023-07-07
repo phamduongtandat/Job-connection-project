@@ -26,7 +26,7 @@ const SideBarContent = () => {
   return (
     <div
       onClick={handleCloseSideBar}
-      className="w-72 p-6 flex flex-col h-screen gap-y-1 items-start text-text-light "
+      className="w-72 flex-shrink-0 p-6 flex flex-col h-screen gap-y-1 items-start text-text-light "
     >
       {isLoggedIn && (
         <Link

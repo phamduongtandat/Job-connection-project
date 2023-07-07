@@ -4,16 +4,21 @@ import useGetLastMessages from '../../react-query/messages/useGetLastMessages';
 import useGetLastPendingMessages from '../../react-query/messages/useGetLastPendingMessages';
 
 const Receiver = ({ from, to, content, currentUserId }) => {
-  const sender = from._id === currentUserId ? 'me' : 'other';
+  const sender = from && from._id === currentUserId ? 'me' : 'other';
 
   let receiver;
 
-  if ((currentUserId !== from?._id && from) || !to) {
+  if (!from) {
+    receiver = to;
+  }
+
+  if (!to) {
     receiver = from;
   }
 
-  if (currentUserId !== to?._id && to) {
-    receiver = to;
+  if (from && to) {
+    if (from._id === currentUserId) receiver = to;
+    if (to._id === currentUserId) receiver = from;
   }
 
   return (
@@ -42,8 +47,10 @@ const Receiver = ({ from, to, content, currentUserId }) => {
 const ReceiverList = () => {
   const pathname = useLocation().pathname;
   const { user } = useGetAuthInfo();
-  const { data: lastMessages } = useGetLastMessages();
-  const { data: pendingMessages } = useGetLastPendingMessages();
+  const { data: lastMessages, isLoading: isLoadingLastMessages } =
+    useGetLastMessages();
+  const { data: pendingMessages, isLoadingLastPendingMessages } =
+    useGetLastPendingMessages();
 
   let messages = [];
 
@@ -56,7 +63,12 @@ const ReceiverList = () => {
   }
 
   return (
-    <div className="w-96 bg-white border-l h-screen">
+    <div className="w-96 bg-white border-l h-screen flex-shrink-0">
+      {!isLoadingLastMessages &&
+        !isLoadingLastPendingMessages &&
+        !messages?.length && (
+          <div className="px-4 py-4">Không có tin nhắn nào được tìm thấy</div>
+        )}
       {messages?.map((message) => (
         <Receiver
           key={message._id}

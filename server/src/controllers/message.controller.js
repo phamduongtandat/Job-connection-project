@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { Message } from '../models/message.model.js';
 import { User } from '../models/user.model.js';
 
@@ -8,7 +9,7 @@ const createMessage = async (req, res) => {
   // create new message
   const message = await Message.create({
     from: req.user?._id,
-    to: to || req.user?.supportId,
+    to: to || req.user?.supportId || null,
     content,
     isLastMessage: true,
     messageType,
@@ -28,8 +29,8 @@ const createMessage = async (req, res) => {
   await Message.findOneAndUpdate(
     {
       $or: [
-        { from, to },
-        { from: to, to: from },
+        { from, to: message.to },
+        { from: message.to, to: from },
       ],
       _id: { $ne: message._id },
       isLastMessage: true,
@@ -54,7 +55,7 @@ const getLastDirectMessages = async (req, res) => {
       {
         from: currentUser,
         to: {
-          $ne: undefined,
+          $ne: null,
         },
       },
       {
@@ -80,20 +81,28 @@ const getLastDirectMessages = async (req, res) => {
 };
 
 const getMessagesWithOne = async (req, res) => {
-  const to = req.params.userId;
   const from = req.user?._id;
+  const to = new mongoose.Types.ObjectId(req.params.userId);
 
   const messages = await Message.find({
     $or: [
       {
+        from: to,
+        to: from,
+      },
+      {
         from,
         to,
       },
-      { to, from },
     ],
-  }).sort({
-    createdAt: -1,
-  });
+  })
+    .sort({
+      createdAt: -1,
+    })
+    .populate({
+      path: 'from',
+      select: 'name email',
+    });
 
   res.status(200).json({
     status: 'success',
@@ -133,12 +142,22 @@ const getUserPendingMessages = async (req, res) => {
   const userId = req.params.userId;
 
   const messages = await Message.find({
-    from: userId,
-    to: undefined,
-  }).populate({
-    path: 'from',
-    select: 'name email',
-  });
+    $or: [
+      {
+        to: userId,
+        from: null,
+      },
+      { from: userId, to: null },
+    ],
+  })
+    .populate({
+      path: 'from',
+      select: 'name email',
+    })
+    .populate({
+      path: 'to',
+      select: 'name email',
+    });
 
   res.status(200).json({
     status: 'success',
@@ -149,12 +168,22 @@ const getUserPendingMessages = async (req, res) => {
 // pending message is a support message that is not replied
 const getLastPendingMessages = async (req, res) => {
   const messages = await Message.find({
-    to: undefined,
+    $or: [
+      {
+        from: null,
+      },
+      { to: null },
+    ],
     isLastMessage: true,
-  }).populate({
-    path: 'from',
-    select: 'name email',
-  });
+  })
+    .populate({
+      path: 'from',
+      select: 'name email',
+    })
+    .populate({
+      path: 'to',
+      select: 'name email',
+    });
 
   res.status(200).json({
     status: 'success',
@@ -174,10 +203,9 @@ const startSupportChat = async (req, res) => {
 
   //
 
-  await Message.updateMany(
-    { from: customerId, to: undefined },
-    { to: adminId },
-  );
+  await Message.updateMany({ from: customerId, to: null }, { to: adminId });
+
+  await Message.updateMany({ from: null, to: customerId }, { from: adminId });
 
   res.status(200).json({
     status: 'success',
@@ -192,6 +220,21 @@ const endSupportChat = async (req, res) => {
 
   user.supportId = undefined;
   await user.save();
+
+  await Message.updateMany(
+    {
+      from: customerId,
+      messageType: 'support',
+    },
+    { to: null },
+  );
+
+  await Message.updateMany(
+    {
+      to: customerId,
+    },
+    { from: null },
+  );
 
   res.status(200).json({
     status: 'success',

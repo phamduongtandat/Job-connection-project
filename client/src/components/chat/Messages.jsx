@@ -32,6 +32,7 @@ const Messages = ({ messages, isSending, className }) => {
 
   const receiver =
     (messages?.length &&
+      messages[0].from &&
       messages[0].from._id !== user._id &&
       messages[0].from) ||
     (messages?.length && messages[0].to && messages[0].to._id !== user._id);
@@ -42,7 +43,10 @@ const Messages = ({ messages, isSending, className }) => {
     >
       <div>
         {groupedMessages.map((group) => {
-          if (group[0].from._id === user._id)
+          if (
+            group[0].from?._id === user._id ||
+            (!group[0].from && group[0].to && group[0].to._id !== user._id)
+          )
             return <MyMessages key={group[0]._id} messages={group} />;
           return (
             <OtherMessages

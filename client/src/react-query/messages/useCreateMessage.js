@@ -3,7 +3,7 @@ import axios from '../../config/axios';
 import { queryClient } from '../../config/react-query';
 import useConfirmModal from '../../hooks/useConfirmModal';
 
-const useCreateMessage = () => {
+const useCreateMessage = ({ sender } = { sender: 'user' }) => {
   const { isConfirmed } = useConfirmModal();
 
   const mutationFn = async (data) => {
@@ -17,9 +17,18 @@ const useCreateMessage = () => {
   };
 
   const onSuccess = async (data) => {
-    queryClient.setQueryData(['messages', 'support-messages'], (messages) =>
-      messages ? [...messages, data] : messages,
-    );
+    if (sender === 'user') {
+      queryClient.setQueryData(['messages', 'support-messages'], (messages) =>
+        messages ? [...messages, data] : messages,
+      );
+    }
+
+    if (sender === 'admin') {
+      queryClient.setQueryData(
+        ['messages', 'direct', data.to._id],
+        (messages) => (messages ? [...messages, data] : messages),
+      );
+    }
   };
 
   const onError = async () => {

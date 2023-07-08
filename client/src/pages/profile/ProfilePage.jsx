@@ -1,12 +1,12 @@
-import { Route, Routes } from 'react-router-dom';
-import SectionContainer from '../../components/container/SectionContainer';
-import RequireLogin from '../../components/hoc/RequireLogin';
-import LinkNotFound from '../../components/linkNotFound/LinkNotFound';
-import ProfilePageNav from './ProfilePageNav';
-import UpdateCurrentUserInfo from './UpdateCurrentUserInfo';
-import UpdatePassword from './UpdatePassword';
-import AppliedJobs from './appliedJobs/AppliedJobs';
-import PostedJobs from './postedJobs/PostedJobs';
+import { Route, Routes } from "react-router-dom";
+import SectionContainer from "../../components/container/SectionContainer";
+import RequireLogin from "../../components/hoc/RequireLogin";
+import LinkNotFound from "../../components/linkNotFound/LinkNotFound";
+import ProfilePageNav from "./ProfilePageNav";
+import UpdateCurrentUserInfo from "./UpdateCurrentUserInfo";
+import UpdatePassword from "./UpdatePassword";
+import AppliedJobs from "./appliedJobs/AppliedJobs";
+import PostedJobs from "./postedJobs/PostedJobs";
 
 const ProfilePage = () => {
   return (
@@ -21,8 +21,8 @@ const ProfilePage = () => {
             <Route path="user-info" element={<UpdateCurrentUserInfo />} />
             <Route path="update-password" element={<UpdatePassword />} />
             <Route path="posted-jobs" element={<PostedJobs />} />
-            <Route path="applied-jobs" element={<AppliedJobs />} />
             <Route path="*" element={<LinkNotFound />} />
+            <Route path="applied-jobs/:id" element={<AppliedJobs />} />
           </Routes>
         </div>
         {/* <Notification /> */}

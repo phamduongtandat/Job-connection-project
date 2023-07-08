@@ -26,11 +26,20 @@ const useSignIn = () => {
     handleCloseAuthModal();
     dispatch(logUserIn(user));
 
+    // if (user?.role === 'admin') {
+    //   navigate('/admin/messages/direct');
+    // } else {
+    //   navigate('/profile/user-info');
+    // }
+
     if (user?.role === 'admin') {
       navigate('/admin/messages/direct');
+    } else if (user?.role === 'user' && user?.account_type === 'personal') {
+      navigate('/jobs/all-jobs/job-list');
     } else {
       navigate('/profile/user-info');
     }
+
   };
 
   const onError = async (error) => {

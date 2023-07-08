@@ -1,14 +1,14 @@
-import { Link } from 'react-router-dom';
-import useGetAuthInfo from '../../hooks/useGetAuthInfo';
-import useSideBar from '../../hooks/useSideBar';
-import useSignOut from '../../react-query/auth/useSignOut';
-import OpenSignInFormBtn from '../auth/OpenSignInFormBtn';
-import OpenSignUpFormBtn from '../auth/OpenSignUpFormBtn';
-import Avatar from '../avatar/Avatar';
-import Button from '../button/Button';
-import NotificationCount from '../notification/NotificationCount';
-import SideBarDropDown from './SideBarDropdown';
-import SideBarItem from './SideBarItem';
+import { Link } from "react-router-dom";
+import useGetAuthInfo from "../../hooks/useGetAuthInfo";
+import useSideBar from "../../hooks/useSideBar";
+import useSignOut from "../../react-query/auth/useSignOut";
+import OpenSignInFormBtn from "../auth/OpenSignInFormBtn";
+import OpenSignUpFormBtn from "../auth/OpenSignUpFormBtn";
+import Avatar from "../avatar/Avatar";
+import Button from "../button/Button";
+import NotificationCount from "../notification/NotificationCount";
+import SideBarDropDown from "./SideBarDropdown";
+import SideBarItem from "./SideBarItem";
 
 const SideBarContent = () => {
   const {
@@ -30,7 +30,7 @@ const SideBarContent = () => {
     >
       {isLoggedIn && (
         <Link
-          to={isAdminAccount ? '/admin/users' : '/profile/user-info'}
+          to={isAdminAccount ? "/admin/users" : "/profile/user-info"}
           className="flex items-center gap-x-4 mb-6"
         >
           <Avatar className="!w-14 text-2xl" />
@@ -60,7 +60,15 @@ const SideBarContent = () => {
       >
         Thông tin tài khoản
       </SideBarItem>
-      <SideBarItem to="/profile/applied-jobs" isShowing={isPersonalAccount}>
+
+      <SideBarItem to="../jobs/all-jobs/job-list" isShowing={isPersonalAccount}>
+        Danh sách tuyển dụng
+      </SideBarItem>
+
+      <SideBarItem
+        to={`/profile/applied-jobs/${user._id}`}
+        isShowing={isPersonalAccount}
+      >
         Công việc đã ứng tuyển
       </SideBarItem>
       <SideBarItem to="/profile/posted-jobs" isShowing={isBusinessAccount}>
@@ -99,11 +107,11 @@ const SideBarContent = () => {
       {isAdminAccount && (
         <Button
           className={`w-full mt-auto sticky bottom-4 ${
-            isStaticSideBarOpen ? '!bg-dark' : ''
+            isStaticSideBarOpen ? "!bg-dark" : ""
           }`}
           onClick={handleToggleStaticSideBar}
         >
-          {isStaticSideBarOpen ? 'Ẩn sidebar' : 'Hiện sidebar'}
+          {isStaticSideBarOpen ? "Ẩn sidebar" : "Hiện sidebar"}
         </Button>
       )}
     </div>

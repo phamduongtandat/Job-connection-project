@@ -1,6 +1,6 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 
-const NavItem = ({ children, className, to = '/', isShowing = true }) => {
+const NavItem = ({ children, className, to = "/", isShowing = true }) => {
   if (!isShowing) return null;
 
   return (
@@ -9,7 +9,7 @@ const NavItem = ({ children, className, to = '/', isShowing = true }) => {
         to={to}
         className={({ isActive }) =>
           `block px-4 py-2.5 hover:bg-base cursor-pointer rounded-sm ${
-            isActive ? 'font-medium bg-base' : ''
+            isActive ? "font-medium bg-base" : ""
           }`
         }
       >

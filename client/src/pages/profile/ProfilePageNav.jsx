@@ -1,10 +1,10 @@
-import Avatar from '../../components/avatar/Avatar';
-import useGetAuthInfo from '../../hooks/useGetAuthInfo';
-import useSignOut from '../../react-query/auth/useSignOut';
-import NavItem from './NavItem';
+import Avatar from "../../components/avatar/Avatar";
+import useGetAuthInfo from "../../hooks/useGetAuthInfo";
+import useSignOut from "../../react-query/auth/useSignOut";
+import NavItem from "./NavItem";
 
 const ProfilePageNav = () => {
-  const { isAdminAccount, isBusinessAccount, isPersonalAccount } =
+  const { user, isAdminAccount, isBusinessAccount, isPersonalAccount } =
     useGetAuthInfo();
 
   const { signOut } = useSignOut();
@@ -19,8 +19,8 @@ const ProfilePageNav = () => {
           isShowing={isPersonalAccount || isBusinessAccount}
           to="user-info"
         >
-          {isBusinessAccount && 'Thông tin doanh nghiệp'}
-          {isPersonalAccount && 'Thông tin cá nhân'}
+          {isBusinessAccount && "Thông tin doanh nghiệp"}
+          {isPersonalAccount && "Thông tin cá nhân"}
         </NavItem>
         <NavItem isShowing={isAdminAccount} to="/admin/users">
           Quản lý người dùng
@@ -34,9 +34,14 @@ const ProfilePageNav = () => {
         <NavItem isShowing={isBusinessAccount} to="posted-jobs">
           Tin tuyển dụng đã đăng
         </NavItem>
-        <NavItem isShowing={isPersonalAccount} to="applied-jobs">
+        <NavItem isShowing={isPersonalAccount} to={`applied-jobs/${user._id}`}>
           Công việc đã ứng tuyển
         </NavItem>
+
+        <NavItem isShowing={isPersonalAccount} to="../jobs/all-jobs/job-list">
+          Danh sách tuyển dụng
+        </NavItem>
+
         <NavItem to="/profile/update-password">Đổi mật khẩu</NavItem>
         <button
           onClick={signOut}

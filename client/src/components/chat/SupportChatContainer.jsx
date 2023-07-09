@@ -4,6 +4,7 @@ import { MdSend } from 'react-icons/md';
 import useAuthModal from '../../hooks/useAuthModal';
 import useConfirmModal from '../../hooks/useConfirmModal';
 import useGetAuthInfo from '../../hooks/useGetAuthInfo';
+import useSocketSlice from '../../hooks/useSocketSlice';
 import useCreateMessage from '../../react-query/messages/useCreateMessage';
 import useGetUserSupportMessages from '../../react-query/messages/useGetUserSupportMessages';
 import Messages from './Messages';
@@ -15,6 +16,7 @@ const SupportChatContainer = () => {
   const { isConfirmed } = useConfirmModal();
   const { isLoggedIn } = useGetAuthInfo();
   const { handleOpenSignInModal } = useAuthModal();
+  const { isAdminOnline } = useSocketSlice();
 
   const openChat = async () => {
     if (!isLoggedIn) {
@@ -50,13 +52,19 @@ const SupportChatContainer = () => {
       {!isOpen && (
         <button
           onClick={openChat}
-          className="fixed z-50 bottom-4 right-4 bg-primary rounded-full w-12 h-12 text-primary-content flex items-center justify-center group"
+          className={`fixed z-50 bottom-4 right-4 rounded-full w-12 h-12 text-primary-content flex items-center justify-center group ${
+            isAdminOnline ? 'bg-primary' : 'bg-text-light'
+          }`}
         >
           <MdSend
             size={24}
             className="-rotate-90 group-hover:rotate-0 transition-all duration-75"
           />
-          <span className="absolute w-8 aspect-square bg-primary animate-ping rounded-full -z-10"></span>
+          <span
+            className={`absolute w-8 aspect-square animate-ping rounded-full -z-10 ${
+              isAdminOnline ? 'bg-primary' : 'bg-text-light'
+            }`}
+          ></span>
         </button>
       )}
       <Transition

@@ -1,9 +1,11 @@
 import { useLocation } from 'react-router-dom';
+import useSocketSlice from '../../hooks/useSocketSlice';
 import useCreateMessage from '../../react-query/messages/useCreateMessage';
 import useEndSupportChat from '../../react-query/messages/useEndSupportChat';
 import useGetMessagesWithOne from '../../react-query/messages/useGetMessagesWithOne';
 import useGetUserPendingMessages from '../../react-query/messages/useGetUserPendingMessages';
 import useStartSupportChat from '../../react-query/messages/useStartSupportChat';
+import useGetUser from '../../react-query/users/useGetUser';
 import Button from '../button/Button';
 import Messages from './Messages';
 import ReceiverList from './ReceiverList';
@@ -22,11 +24,11 @@ const DirectChatContainer = () => {
     useEndSupportChat();
 
   const handleStartSupportChat = () => {
-    if (receiverId.length > 0) startSupportChat(receiverId);
+    if (receiverId.length === 24) startSupportChat(receiverId);
   };
 
   const handleEndSupportChat = () => {
-    if (receiverId.length > 0) endSupportChat(receiverId);
+    if (receiverId.length === 24) endSupportChat(receiverId);
   };
 
   const messages = pathname.startsWith('/admin/messages/direct')
@@ -47,19 +49,24 @@ const DirectChatContainer = () => {
     });
   };
 
+  const { user, isLoading: isLoadingReceiver } = useGetUser({
+    id: receiverId,
+    query: { fields: 'name profileImage email' },
+  });
+
+  const { users } = useSocketSlice();
+  const isOnline = users[receiverId] && users[receiverId].isOnline;
+
   return (
     <div className="flex">
-      <ReceiverList />
+      <ReceiverList
+        className={receiverId.length === 24 ? 'hidden lg:block' : ''}
+      />
       <div className="flex-grow px-8">
         {receiverId.length === 24 && (
-          <div className="flex flex-col max-w-5xl mx-auto pb-6 bg-white h-screen small-scrollbar">
+          <div className="flex border flex-col max-w-5xl mx-auto pb-6 bg-white h-screen small-scrollbar">
             {pathname.startsWith('/admin/messages/pending') && (
-              <div className="py-4 px-10 border-b space-y-2 bg-gray-50">
-                <p>
-                  Tin nhắn chờ sẽ được hiển thị cho tất cả quản trị viên. Nếu
-                  bạn chấp nhận tin nhắn chờ này, chỉ bạn có thể thấy những tin
-                  nhắn sau đó của tài khoản này..
-                </p>
+              <div className="py-4 px-10 border-b space-y-2 bg-gray-50 flex justify-end">
                 <Button onClick={handleStartSupportChat}>
                   Bắt đầu cuộc hội thoại
                 </Button>
@@ -67,17 +74,37 @@ const DirectChatContainer = () => {
             )}
 
             {pathname.startsWith('/admin/messages/direct') && (
-              <div className="py-4 px-10 border-b space-y-2 bg-gray-50">
-                <p>
-                  Sau khi kết thúc hội thoại, những tin nhắn tiếp theo của tài
-                  khoản này sẽ được gửi vào tin nhắn chờ. Tất cả quản trị viên
-                  có thể đọc được tin nhắn chờ.
-                </p>
+              <div className="py-4 px-10 border-b space-y-2 bg-gray-50 flex justify-end">
                 <Button onClick={handleEndSupportChat} className="bg-red-400">
                   Kết thúc hội thoại
                 </Button>
               </div>
             )}
+            <div className="flex items-center gap-x-6 p-4 border-b">
+              {!isLoadingReceiver && (
+                <>
+                  <img
+                    className="w-10 aspect-square"
+                    src={user?.profileImage}
+                  />
+                  <div>
+                    <div>{user?.name || user?.email}</div>
+                    {isOnline === false ? (
+                      <div className="text-sm text-text-light flex items-center gap-x-2">
+                        <div>Hoạt động 15 phút trước</div>
+                        <div className="w-2 aspect-square rounded-full bg-text-light"></div>
+                      </div>
+                    ) : (
+                      <div className="text-sm text-primary flex items-center gap-x-2">
+                        <div>Đang hoạt động</div>
+                        <div className="w-2 aspect-square rounded-full bg-primary"></div>
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+
             <Messages
               isSending={isSendingMessage}
               messages={messages}

@@ -1,14 +1,13 @@
-import { Link } from "react-router-dom";
-import useGetAuthInfo from "../../hooks/useGetAuthInfo";
-import useSideBar from "../../hooks/useSideBar";
-import useSignOut from "../../react-query/auth/useSignOut";
-import OpenSignInFormBtn from "../auth/OpenSignInFormBtn";
-import OpenSignUpFormBtn from "../auth/OpenSignUpFormBtn";
-import Avatar from "../avatar/Avatar";
-import Button from "../button/Button";
-import NotificationCount from "../notification/NotificationCount";
-import SideBarDropDown from "./SideBarDropdown";
-import SideBarItem from "./SideBarItem";
+import { Link } from 'react-router-dom';
+import useGetAuthInfo from '../../hooks/useGetAuthInfo';
+import useSideBar from '../../hooks/useSideBar';
+import useSignOut from '../../react-query/auth/useSignOut';
+import OpenSignInFormBtn from '../auth/OpenSignInFormBtn';
+import OpenSignUpFormBtn from '../auth/OpenSignUpFormBtn';
+import Avatar from '../avatar/Avatar';
+import Button from '../button/Button';
+import SideBarDropDown from './SideBarDropdown';
+import SideBarItem from './SideBarItem';
 
 const SideBarContent = () => {
   const {
@@ -30,12 +29,12 @@ const SideBarContent = () => {
     >
       {isLoggedIn && (
         <Link
-          to={isAdminAccount ? "/admin/users" : "/profile/user-info"}
+          to={isAdminAccount ? '/admin/users' : '/profile/user-info'}
           className="flex items-center gap-x-4 mb-6"
         >
           <Avatar className="!w-14 text-2xl" />
           <span className="font-medium text-text">
-            {user.name || user.email}
+            {user?.name || user?.email}
           </span>
         </Link>
       )}
@@ -73,7 +72,7 @@ const SideBarContent = () => {
       </SideBarItem>
 
       <SideBarItem
-        to={`/profile/applied-jobs/${user._id}`}
+        to={`/profile/applied-jobs/${user?._id}`}
         isShowing={isPersonalAccount}
       >
         Công việc đã ứng tuyển
@@ -88,7 +87,6 @@ const SideBarContent = () => {
         isShowing={isAdminAccount}
       >
         Tin nhắn
-        <NotificationCount quantity={101} />
       </SideBarItem>
       <SideBarItem
         className="flex items-center gap-x-2 justify-between"
@@ -96,7 +94,6 @@ const SideBarContent = () => {
         isShowing={isAdminAccount}
       >
         Tin nhắn chờ
-        <NotificationCount quantity={101} />
       </SideBarItem>
       <SideBarItem to="/admin/users" isShowing={isAdminAccount}>
         Quản lý người dùng
@@ -121,11 +118,11 @@ const SideBarContent = () => {
       {isAdminAccount && (
         <Button
           className={`w-full mt-auto sticky bottom-4 ${
-            isStaticSideBarOpen ? "!bg-dark" : ""
+            isStaticSideBarOpen ? '!bg-dark' : ''
           }`}
           onClick={handleToggleStaticSideBar}
         >
-          {isStaticSideBarOpen ? "Ẩn sidebar" : "Hiện sidebar"}
+          {isStaticSideBarOpen ? 'Ẩn sidebar' : 'Hiện sidebar'}
         </Button>
       )}
     </div>

@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import { io } from '../config/socketio.js';
+import { ADMIN_ROOM } from '../constant/socketio.constant.js';
 import { Message } from '../models/message.model.js';
 import { User } from '../models/user.model.js';
 
@@ -24,6 +26,21 @@ const createMessage = async (req, res) => {
       path: 'to',
       select: 'email name profileImage',
     });
+
+  // user to specific admin
+  if (message.to && req.user.role !== 'admin') {
+    io.to(message.to.toString()).emit('new_direct_message', populatedMessage);
+  }
+
+  // admin to user
+  if (req.user.role === 'admin' && message.to) {
+    io.to(message.to.toString()).emit('new_support_message', populatedMessage);
+  }
+
+  // user to all admin
+  if (message.to === null && req.user.role !== 'admin') {
+    io.to(ADMIN_ROOM).emit('new_pending_message', populatedMessage);
+  }
 
   // remove isLastMessage:true from old message
   await Message.findOneAndUpdate(
@@ -62,16 +79,15 @@ const getLastDirectMessages = async (req, res) => {
         to: currentUser,
       },
     ],
-
     isLastMessage: true,
   })
     .populate({
       path: 'from',
-      select: 'name email',
+      select: 'name email profileImage',
     })
     .populate({
       path: 'to',
-      select: 'name email',
+      select: 'name email profileImage',
     });
 
   res.status(200).json({
@@ -102,7 +118,29 @@ const getMessagesWithOne = async (req, res) => {
     .populate({
       path: 'from',
       select: 'name email',
+    })
+    .populate({
+      path: 'to',
+      select: 'pname email',
     });
+
+  await Message.updateMany(
+    {
+      $or: [
+        {
+          from: to,
+          to: from,
+        },
+        {
+          from,
+          to,
+        },
+      ],
+    },
+    {
+      isRead: true,
+    },
+  );
 
   res.status(200).json({
     status: 'success',
@@ -130,6 +168,23 @@ const getUserSupportMessages = async (req, res) => {
       path: 'to',
       select: 'name email profileImage',
     });
+
+  await Message.updateMany(
+    {
+      messageType: 'support',
+      $or: [
+        {
+          from: req.user._id,
+        },
+        {
+          to: req.user._id,
+        },
+      ],
+    },
+    {
+      isRead: true,
+    },
+  );
 
   res.status(200).json({
     status: 'success',
@@ -178,11 +233,11 @@ const getLastPendingMessages = async (req, res) => {
   })
     .populate({
       path: 'from',
-      select: 'name email',
+      select: 'name email profileImage',
     })
     .populate({
       path: 'to',
-      select: 'name email',
+      select: 'name email profileImage',
     });
 
   res.status(200).json({

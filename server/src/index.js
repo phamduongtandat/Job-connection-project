@@ -1,14 +1,12 @@
 // config env
-import dotenv from 'dotenv';
-dotenv.config();
-
+import 'dotenv/config';
 import { app } from './config/app.js';
 import { connectDB } from './config/db.js';
+import './config/socketio.js';
 
 // connect to db
 connectDB();
 
-// start the server
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running with port ${process.env.PORT}`);
+app.listen(8080, () => {
+  console.log('App running on port 8080');
 });

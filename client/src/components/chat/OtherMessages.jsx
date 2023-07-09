@@ -15,7 +15,7 @@ const OtherMessages = ({ messages, receiver }) => {
     <div className="space-y-2 py-4">
       <OtherInfo
         profileImage={receiver?.profileImage}
-        name={receiver?.name || receiver?.email}
+        name={receiver?.name || receiver?.email || 'Admin'}
       />
       {messages?.map((message) => (
         <OtherMessage key={message._id} content={message.content} />

@@ -35,7 +35,10 @@ const Messages = ({ messages, isSending, className }) => {
       messages[0].from &&
       messages[0].from._id !== user._id &&
       messages[0].from) ||
-    (messages?.length && messages[0].to && messages[0].to._id !== user._id);
+    (messages?.length &&
+      messages[0].to &&
+      messages[0].to._id !== user._id &&
+      messages[0].to);
 
   return (
     <div

@@ -49,7 +49,11 @@ io.use(async (socket, next) => {
 });
 
 io.on('connection', (socket) => {
+  console.log('new connection');
   const numberOfOnlineAdmins = countRoomConnections(io, ADMIN_ROOM);
+
+  console.log(numberOfOnlineAdmins);
+
   // emit to all clients except sender
   if (numberOfOnlineAdmins === 1) {
     socket.broadcast.emit('admin_online');
@@ -82,6 +86,7 @@ io.on('connection', (socket) => {
       .emit('user_list', Object.fromEntries(users.entries()));
 
     const numberOfOnlineAdmins = countRoomConnections(io, ADMIN_ROOM);
+
     if (numberOfOnlineAdmins === 0) {
       io.emit('admin_offline');
     }

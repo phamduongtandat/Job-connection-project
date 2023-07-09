@@ -9,8 +9,14 @@ const useSocketSlice = () => {
   const dispatch = useDispatch();
   const { isAdminOnline, users } = useSelector((state) => state.socket);
 
-  const handleAdminOnline = () => dispatch(adminOnline());
-  const handleAdminOffline = () => dispatch(adminOffline());
+  const handleAdminOnline = () => {
+    dispatch(adminOnline());
+    console.log('Admin is online');
+  };
+  const handleAdminOffline = () => {
+    console.log('Admin is offline');
+    dispatch(adminOffline());
+  };
   const handleUpdateUserList = (users) => dispatch(updateUserList(users));
   return {
     isAdminOnline,

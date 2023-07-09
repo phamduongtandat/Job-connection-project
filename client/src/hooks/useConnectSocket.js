@@ -7,11 +7,11 @@ const useConnectSocketIo = () => {
 
   useEffect(() => {
     if (isLoggedIn) socket.connect();
-    if (isLoggedIn === false) {
+    if (!isLoggedIn) {
       socket.disconnect();
       socket.removeAllListeners();
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, socket]);
 };
 
 export default useConnectSocketIo;

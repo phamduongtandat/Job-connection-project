@@ -39,6 +39,13 @@ const SideBarContent = () => {
           </span>
         </Link>
       )}
+      <SideBarItem
+        className="flex items-center gap-x-2 justify-between"
+        to="/"
+        isShowing={true}
+      >
+        Trang chủ
+      </SideBarItem>
       {!isLoggedIn && (
         <>
           <OpenSignUpFormBtn className="mb-5">
@@ -74,6 +81,7 @@ const SideBarContent = () => {
       <SideBarItem to="/profile/posted-jobs" isShowing={isBusinessAccount}>
         Tin tuyển dụng đã đăng
       </SideBarItem>
+
       <SideBarItem
         className="flex items-center gap-x-2 justify-between"
         to="/admin/messages/direct"
@@ -100,9 +108,15 @@ const SideBarContent = () => {
         Quản lý tin tuyển dụng
       </SideBarItem>
       <SideBarItem to="/profile/update-password">Đổi mật khẩu</SideBarItem>
-      <button className="py-2 hover:text-text" onClick={signOut}>
-        Đăng xuất
-      </button>
+      {isLoggedIn && isAdminAccount && (
+        <button className="py-2 hover:text-primary" onClick={signOut}>
+          Đăng xuất
+        </button>
+      )}
+
+      {isLoggedIn && !isAdminAccount && (
+        <Button className="w-full mt-auto">Đăng xuất</Button>
+      )}
 
       {isAdminAccount && (
         <Button

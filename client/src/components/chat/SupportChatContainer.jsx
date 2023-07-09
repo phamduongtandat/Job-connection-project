@@ -34,7 +34,9 @@ const SupportChatContainer = () => {
   const closeChat = () => setIsOpen(false);
 
   // get support messages
-  const { data, isFetching } = useGetUserSupportMessages();
+  const { data, isFetching } = useGetUserSupportMessages({
+    enabled: !!isLoggedIn,
+  });
 
   // handle submit message
   const { createMessage, isSuccess, isLoading: isSending } = useCreateMessage();

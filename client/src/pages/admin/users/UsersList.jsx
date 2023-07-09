@@ -60,6 +60,7 @@ const UsersTable = () => {
           />
           <SearchBar placeholder="Tìm người dùng theo tên hoặc email" />
         </div>
+
         <table className="shared-table border">
           <thead>
             <tr>
@@ -108,6 +109,19 @@ const UsersTable = () => {
             ))}
           </tbody>
         </table>
+        {!isLoading && !users?.length && (
+          <div className="py-12 px-6">
+            {!keyword ? (
+              ' Không thể tìm thấy danh sách người dùng'
+            ) : (
+              <div>
+                {' '}
+                Không thể tìm thấy danh sách người dùng với từ khóa:{' '}
+                <span className="bg-orange-400 text-white px-1">{keyword}</span>
+              </div>
+            )}
+          </div>
+        )}
         <Pagination pagination={pagination} />
       </div>
     </div>

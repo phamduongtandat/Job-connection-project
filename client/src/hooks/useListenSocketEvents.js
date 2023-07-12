@@ -42,7 +42,10 @@ const useListenSocketEvents = () => {
       socket.on('new_direct_message', handleNewDirectMessage);
       socket.on('new_pending_message', handleNewPendingMessage);
     });
-  }, [socket.connected]);
+    socket.on('disconnect', () => {
+      socket.removeAllListeners();
+    });
+  }, []);
 };
 
 export default useListenSocketEvents;

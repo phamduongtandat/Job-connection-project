@@ -9,7 +9,6 @@ const useConnectSocketIo = () => {
     if (isLoggedIn) socket.connect();
     if (!isLoggedIn) {
       socket.disconnect();
-      socket.removeAllListeners();
     }
   }, [isLoggedIn, socket]);
 };

@@ -49,10 +49,7 @@ io.use(async (socket, next) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('new connection');
   const numberOfOnlineAdmins = countRoomConnections(io, ADMIN_ROOM);
-
-  console.log(numberOfOnlineAdmins);
 
   // emit to all clients except sender
   if (numberOfOnlineAdmins === 1) {
@@ -62,6 +59,7 @@ io.on('connection', (socket) => {
   // emit to current client
   if (numberOfOnlineAdmins > 0) {
     socket.emit('admin_online');
+    console.log('this run');
   }
 
   users.set(socket.user._id, {

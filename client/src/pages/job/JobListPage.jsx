@@ -7,7 +7,7 @@ import AppliedJobs from "./../profile/appliedJobs/AppliedJobs";
 import AllJobs from "./AllJobs";
 function JobListPage() {
   return (
-    <div>
+    <div className="">
       <JobTab
         tab1="Danh sách việc làm"
         tab2="Công việc đã ứng tuyển"

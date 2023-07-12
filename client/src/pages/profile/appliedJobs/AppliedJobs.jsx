@@ -8,7 +8,7 @@ const AppliedJobs = () => {
   const { id } = useParams();
   const { appliedJobs } = useGetAppliedJobs({ id });
   return (
-    <div>
+    <div className="p-10">
       {appliedJobs?.map((item) => (
         <JobItem
           key={item._id}

@@ -15,7 +15,7 @@ function JobDetailPage() {
         isSwitch={isSwitch}
         setIsSwitch={setIsSwitch}
         tab1="Chi tiết tuyển dụng"
-        tab2="Ứng tuyển"
+        tab2="Chi tiết"
         button
       >
         {isSwitch ? (

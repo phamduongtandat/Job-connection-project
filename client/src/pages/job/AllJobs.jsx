@@ -5,7 +5,7 @@ import JobItem from "../../components/job/JobItem";
 function AllJobs() {
   const { jobs } = useGetJobs();
   return (
-    <div>
+    <div className="p-10">
       {jobs?.map((item) => (
         <JobItem key={item._id} item={item} />
       ))}

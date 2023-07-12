@@ -14,20 +14,19 @@ function JobTab({ children, tab1, tab2, navi, button, setIsSwitch, isSwitch }) {
   }, []);
 
   return (
-    <div className="mx-28">
-      <div className="  my-7  text-sm font-medium text-center text-purple-600 border-b  border-yellow-300 ">
-        <ul className="flex -mb-px  ">
-          <li>
+    <div className="mx-32 my-10  ">
+      <div className="  text-sm font-medium text-center text-purple-600">
+        <ul className="w-full flex justify-between ">
+          <li className=" w-[50%]  -mb-px ">
             {button ? (
               <button
                 onClick={() => {
                   setIsSwitch(true);
                 }}
-                className={`block hover:border-b-solid hover:border-r-0 hover:border-dashed hover:border hover:border-b-white hover:border-yellow-400 text-xl w-[600px]  py-4 font-bold leading-10 rounded-t-xl ${
-                  isSwitch
-                    ? "font-medium border border-b-white  border-yellow-300 hover:border-r"
-                    : "text-gray-400"
-                }`}
+                className={`block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400  ${isSwitch
+                  ? "font-medium border border-b-white w-full border-yellow-300 hover:border-r"
+                  : "text-gray-400 hover:border-r-0"
+                  }`}
               >
                 {tab1}
               </button>
@@ -35,10 +34,9 @@ function JobTab({ children, tab1, tab2, navi, button, setIsSwitch, isSwitch }) {
               <NavLink
                 to="job-list"
                 className={({ isActive }) =>
-                  `block hover:border-b-solid hover:border-r-0  hover:border-dashed hover:border hover:border-b-white hover:border-yellow-400 text-xl w-[600px]  py-4 font-bold leading-10 rounded-t-xl ${
-                    isActive
-                      ? "font-medium border border-b-white  border-yellow-300 hover:border-r"
-                      : "text-gray-400"
+                  `block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${isActive
+                    ? "font-medium border border-b-white w-full border-yellow-300 hover:border-r"
+                    : "text-gray-400 hover:border-r-0"
                   }`
                 }
               >
@@ -47,17 +45,16 @@ function JobTab({ children, tab1, tab2, navi, button, setIsSwitch, isSwitch }) {
             )}
           </li>
 
-          <li>
+          <li className=" w-[50%]  -mb-px">
             {button ? (
               <button
                 onClick={() => {
                   setIsSwitch(false);
                 }}
-                className={`block hover:border-b-solid hover:border-l-0 hover:border-dashed hover:border hover:border-b-white hover:border-yellow-400 text-xl w-[600px]  py-4 font-bold leading-10 rounded-t-xl ${
-                  isSwitch
-                    ? "text-gray-400"
-                    : "font-medium  border border-b-white  border-yellow-300  hover:border-l"
-                }`}
+                className={`block text-xl mx-auto py-7 font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400  ${isSwitch
+                  ? "text-gray-400 hover:border-l-0"
+                  : "font-medium  border border-b-white w-full py-7 border-yellow-400 hover:border-l-1"
+                  }`}
               >
                 {tab2}
               </button>
@@ -65,10 +62,9 @@ function JobTab({ children, tab1, tab2, navi, button, setIsSwitch, isSwitch }) {
               <NavLink
                 to={`applied-jobs/${user?._id}`}
                 className={({ isActive }) =>
-                  `block hover:border-b-solid hover:border-l-0 hover:border-dashed hover:border hover:border-b-white hover:border-yellow-400 text-xl w-[600px]  py-4 font-bold leading-10 rounded-t-xl ${
-                    isActive
-                      ? "font-medium  border border-b-white  border-yellow-300  hover:border-l"
-                      : "text-gray-400"
+                  `block text-xl mx-auto py-7 font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${isActive
+                    ? "font-medium  border border-b-white w-full py-7 border-yellow-400 hover:border-l-1"
+                    : "text-gray-400 hover:border-l-0"
                   }`
                 }
               >
@@ -78,7 +74,9 @@ function JobTab({ children, tab1, tab2, navi, button, setIsSwitch, isSwitch }) {
           </li>
         </ul>
       </div>
-      {children}
+      <div className="border  border-yellow-300">
+        {children}
+      </div>
     </div>
   );
 }

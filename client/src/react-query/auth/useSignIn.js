@@ -25,6 +25,9 @@ const useSignIn = () => {
     const user = data.data;
     handleCloseAuthModal();
     dispatch(logUserIn(user));
+    if (user?.role === 'user' && user?.account_type === 'personal') {
+      navigate('/jobs/all-jobs/job-list');
+    }
   };
 
   const onError = async (error) => {

@@ -39,7 +39,7 @@ function JobItem({ item, status }) {
                 </p>
 
                 <p className="text-sm font-medium leading-7 text-blue-400 ">
-                  {item.salary}
+                  Mức lương: {item.salary.toLocaleString("vi-VN")} VNĐ
                 </p>
               </div>
 

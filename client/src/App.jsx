@@ -10,8 +10,6 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import JobDetailPage from "./pages/job/JobDetailPage";
 import JobListPage from "./pages/job/JobListPage";
 
-import AppliedJobs from "./pages/profile/appliedJobs/AppliedJobs";
-
 export default function App() {
   return (
     <main>

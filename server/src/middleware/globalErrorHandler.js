@@ -16,7 +16,6 @@ const globalErrorHandler = (error, req, res, next) => {
   // email must be unique
   if (error.code === 11000) {
     message = handleUniqueFieldError(error);
-    message = error
   }
 
   if (error.name === 'CastError' && error.kind === 'ObjectId') {
@@ -30,7 +29,7 @@ const globalErrorHandler = (error, req, res, next) => {
 
   res.status(statusCode).json({
     status: 'fail',
-    message
+    message,
   });
 };
 

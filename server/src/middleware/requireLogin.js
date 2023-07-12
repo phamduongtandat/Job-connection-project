@@ -4,7 +4,7 @@ import { User } from '../models/user.model.js';
 
 const requireLogin = () => {
   return async (req, res, next) => {
-    const cookie = req.cookies.jwt;
+    const cookie = req.cookies?.jwt;
 
     if (!cookie) {
       return res.status(401).json({

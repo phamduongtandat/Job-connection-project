@@ -1,14 +1,13 @@
-import { Link } from "react-router-dom";
-import useGetAuthInfo from "../../hooks/useGetAuthInfo";
-import useSideBar from "../../hooks/useSideBar";
-import useSignOut from "../../react-query/auth/useSignOut";
-import OpenSignInFormBtn from "../auth/OpenSignInFormBtn";
-import OpenSignUpFormBtn from "../auth/OpenSignUpFormBtn";
-import Avatar from "../avatar/Avatar";
-import Button from "../button/Button";
-import NotificationCount from "../notification/NotificationCount";
-import SideBarDropDown from "./SideBarDropdown";
-import SideBarItem from "./SideBarItem";
+import { Link } from 'react-router-dom';
+import useGetAuthInfo from '../../hooks/useGetAuthInfo';
+import useSideBar from '../../hooks/useSideBar';
+import useSignOut from '../../react-query/auth/useSignOut';
+import OpenSignInFormBtn from '../auth/OpenSignInFormBtn';
+import OpenSignUpFormBtn from '../auth/OpenSignUpFormBtn';
+import Avatar from '../avatar/Avatar';
+import Button from '../button/Button';
+import SideBarDropDown from './SideBarDropdown';
+import SideBarItem from './SideBarItem';
 
 const SideBarContent = () => {
   const {
@@ -26,19 +25,26 @@ const SideBarContent = () => {
   return (
     <div
       onClick={handleCloseSideBar}
-      className="w-72 p-6 flex flex-col h-screen gap-y-1 items-start text-text-light "
+      className="w-72 flex-shrink-0 p-6 flex flex-col h-screen gap-y-1 items-start text-text-light "
     >
       {isLoggedIn && (
         <Link
-          to={isAdminAccount ? "/admin/users" : "/profile/user-info"}
+          to={isAdminAccount ? '/admin/users' : '/profile/user-info'}
           className="flex items-center gap-x-4 mb-6"
         >
           <Avatar className="!w-14 text-2xl" />
           <span className="font-medium text-text">
-            {user.name || user.email}
+            {user?.name || user?.email}
           </span>
         </Link>
       )}
+      <SideBarItem
+        className="flex items-center gap-x-2 justify-between"
+        to="/"
+        isShowing={true}
+      >
+        Trang chủ
+      </SideBarItem>
       {!isLoggedIn && (
         <>
           <OpenSignUpFormBtn className="mb-5">
@@ -66,7 +72,7 @@ const SideBarContent = () => {
       </SideBarItem>
 
       <SideBarItem
-        to={`/profile/applied-jobs/${user._id}`}
+        to={`/profile/applied-jobs/${user?._id}`}
         isShowing={isPersonalAccount}
       >
         Công việc đã ứng tuyển
@@ -74,13 +80,13 @@ const SideBarContent = () => {
       <SideBarItem to="/profile/posted-jobs" isShowing={isBusinessAccount}>
         Tin tuyển dụng đã đăng
       </SideBarItem>
+
       <SideBarItem
         className="flex items-center gap-x-2 justify-between"
         to="/admin/messages/direct"
         isShowing={isAdminAccount}
       >
         Tin nhắn
-        <NotificationCount quantity={101} />
       </SideBarItem>
       <SideBarItem
         className="flex items-center gap-x-2 justify-between"
@@ -88,7 +94,6 @@ const SideBarContent = () => {
         isShowing={isAdminAccount}
       >
         Tin nhắn chờ
-        <NotificationCount quantity={101} />
       </SideBarItem>
       <SideBarItem to="/admin/users" isShowing={isAdminAccount}>
         Quản lý người dùng
@@ -100,18 +105,24 @@ const SideBarContent = () => {
         Quản lý tin tuyển dụng
       </SideBarItem>
       <SideBarItem to="/profile/update-password">Đổi mật khẩu</SideBarItem>
-      <button className="py-2 hover:text-text" onClick={signOut}>
-        Đăng xuất
-      </button>
+      {isLoggedIn && isAdminAccount && (
+        <button className="py-2 hover:text-primary" onClick={signOut}>
+          Đăng xuất
+        </button>
+      )}
+
+      {isLoggedIn && !isAdminAccount && (
+        <Button className="w-full mt-auto">Đăng xuất</Button>
+      )}
 
       {isAdminAccount && (
         <Button
           className={`w-full mt-auto sticky bottom-4 ${
-            isStaticSideBarOpen ? "!bg-dark" : ""
+            isStaticSideBarOpen ? '!bg-dark' : ''
           }`}
           onClick={handleToggleStaticSideBar}
         >
-          {isStaticSideBarOpen ? "Ẩn sidebar" : "Hiện sidebar"}
+          {isStaticSideBarOpen ? 'Ẩn sidebar' : 'Hiện sidebar'}
         </Button>
       )}
     </div>

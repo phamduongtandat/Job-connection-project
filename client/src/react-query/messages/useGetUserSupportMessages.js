@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from '../../config/axios';
 
-const useGetUserSupportMessages = () => {
+const useGetUserSupportMessages = ({ enabled }) => {
   const queryFn = async () => {
     const res = await axios({
       url: '/api/v1/messages/support-messages',
@@ -14,6 +14,7 @@ const useGetUserSupportMessages = () => {
   const res = useQuery({
     queryFn,
     queryKey: ['messages', 'support-messages'],
+    enabled,
   });
 
   return {

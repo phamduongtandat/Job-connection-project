@@ -1,7 +1,7 @@
 import { sendEmail } from '../config/email.js';
 
 const sendResetPasswordToken = async ({ token, email, name }) => {
-  const reset_password_link = `http://localhost:5173?resetPasswordToken=${token}`;
+  const reset_password_link = `${process.env.CLIENT_HOST}?resetPasswordToken=${token}`;
 
   await sendEmail({
     fileName: 'reset-password.mjml',
@@ -22,7 +22,7 @@ const sendNewUserCredentials = async ({ email, password, name }) => {
       name: name || email,
       email,
       password,
-      login_link: process.env.FRONTEND_HOST,
+      login_link: process.env.CLIENT_HOST,
     },
     subject: 'Bạn đã được thêm làm quản trị viên tại vjobs',
     to: email,

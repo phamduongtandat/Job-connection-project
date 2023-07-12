@@ -15,11 +15,12 @@ const Layout = (props) => {
 
   return (
     <div className="max-w-full overflow-hidden">
-      {/* {!isAdminAccount && <SupportChatContainer />} */}
-      <SupportChatContainer />
-      {!isAdminAccount && <Header />}
+      {!isAdminAccount && <SupportChatContainer />}
+      {!pathname.startsWith('/admin') && <Header />}
       <div className="flex">
-        {isAdminAccount && isStaticSideBarOpen && <SideBarContent />}
+        {isAdminAccount &&
+          isStaticSideBarOpen &&
+          pathname.startsWith('/admin') && <SideBarContent />}
         {!isStaticSideBarOpen && (
           <OpenSideBarBtn className="fixed top-3 left-3">
             <AiOutlineMenu size={24} />
@@ -28,7 +29,7 @@ const Layout = (props) => {
 
         <div className="min-h-screen flex-grow">{props.children}</div>
       </div>
-      {!isAdminAccount && <Footer />}
+      {!pathname.startsWith('/admin') && <Footer />}
     </div>
   );
 };

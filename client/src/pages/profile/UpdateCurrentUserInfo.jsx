@@ -13,7 +13,7 @@ import { getErrorMessage } from '../../utils/getErrorMessage';
 import { updateCurrentUserSchema } from '../../validation/auth.schema';
 
 const UpdateCurrentUserInfo = () => {
-  const { isPersonalAccount, user } = useGetAuthInfo();
+  const { isPersonalAccount, user, isAdminAccount } = useGetAuthInfo();
   const { updateCurrentUser, isLoading, updatedUser, isSuccess } =
     useUpdateCurrentUser();
 

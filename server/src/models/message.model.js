@@ -17,6 +17,10 @@ const messageSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  isRead: {
+    type: Boolean,
+    default: false,
+  },
   messageType: {
     type: String,
     enum: ['support', 'business'],

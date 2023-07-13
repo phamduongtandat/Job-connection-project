@@ -12,9 +12,8 @@ function PaginationItem({ pageNum, currentPage }) {
   return (
     <button
       onClick={onClickHandler}
-      className={`text-paragraph w-9 text-sm aspect-square rounded-full hover:bg-primary hover:text-white ${
-        currentPage == pageNum ? 'bg-primary text-white' : ''
-      }`}
+      className={`text-paragraph w-9 text-sm aspect-square rounded-full hover:bg-primary hover:text-white ${currentPage == pageNum ? 'bg-primary text-white' : ''
+        }`}
     >
       {pageNum}
     </button>

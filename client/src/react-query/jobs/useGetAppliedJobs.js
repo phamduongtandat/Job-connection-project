@@ -20,6 +20,7 @@ const useGetAppliedJobs = ({ id, query }) => {
 
   return {
     appliedJobs: res.data?.data,
+    pagination: res.data?.pagination,
     isLoading: res.isLoading,
     isError: res.isError,
     isSuccess: res.isSuccess,

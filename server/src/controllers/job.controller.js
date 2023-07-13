@@ -2,7 +2,15 @@ import jobService from "../services/job.service.js"
 import { Job } from "../models/job.model.js";
 const getAppliedJobsByUserId = async (req, res) => {
   const { userID } = req.params
-  const { code, ...data } = await jobService.getAppliedJobsByUserId(userID)
+
+  const {
+    page,
+    pageSize,
+    skip = 0,
+    limit = 10,
+  } = req.query;
+
+  const { code, ...data } = await jobService.getAppliedJobsByUserId(userID, page, pageSize, skip, limit)
 
   res.status(code).json(data);
 
@@ -14,12 +22,34 @@ const getAppliedJobsByUserId = async (req, res) => {
 
 
 const getJobList = async (req, res) => {
-  const jobs = await Job.find().select("-status -postedBy -candidateList ");
+  const {
+    page,
+    pageSize,
+    skip = 0,
+    limit = 10,
+    filter = {},
+  } = req.query;
+
+  const matchingResults = await Job.countDocuments(filter);
+  const totalPages = Math.ceil(matchingResults / limit);
+
+  const jobs = await Job.find(filter).skip(skip)
+    .limit(limit).select("-status -candidateList ");
   res.status(200).json({
-    status: "success",
+    status: 'success',
+    pagination: {
+      matchingResults,
+      totalPages,
+      currentPage: page,
+      pageSize: limit,
+      returnedResults: jobs.length,
+    },
     data: jobs,
   });
 };
+
+
+
 const getJobById = async (req, res) => {
   const job = await Job.findById(req.params.id).select(
     "-status -postedBy -candidateList "

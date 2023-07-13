@@ -4,6 +4,7 @@ import jobController from '../controllers/job.controller.js';
 import validateReqBody from "../middleware/validateReqBody.js";
 import { createJobSchema, updateJobSchema } from "../validation/job.schema.js";
 import requireTypeAccount from "../middleware/requireTypeAccount.js";
+import parseReqQuery from './../middleware/parseReqQuery.js'
 import {
   candidateSchema,
   statusOfApplication,
@@ -11,9 +12,9 @@ import {
 
 
 const jobRouter = express.Router();
-jobRouter.get('/applied-by/:userID', jobController.getAppliedJobsByUserId)
+jobRouter.get('/applied-by/:userID', requireLogin(), parseReqQuery(), jobController.getAppliedJobsByUserId)
 //get all job
-jobRouter.get("/", jobController.getJobList);
+jobRouter.get("/", parseReqQuery(), jobController.getJobList);
 //get job with search filter
 jobRouter.get("/search", jobController.getJobWithFilter);
 //get job by id

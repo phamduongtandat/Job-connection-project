@@ -40,7 +40,7 @@ const getJobList = async (req, res) => {
 };
 
 const getJobById = async (req, res) => {
-  const job = await Job.findById(req.params.id).select('-status -postedBy ');
+  const job = await Job.findById(req.params.id).select('-postedBy ');
   let isApplied = job.candidateList?.some(
     (i) => i.user?.toString() == req.userID?._id?.toString(),
   );
@@ -98,7 +98,7 @@ const updateCurrentJob = async (req, res) => {
   //Kiem tra postedBy === current user id
   const job = await Job.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
-  }).select('-status -postedBy');
+  }).select('-postedBy');
   if (job) {
     return res.status(200).json({
       status: 'success',
@@ -188,7 +188,7 @@ const getJobWithFilter = async (req, res) => {
       }
     } else {
       const results = await Job.find(searchConditions).select(
-        '-status -postedBy -candidateList ',
+        '-status -postedBy ',
       );
       res.json(results);
     }

@@ -1,7 +1,7 @@
-import Avatar from "../../components/avatar/Avatar";
-import useGetAuthInfo from "../../hooks/useGetAuthInfo";
-import useSignOut from "../../react-query/auth/useSignOut";
-import NavItem from "./NavItem";
+import Avatar from '../../components/avatar/Avatar';
+import useGetAuthInfo from '../../hooks/useGetAuthInfo';
+import useSignOut from '../../react-query/auth/useSignOut';
+import NavItem from './NavItem';
 
 const ProfilePageNav = () => {
   const { user, isAdminAccount, isBusinessAccount, isPersonalAccount } =
@@ -19,8 +19,8 @@ const ProfilePageNav = () => {
           isShowing={isPersonalAccount || isBusinessAccount}
           to="user-info"
         >
-          {isBusinessAccount && "Thông tin doanh nghiệp"}
-          {isPersonalAccount && "Thông tin cá nhân"}
+          {isBusinessAccount && 'Thông tin doanh nghiệp'}
+          {isPersonalAccount && 'Thông tin cá nhân'}
         </NavItem>
         <NavItem isShowing={isAdminAccount} to="/admin/users">
           Quản lý người dùng
@@ -31,7 +31,7 @@ const ProfilePageNav = () => {
         <NavItem isShowing={isAdminAccount} to="/admin/jobs">
           Quản lý tin tuyển dụng
         </NavItem>
-        <NavItem isShowing={isBusinessAccount} to="posted-jobs">
+        <NavItem isShowing={isBusinessAccount} to="/jobs/all-jobs/posted-jobs">
           Tin tuyển dụng đã đăng
         </NavItem>
         <NavItem isShowing={isPersonalAccount} to={`applied-jobs/${user._id}`}>

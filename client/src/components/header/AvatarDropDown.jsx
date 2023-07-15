@@ -32,7 +32,7 @@ function AvatarDropDown() {
           </AvatarDropDownItem>
           <AvatarDropDownItem
             isShowing={isBusinessAccount}
-            to="/profile/posted-jobs"
+            to="/jobs/all-jobs/posted-jobs"
           >
             Tin tuyển dụng đã đăng
           </AvatarDropDownItem>

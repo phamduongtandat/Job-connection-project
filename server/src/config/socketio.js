@@ -59,7 +59,6 @@ io.on('connection', (socket) => {
   // emit to current client
   if (numberOfOnlineAdmins > 0) {
     socket.emit('admin_online');
-    console.log('this run');
   }
 
   users.set(socket.user._id, {

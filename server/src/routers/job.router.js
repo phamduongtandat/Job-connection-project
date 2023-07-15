@@ -5,6 +5,7 @@ import validateReqBody from "../middleware/validateReqBody.js";
 import { createJobSchema, updateJobSchema } from "../validation/job.schema.js";
 import requireTypeAccount from "../middleware/requireTypeAccount.js";
 import parseReqQuery from './../middleware/parseReqQuery.js'
+import checkUserID from './../middleware/checkUserID.js';
 import {
   candidateSchema,
   statusOfApplication,
@@ -18,7 +19,7 @@ jobRouter.get("/", parseReqQuery(), jobController.getJobList);
 //get job with search filter
 jobRouter.get("/search", jobController.getJobWithFilter);
 //get job by id
-jobRouter.get("/:id", jobController.getJobById);
+jobRouter.get("/:id", checkUserID(), jobController.getJobById);
 //get candidateList of current job(only for bussiness acount)
 jobRouter.get(
   "/:id/candidate-list",

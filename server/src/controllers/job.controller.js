@@ -52,10 +52,33 @@ const getJobList = async (req, res) => {
 
 const getJobById = async (req, res) => {
   const job = await Job.findById(req.params.id).select(
-    "-status -postedBy -candidateList "
+    "-status -postedBy "
   );
+  let isApplied = job.candidateList?.some(i => i.user?.toString() == req.userID?._id?.toString())
+
+  const { _id,
+    title,
+    deadlineDate,
+    field,
+    salary,
+    workLocation,
+    position,
+    numberApplicants,
+    description, createdAt,
+    updatedAt } = job
+
+  const data = {
+    _id, title, deadlineDate, field, salary, workLocation, position, numberApplicants, description, createdAt,
+    updatedAt, isApplied
+  }
+
+
+
+
+
+
   if (job) {
-    res.json(job);
+    res.json(data);
   } else {
     res.status(404);
     throw new Error("Job Not Found");

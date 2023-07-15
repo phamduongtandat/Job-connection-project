@@ -13,8 +13,9 @@ function JobDetail({ jobDetail }) {
     return (
         <div className="m-7">
             <div className="mb-16">
-                <h1 className=" leading-relaxed tracking-wide text-gray-700 ml-2  text-5xl ">
+                <h1 className="flex items-center gap-2 leading-relaxed tracking-wide text-gray-700 ml-2  text-5xl ">
                     {jobDetail?.title}
+                    {jobDetail?.isApplied && <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded  ">Đã ứng tuyển</span>}
                 </h1>
                 <div className="flex gap-2 ml-7">
                     <GiModernCity color="orange" size={21} />

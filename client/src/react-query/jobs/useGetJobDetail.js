@@ -17,7 +17,7 @@ const useGetJobDetail = ({ id }) => {
         enabled: !!id,
         queryKey: ['jobDetail', id],
     });
-    console.log('res :', res)
+
     return {
         jobDetail: res.data,
         isLoading: res.isLoading,

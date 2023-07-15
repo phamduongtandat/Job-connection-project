@@ -17,6 +17,10 @@ const candidateSchema = new mongoose.Schema(
       enum: ["awaiting", "confirmed", "rejected"],
       required: true,
     },
+    note: {
+      type: String,
+      required: true,
+    },
     file: {
       type: String,
       required: true,

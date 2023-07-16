@@ -1,7 +1,7 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
-import { FaRegBookmark, FaMapMarkerAlt } from "react-icons/fa";
-import formatDate from "./../../utils/formatDate";
+import React from 'react';
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import formatDate from './../../utils/formatDate';
 function JobItem({ item, status }) {
   return (
     <div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 ">
@@ -23,7 +23,7 @@ function JobItem({ item, status }) {
                       {status}
                     </span>
                   ) : (
-                    ""
+                    ''
                   )}
                 </div>
 
@@ -39,7 +39,7 @@ function JobItem({ item, status }) {
                 </p>
 
                 <p className="text-sm font-medium leading-7 text-blue-400 ">
-                  Mức lương: {item.salary.toLocaleString("vi-VN")} VNĐ
+                  Mức lương: {item.salary.toLocaleString('vi-VN')} VNĐ
                 </p>
               </div>
 

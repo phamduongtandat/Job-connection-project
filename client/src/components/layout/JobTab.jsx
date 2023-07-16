@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import useGetAuthInfo from './../../hooks/useGetAuthInfo';
-import { useEffect } from 'react';
 
 function JobTab({ children, tab1, tab2, navi, button, setIsSwitch, isSwitch }) {
-  const { user } = useGetAuthInfo();
+  const { user, isBusinessAccount, isPersonalAccount } = useGetAuthInfo();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,10 +22,11 @@ function JobTab({ children, tab1, tab2, navi, button, setIsSwitch, isSwitch }) {
                 onClick={() => {
                   setIsSwitch(true);
                 }}
-                className={`block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${isSwitch
-                  ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
-                  : 'text-gray-400 hover:border-r-0'
-                  }`}
+                className={`block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
+                  isSwitch
+                    ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+                    : 'text-gray-400 hover:border-r-0'
+                }`}
               >
                 {tab1}
               </button>
@@ -34,9 +34,10 @@ function JobTab({ children, tab1, tab2, navi, button, setIsSwitch, isSwitch }) {
               <NavLink
                 to="job-list"
                 className={({ isActive }) =>
-                  `block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${isActive
-                    ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
-                    : 'text-gray-400 hover:border-r-0'
+                  `block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
+                    isActive
+                      ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+                      : 'text-gray-400 hover:border-r-0'
                   }`
                 }
               >
@@ -45,38 +46,71 @@ function JobTab({ children, tab1, tab2, navi, button, setIsSwitch, isSwitch }) {
             )}
           </li>
 
-          <li className=" w-[50%]  -mb-px">
-            {button ? (
-              <button
-                onClick={() => {
-                  setIsSwitch(false);
-                }}
-                className={`block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${isSwitch
-                  ? 'text-gray-400 hover:border-l-0'
-                  : 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+          {isPersonalAccount && (
+            <li className=" w-[50%]  -mb-px">
+              {button ? (
+                <button
+                  onClick={() => {
+                    setIsSwitch(false);
+                  }}
+                  className={`block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
+                    isSwitch
+                      ? 'text-gray-400 hover:border-l-0'
+                      : 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
                   }`}
-              >
-                {tab2}
-              </button>
-            ) : (
-              <NavLink
-                to={`applied-jobs/${user?._id}`}
-                className={({ isActive }) =>
-                  `block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${isActive
-                    ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
-                    : 'text-gray-400 hover:border-l-0'
-                  }`
-                }
-              >
-                {tab2}
-              </NavLink>
-            )}
-          </li>
+                >
+                  {tab2}
+                </button>
+              ) : (
+                <NavLink
+                  to={`applied-jobs/${user?._id}`}
+                  className={({ isActive }) =>
+                    `block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
+                      isActive
+                        ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+                        : 'text-gray-400 hover:border-l-0'
+                    }`
+                  }
+                >
+                  {tab2}
+                </NavLink>
+              )}
+            </li>
+          )}
+          {isBusinessAccount && (
+            <li className=" w-[50%]  -mb-px">
+              {button ? (
+                <button
+                  onClick={() => {
+                    setIsSwitch(false);
+                  }}
+                  className={`block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
+                    isSwitch
+                      ? 'text-gray-400 hover:border-l-0'
+                      : 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+                  }`}
+                >
+                  {tab2}
+                </button>
+              ) : (
+                <NavLink
+                  to={`posted-jobs`}
+                  className={({ isActive }) =>
+                    `block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
+                      isActive
+                        ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+                        : 'text-gray-400 hover:border-l-0'
+                    }`
+                  }
+                >
+                  Công việc đã đăng
+                </NavLink>
+              )}
+            </li>
+          )}
         </ul>
       </div>
-      <div className="border  border-yellow-300">
-        {children}
-      </div>
+      <div className="border  border-yellow-300">{children}</div>
     </div>
   );
 }

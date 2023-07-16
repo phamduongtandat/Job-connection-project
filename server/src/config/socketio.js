@@ -49,10 +49,7 @@ io.use(async (socket, next) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('new connection');
   const numberOfOnlineAdmins = countRoomConnections(io, ADMIN_ROOM);
-
-  console.log(numberOfOnlineAdmins);
 
   // emit to all clients except sender
   if (numberOfOnlineAdmins === 1) {

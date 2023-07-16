@@ -97,15 +97,7 @@ const createNewAdmin = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-  const {
-    fields,
-    page,
-    pageSize,
-    skip = 0,
-    limit = 10,
-    sort,
-    filter = {},
-  } = req.query;
+  const { fields, page, skip = 0, limit = 10, sort, filter = {} } = req.query;
   const matchingResults = await User.countDocuments(filter);
   const totalPages = Math.ceil(matchingResults / limit);
 

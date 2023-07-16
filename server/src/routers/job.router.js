@@ -1,62 +1,77 @@
 import express from 'express';
-import requireLogin from '../middleware/requireLogin.js';
 import jobController from '../controllers/job.controller.js';
-import validateReqBody from "../middleware/validateReqBody.js";
-import { createJobSchema, updateJobSchema } from "../validation/job.schema.js";
-import requireTypeAccount from "../middleware/requireTypeAccount.js";
-import parseReqQuery from './../middleware/parseReqQuery.js'
+import requireLogin from '../middleware/requireLogin.js';
+import requireTypeAccount from '../middleware/requireTypeAccount.js';
+import validateReqBody from '../middleware/validateReqBody.js';
 import {
   candidateSchema,
   statusOfApplication,
-} from "../validation/candidate.schema.js";
-
+} from '../validation/candidate.schema.js';
+import { createJobSchema, updateJobSchema } from '../validation/job.schema.js';
+import checkUserID from './../middleware/checkUserID.js';
+import parseReqQuery from './../middleware/parseReqQuery.js';
 
 const jobRouter = express.Router();
-jobRouter.get('/applied-by/:userID', requireLogin(), parseReqQuery(), jobController.getAppliedJobsByUserId)
+jobRouter.get(
+  '/applied-by/:userID',
+  requireLogin(),
+  parseReqQuery(),
+  jobController.getAppliedJobsByUserId,
+);
+
+// get posted jobs by current user
+jobRouter.get(
+  '/posted-jobs',
+  requireLogin(),
+  parseReqQuery(),
+  jobController.getPostedJobsByCurrentUser,
+);
+
 //get all job
-jobRouter.get("/", parseReqQuery(), jobController.getJobList);
+jobRouter.get('/', parseReqQuery(), jobController.getJobList);
 //get job with search filter
-jobRouter.get("/search", jobController.getJobWithFilter);
+jobRouter.get('/search', jobController.getJobWithFilter);
 //get job by id
-jobRouter.get("/:id", jobController.getJobById);
+jobRouter.get('/:id', checkUserID(), jobController.getJobById);
 //get candidateList of current job(only for bussiness acount)
 jobRouter.get(
-  "/:id/candidate-list",
+  '/:id/candidate-list',
   requireLogin(),
-  requireTypeAccount("business"),
-  jobController.getCandidateList
+  requireTypeAccount('business'),
+  jobController.getCandidateList,
 );
 //create new job
 jobRouter.post(
-  "/",
+  '/',
   requireLogin(),
-  requireTypeAccount("business"),
+  requireTypeAccount('business'),
   validateReqBody(createJobSchema),
-  jobController.createNewJob
+  jobController.createNewJob,
 );
 //apply job for personal
 jobRouter.post(
-  "/:id/applied",
+  '/:id/applied',
   requireLogin(),
-  requireTypeAccount("personal"),
+  requireTypeAccount('personal'),
   validateReqBody(candidateSchema),
-  jobController.applyJobById
+  jobController.applyJobById,
 );
+
 //update job by id
 jobRouter.put(
-  "/:id",
+  '/:id',
   requireLogin(),
-  requireTypeAccount("business"),
+  requireTypeAccount('business'),
   validateReqBody(updateJobSchema),
-  jobController.updateCurrentJob
+  jobController.updateCurrentJob,
 );
 //Aprrove or Refuse Application
 jobRouter.put(
-  "/:id/candidate-list/:index",
+  '/:id/candidate-list/:index',
   requireLogin(),
-  requireTypeAccount("business"),
+  requireTypeAccount('business'),
   validateReqBody(statusOfApplication),
-  jobController.handleApplication
+  jobController.handleApplication,
 );
 
 export default jobRouter;

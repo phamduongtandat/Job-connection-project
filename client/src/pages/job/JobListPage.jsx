@@ -1,10 +1,12 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 
-import JobTab from "./../../components/layout/JobTab";
+import JobTab from './../../components/layout/JobTab';
 
-import AppliedJobs from "./../profile/appliedJobs/AppliedJobs";
-import AllJobs from "./AllJobs";
+import AppliedJobs from './../profile/appliedJobs/AppliedJobs';
+import AllJobs from './AllJobs';
+import PostedJobs from './PostedJobs';
+
 function JobListPage() {
   return (
     <div className="">
@@ -16,6 +18,7 @@ function JobListPage() {
         <Routes>
           <Route path="job-list" element={<AllJobs />} />
           <Route path="applied-jobs/:id" element={<AppliedJobs />} />
+          <Route path="posted-jobs" element={<PostedJobs />} />
         </Routes>
       </JobTab>
     </div>

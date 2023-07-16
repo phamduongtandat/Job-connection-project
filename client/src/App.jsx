@@ -12,6 +12,8 @@ import useListenSocketEvents from './hooks/useListenSocketEvents';
 import JobDetailPage from './pages/job/JobDetailPage';
 import JobListPage from './pages/job/JobListPage';
 
+import CreateProject from './pages/employer/CreateProject';
+
 export default function App() {
   useConnectSocket();
   useListenSocketEvents();
@@ -26,6 +28,7 @@ export default function App() {
           <Route path="/admin/*" element={<AdminPage />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<LinkNotFound />} />
+          <Route path="/project/*" element={<CreateProject />} />
         </Routes>
       </Layout>
       <UIContainer />

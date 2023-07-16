@@ -6,6 +6,8 @@ import LinkNotFound from '../../components/linkNotFound/LinkNotFound';
 import FieldsList from './fields/FieldsList';
 import JobsList from './jobs/JobsList';
 import UsersList from './users/UsersList';
+import AppliedJobs from '../profile/appliedJobs/AppliedJobs';
+import JobDetailPage from '../job/JobDetailPage';
 
 const ProfilePage = () => {
   return (
@@ -17,6 +19,8 @@ const ProfilePage = () => {
               <Route path="users" element={<UsersList />} />
               <Route path="fields" element={<FieldsList />} />
               <Route path="jobs" element={<JobsList />} />
+              <Route path="/jobs/:id" element={<JobDetailPage />} />
+
               <Route
                 path="messages/direct/*"
                 element={<DirectChatContainer />}

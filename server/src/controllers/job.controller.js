@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { Job } from '../models/job.model.js';
 import jobService from '../services/job.service.js';
 const getAppliedJobsByUserId = async (req, res) => {
@@ -41,9 +42,13 @@ const getJobList = async (req, res) => {
 
 const getJobById = async (req, res) => {
   const job = await Job.findById(req.params.id).select('-postedBy ');
+
+
   let isApplied = job.candidateList?.some(
     (i) => i.user?.toString() == req.userID?._id?.toString(),
   );
+
+  const ApplicationOfThisUser = job.candidateList?.find(i => i.user?.toString() === req.userID?._id?.toString())
 
   const {
     _id,
@@ -71,6 +76,7 @@ const getJobById = async (req, res) => {
     description,
     createdAt,
     updatedAt,
+    ApplicationOfThisUser,
     isApplied,
   };
 
@@ -81,6 +87,8 @@ const getJobById = async (req, res) => {
     throw new Error('Job Not Found');
   }
 };
+
+
 const createNewJob = async (req, res) => {
   const job = await Job.create({
     ...req.body,
@@ -114,6 +122,7 @@ const applyJobById = async (req, res) => {
   const job = await Job.findById(req.params.id);
   //Truong hop da apply job!!!
   if (job) {
+
     job.candidateList.push({
       ...req.body,
       status: 'awaiting',
@@ -226,6 +235,28 @@ const getPostedJobsByCurrentUser = async (req, res) => {
     data: jobs,
   });
 };
+const removeCVFromAppliedJob = async (req, res) => {
+
+  const idUser = req.user?._id
+  const { id } = req.params
+  console.log('req.user?._id :', req.user?._id)
+  const AfterRemoving = await Job.findByIdAndUpdate(
+    id,
+    { "$pull": { 'candidateList': { 'user': idUser } } },
+    { new: true }
+  );
+  res.status(201).json({
+    status: 'success',
+    AfterRemoving,
+  });
+}
+
+
+
+
+
+
+
 
 const jobController = {
   getJobList,
@@ -238,5 +269,6 @@ const jobController = {
   getJobWithFilter,
   getAppliedJobsByUserId,
   getPostedJobsByCurrentUser,
+  removeCVFromAppliedJob,
 };
 export default jobController;

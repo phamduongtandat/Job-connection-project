@@ -74,4 +74,15 @@ jobRouter.put(
   jobController.handleApplication,
 );
 
+
+jobRouter.delete(
+  '/:id/applied',
+  requireLogin(),
+  requireTypeAccount('personal'),
+  // validateReqBody(candidateSchema),
+  jobController.removeCVFromAppliedJob,
+);
+
+
+
 export default jobRouter;

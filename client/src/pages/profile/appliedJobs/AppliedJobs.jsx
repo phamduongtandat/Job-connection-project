@@ -25,7 +25,7 @@ const AppliedJobs = () => {
       {appliedJobs?.map((item) => (
         <JobItem
           key={item._id}
-          status={item.candidateList.filter((x) => x.user === id)[0].status}
+          status={item.candidateList.filter((x) => x.user === id)[0]?.status}
           item={item}
         />
       ))}

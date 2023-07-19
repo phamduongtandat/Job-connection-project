@@ -10,7 +10,7 @@ const candidateSchema = new mongoose.Schema(
     name: {
       type: mongoose.Schema.Types.String,
       ref: "user",
-      required: true,
+      //required: true,
     },
     status: {
       type: String,
@@ -24,6 +24,10 @@ const candidateSchema = new mongoose.Schema(
     file: {
       type: String,
       required: true,
+    },
+    fileName: {
+      type: String,
+      //required: true
     },
   },
   {

@@ -20,7 +20,7 @@ const getFieldById = async (id) => {
     }
 }
 
-//       _____ GET ALL _____
+//       _____ GET FIELDS _____
 
 const getFields = async (page, pageSize, skip = 0, limit = 10, filter = {}) => {
     const matchingResults = await Field.countDocuments(filter);
@@ -44,6 +44,19 @@ const getFields = async (page, pageSize, skip = 0, limit = 10, filter = {}) => {
     }
 }
 
+
+//       _____ GET ALL _____ 
+
+const getAllFields = async () => {
+
+    const result = await Field.find().select('_id name')
+
+    return {
+        code: 200,
+        status: 'success',
+        data: result,
+    }
+}
 
 //       _____ CREATE A NEW _____
 
@@ -86,5 +99,5 @@ const updateField = async (_id, reqBody, email, username) => {
     }
 }
 
-const fieldService = { getFields, createField, updateField, getFieldById }
+const fieldService = { getFields, getAllFields, createField, updateField, getFieldById }
 export default fieldService

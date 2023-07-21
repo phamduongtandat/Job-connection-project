@@ -1,9 +1,15 @@
+
 import Field from './Field';
+import Filter from './Filter';
+
 
 const Fields = () => {
   return (
-    <div className="px-4 xl:px-0 overflow-hidden">
-      <div className="flex gap-x-5 overflow-auto py-4 small-scrollbar w-full">
+    <div className=" relative  xl:px-0  ">
+      <Filter />
+
+      {/* <div className="flex  gap-x-5  py-1 small-scrollbar w-full">
+        
         <Field>Lập trình website</Field>
         <Field>Marketing</Field>
         <Field>Thiết kế phần mềm</Field>
@@ -14,7 +20,7 @@ const Fields = () => {
         <Field>Shopify</Field>
         <Field>Chạy quảng cáo</Field>
         <Field>Quản lý mạng xã hội</Field>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 
 
+
 import FeatureSection from './FeatureSection';
 import FieldsSection from './FieldsSection';
 import HeroSection from './HeroSection';
@@ -14,6 +15,7 @@ const Home = () => {
       <FieldsSection />
       <FeatureSection />
       <TestimonialSection />
+
 
 
     </div>

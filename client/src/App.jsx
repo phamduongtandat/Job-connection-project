@@ -12,7 +12,7 @@ import useListenSocketEvents from './hooks/useListenSocketEvents';
 import JobDetailPage from './pages/job/JobDetailPage';
 import JobListPage from './pages/job/JobListPage';
 
-import CreateProject from './pages/employer/CreateProject';
+import CreateJob from './pages/job/CreateJob';
 
 export default function App() {
   useConnectSocket();

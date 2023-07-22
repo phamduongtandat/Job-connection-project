@@ -28,7 +28,7 @@ export default function App() {
           <Route path="/admin/*" element={<AdminPage />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<LinkNotFound />} />
-          <Route path="/project/*" element={<CreateProject />} />
+          <Route path="/createjob/*" element={<CreateJob />} />
         </Routes>
       </Layout>
       <UIContainer />

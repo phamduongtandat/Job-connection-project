@@ -14,6 +14,7 @@ import JobListPage from './pages/job/JobListPage';
 
 import CreateProject from './pages/employer/CreateProject';
 import CVManagement from './pages/profile/myCV/CVManagement';
+import CreateJob from './pages/job/CreateJob';
 
 export default function App() {
   useConnectSocket();
@@ -30,7 +31,7 @@ export default function App() {
           <Route path="/admin/*" element={<AdminPage />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<LinkNotFound />} />
-          <Route path="/project/*" element={<CreateProject />} />
+          <Route path="/createjob/*" element={<CreateJob />} />
         </Routes>
       </Layout>
       <UIContainer />

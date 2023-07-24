@@ -13,6 +13,7 @@ import JobDetailPage from './pages/job/JobDetailPage';
 import JobListPage from './pages/job/JobListPage';
 
 import CreateProject from './pages/employer/CreateProject';
+import CVManagement from './pages/profile/myCV/CVManagement';
 
 export default function App() {
   useConnectSocket();
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/profile/*" element={<ProfilePage />} />
           <Route path="/jobs/all-jobs/*" element={<JobListPage />} />
           <Route path="/jobs/:id" element={<JobDetailPage />} />
+          <Route path="/CV-management/*" element={<CVManagement />} />
           <Route path="/admin/*" element={<AdminPage />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<LinkNotFound />} />

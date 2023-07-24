@@ -30,7 +30,7 @@ const JobsTable = () => {
   const { jobs, pagination, isLoading, isError } = useGetJobs({
     query,
   });
-  console.log(pagination);
+  //console.log(pagination);
   const { openCreateOrUpdateUserModal } = useModal();
 
   const openUpdateUserModal = (id) => {

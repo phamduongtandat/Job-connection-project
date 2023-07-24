@@ -1,5 +1,7 @@
 const parseReqQuery = () => (req, res, next) => {
   let {
+    word,
+    field,
     fields,
     page = 1,
     pageSize = 10,
@@ -8,6 +10,8 @@ const parseReqQuery = () => (req, res, next) => {
     keyword,
     ...filter
   } = req.query;
+
+
 
   let parsedFilter = handleQueryList(filter);
   let filterStr = JSON.stringify(parsedFilter);
@@ -18,11 +22,13 @@ const parseReqQuery = () => (req, res, next) => {
   const { skip, limit } = calculateSkipAndLimit(page, pageSize);
 
   let query = {
+    word,
+    field,
     fields:
       typeof fields === 'string' ? fields.split(',').join(' ') : undefined,
     skip,
     limit,
-    sort: typeof sort === 'string' ? sort : '',
+    sort: typeof sort === 'string' || Array.isArray(sort) ? sort : '',
     page,
     pageSize,
     filter: {

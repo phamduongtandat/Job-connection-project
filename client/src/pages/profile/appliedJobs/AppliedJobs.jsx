@@ -4,6 +4,7 @@ import useGetAppliedJobs from "./../../../react-query/jobs/useGetAppliedJobs";
 
 import JobItem from "../../../components/job/JobItem";
 import Pagination from "../../../components/table/Pagination";
+import NoData from "../../../components/job/NoData";
 
 const AppliedJobs = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,16 +22,22 @@ const AppliedJobs = () => {
   const { id } = useParams();
   const { appliedJobs, pagination } = useGetAppliedJobs({ id, query });
   return (
-    <div className="p-10">
-      {appliedJobs?.map((item) => (
-        <JobItem
-          key={item._id}
-          status={item.candidateList.filter((x) => x.user === id)[0]?.status}
-          item={item}
-        />
-      ))}
-      <Pagination pagination={pagination} />
+    <div>
+      {appliedJobs?.length === 0 ? <NoData content='BẠN CHƯA ỨNG TUYỂN CÔNG VIỆC NÀO' />
+        : <div className="p-10">
+          {appliedJobs?.map((item) => (
+            <JobItem
+              key={item._id}
+              status={item.candidateList.filter((x) => x.user === id)[0]?.status}
+              item={item}
+            />
+          ))}
+          <Pagination pagination={pagination} />
+        </div>
+      }
+
     </div>
+
   );
 };
 

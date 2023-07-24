@@ -3,14 +3,22 @@ import Button from '../button/Button';
 import FieldFilter from './FieldFilter';
 import OrderFilter from './OrderFilter';
 import SortFilter from './SortFilter';
-
+import { useSearchParams, useNavigate } from 'react-router-dom';
 function Filter() {
-
+    const [searchParams, setSearchParams] = useSearchParams();
+    const navi = useNavigate()
     const handleAdvancedSearch = () => {
-        let fieldKey = JSON.parse(localStorage.getItem('fFilter')) || ''
-        let sortBy = JSON.parse(localStorage.getItem('sFilter')) || ''
-        let order = JSON.parse(localStorage.getItem('oFilter')) || ''
-        console.log(fieldKey, sortBy, order)
+        // let fieldKey = JSON.parse(localStorage.getItem('fFilter')) || ''
+        // let sortBy = JSON.parse(localStorage.getItem('sFilter')) || 'deadlineDate'
+        // let order = JSON.parse(localStorage.getItem('oFilter')) || 'desc'
+        localStorage.setItem('isActiveF', JSON.stringify(true))
+        // searchParams.set('field', fieldKey);
+        // searchParams.set('sort', sortBy)
+        // searchParams.append('sort', order);
+        // setSearchParams(searchParams);
+        // navi(`/jobs/all-jobs/job-list?${searchParams}`)
+        navi(`/jobs/all-jobs/job-list`)
+        //console.log(fieldKey, sortBy, order)
     }
 
 

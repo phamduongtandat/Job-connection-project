@@ -38,9 +38,9 @@ function AvatarDropDown() {
           </AvatarDropDownItem>
           <AvatarDropDownItem
             isShowing={isPersonalAccount}
-            to="/profile/applied-jobs"
+            to="/CV-management"
           >
-            Công việc đã ứng tuyển
+            Quản lý CV của bạn
           </AvatarDropDownItem>
           <AvatarDropDownItem to="/profile/update-password">
             Đổi mật khẩu

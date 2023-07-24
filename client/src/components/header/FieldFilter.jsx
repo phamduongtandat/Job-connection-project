@@ -13,6 +13,7 @@ function FieldFilter() {
             <div className=" my-2 flex rounded border border-gray-200 bg-white p-1">
 
                 <input
+                    maxLength={30}
                     value={selectedF}
                     onChange={(e) => {
                         setIsShow(true)
@@ -22,9 +23,9 @@ function FieldFilter() {
                     placeholder='Chọn hoặc gõ lĩnh vực'
                 />
                 {/* Dấu mũi tên */}
-                <div className="bg-teal-200 flex w-8 items-center rounded-md  py-1 pl-2 pr-1 "
+                <div className={`bg-teal-200 flex w-8 items-center rounded-md hover:rotate-180  py-1 pl-2 pr-1 ${isShow ? 'rotate-180' : ''}`}
                     onClick={() => {
-                        localStorage.setItem('fFilter', JSON.stringify(''))
+                        localStorage.removeItem('fFilter')
                         setselectedF('')
                         setIsShow(!isShow)
                     }}

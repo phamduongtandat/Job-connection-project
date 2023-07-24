@@ -4,9 +4,9 @@ import requireLogin from '../middleware/requireLogin.js';
 import requireRole from '../middleware/requireRole.js';
 const searchRouter = express.Router();
 
+searchRouter.get('/jobs', searchController.searchJobs)
 searchRouter.use(requireLogin());
 
 searchRouter.get('/fields', requireRole('admin'), searchController.searchFields)
-searchRouter.get('/jobs', searchController.searchJobs)
 
 export default searchRouter;

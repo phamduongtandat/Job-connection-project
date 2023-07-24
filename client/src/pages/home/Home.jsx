@@ -1,6 +1,7 @@
 
 
 
+import CVManagement from '../profile/myCV/CVManagement';
 import FeatureSection from './FeatureSection';
 import FieldsSection from './FieldsSection';
 import HeroSection from './HeroSection';
@@ -15,9 +16,7 @@ const Home = () => {
       <FieldsSection />
       <FeatureSection />
       <TestimonialSection />
-
-
-
+      <CVManagement />
     </div>
   );
 };

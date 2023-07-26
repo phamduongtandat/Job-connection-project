@@ -2,8 +2,19 @@ import React, { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import useGetAuthInfo from './../../hooks/useGetAuthInfo';
 
-function JobTab({ children, tab1, tab2, navi, button, setIsSwitch, isSwitch }) {
-  const { user, isBusinessAccount, isPersonalAccount } = useGetAuthInfo();
+function JobTab({
+  children,
+  tab1,
+  tab2,
+  tab3,
+  tabAdmin,
+  navi,
+  button,
+  setIsSwitch,
+  isSwitch,
+}) {
+  const { user, isBusinessAccount, isPersonalAccount, isAdminAccount } =
+    useGetAuthInfo();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -85,7 +96,38 @@ function JobTab({ children, tab1, tab2, navi, button, setIsSwitch, isSwitch }) {
                     : 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
                     }`}
                 >
-                  {tab2}
+                  {tab3}
+                </button>
+              ) : (
+                <NavLink
+                  to={`posted-jobs`}
+                  className={({ isActive }) =>
+                    `block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
+                      isActive
+                        ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+                        : 'text-gray-400 hover:border-l-0'
+                    }`
+                  }
+                >
+                  {tab3}
+                </NavLink>
+              )}
+            </li>
+          )}
+          {isAdminAccount && tabAdmin && (
+            <li className=" w-[50%]  -mb-px">
+              {button ? (
+                <button
+                  onClick={() => {
+                    setIsSwitch(false);
+                  }}
+                  className={`block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
+                    isSwitch
+                      ? 'text-gray-400 hover:border-l-0'
+                      : 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+                  }`}
+                >
+                  {tabAdmin}
                 </button>
               ) : (
                 <NavLink
@@ -97,7 +139,7 @@ function JobTab({ children, tab1, tab2, navi, button, setIsSwitch, isSwitch }) {
                     }`
                   }
                 >
-                  Công việc đã đăng
+                  {tabAdmin}
                 </NavLink>
               )}
             </li>

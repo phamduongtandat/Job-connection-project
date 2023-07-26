@@ -13,6 +13,7 @@ function JobListPage() {
       <JobTab
         tab1="Danh sách việc làm"
         tab2="Công việc đã ứng tuyển"
+        tab3="Công việc đã đăng"
         navi="job-list"
       >
         <Routes>

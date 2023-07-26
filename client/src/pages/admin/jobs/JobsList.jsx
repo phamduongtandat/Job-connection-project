@@ -1,15 +1,12 @@
 import { Link, useSearchParams } from 'react-router-dom';
-import Avatar from '../../../components/avatar/Avatar';
 import KeywordHighlighter from '../../../components/keywordHighlighter/KeywordHighlighter';
 import EditButton from '../../../components/table/EditButton';
 import Pagination from '../../../components/table/Pagination';
 import MultipleSelectFilter from '../../../components/table/multipleSelectFilter/MultipleSelectFilter';
 import SearchBar from '../../../components/table/searchBar/SearchBar';
-import useModal from '../../../hooks/useModal';
-import useGetUsers from '../../../react-query/users/useGetUsers';
-import getAccountType from '../../../utils/getAccountType';
-import ToggleUserStatusBtn from '../users/ToggleUserStatusBtn';
+import useConfirmModal from '../../../hooks/useConfirmModal';
 import useGetJobs from '../../../react-query/admin/useGetJobs';
+import useUpdateJob from '../../../react-query/admin/useRemoveJob';
 import formatDate from '../../../utils/formatDate';
 
 const JobsTable = () => {
@@ -18,6 +15,7 @@ const JobsTable = () => {
   const page = searchParams.getAll('page');
   const keyword = searchParams.get('keyword');
   const account_type = searchParams.get('account_type');
+  const { isConfirmed } = useConfirmModal();
 
   const query = {
     page,
@@ -30,16 +28,24 @@ const JobsTable = () => {
   const { jobs, pagination, isLoading, isError } = useGetJobs({
     query,
   });
-  console.log(pagination);
-  const { openCreateOrUpdateUserModal } = useModal();
+  const id = searchParams.get('id');
 
-  const openUpdateUserModal = (id) => {
+  const { removeJob } = useUpdateJob({ id });
+  const removeStatusJob = async (id) => {
     searchParams.set('id', id);
     setSearchParams(searchParams);
-    openCreateOrUpdateUserModal();
+
+    const confirm = await isConfirmed({
+      confirmButtonText: 'Hoàn tất',
+      cancelButtonText: 'Thôi',
+      title: 'Xóa tin tuyển dụng này',
+      subTitle: `Hãy xác nhận lại việc thay đổi trạng thái của tin tuyển dụng `,
+    });
+    if (confirm && id) {
+      removeJob();
+    }
   };
 
-  const openCreateUserModal = () => openCreateOrUpdateUserModal();
   return (
     <div className="px-16 py-6">
       <div className="bg-white">
@@ -52,7 +58,7 @@ const JobsTable = () => {
               { value: 'personal', name: 'Người lao động' },
             ]}
           />
-          <SearchBar placeholder="Tìm người dùng theo tên hoặc email" />
+          <SearchBar placeholder="Tìm tin tuyển dụng theo title" />
         </div>
 
         <table className="shared-table border">
@@ -86,7 +92,7 @@ const JobsTable = () => {
 
                 <td>
                   <div className="flex items-center justify-center gap-x-6">
-                    x{' '}
+                    <EditButton onClick={() => removeStatusJob(job._id)} />
                   </div>
                 </td>
               </tr>

@@ -4,16 +4,38 @@ import parseReqQuery from '../middleware/parseReqQuery.js';
 import requireLogin from '../middleware/requireLogin.js';
 import requireRole from '../middleware/requireRole.js';
 import validateReqBody from '../middleware/validateReqBody.js';
+import cvSchema from './../validation/cv.schema.js';
 import {
   createNewAdminSchema,
   updateUserByIdSchema,
   updateUserStatusSchema,
 } from '../validation/user.schema.js';
+import requireTypeAccount from '../middleware/requireTypeAccount.js';
 
 const userRouter = express.Router();
 
 // admin only router
 userRouter.use(requireLogin());
+
+
+//       _____ CVs _____ 
+
+userRouter.post(
+  '/CVs/:id',
+  requireTypeAccount('personal'),
+  validateReqBody(cvSchema),
+  userController.createCVsManagement,
+);
+
+userRouter.put(
+  '/CVs/:id',
+  requireTypeAccount('personal'),
+  userController.deleteCV,
+);
+
+userRouter.get('/CVs/:id', userController.getCVs);
+
+
 userRouter.use(requireRole('admin'));
 
 // routes
@@ -34,5 +56,7 @@ userRouter.put(
   validateReqBody(updateUserStatusSchema),
   userController.updateUserStatus,
 );
+
+
 
 export default userRouter;

@@ -1,11 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import CVItem from './../../../components/myCV/CVItem';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Button from '../../../components/button/Button';
+import useGetCVs from '../../../react-query/cv/useGetCVs';
+import useGetAuthInfo from '../../../hooks/useGetAuthInfo';
+import useConfirmModal from '../../../hooks/useConfirmModal';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import useAddCV from '../../../react-query/cv/useAddCV';
+import { storage } from '../../../config/firebase';
+
 
 function CVManagement() {
+
+    // useEffect((() => {
+
+    //     setID(user)
+    // }, []))
+    //const [id, setID] = useState('')
     const [isShow, setIsShow] = useState(false)
     const addCVFormSchema = yup.object().shape({
         files: yup.mixed()
@@ -24,9 +37,39 @@ function CVManagement() {
         resolver: yupResolver(addCVFormSchema)
     })
 
-    const onSubmit = (data) => {
-        console.log('data :', data)
+    const { user } = useGetAuthInfo();
+    const { _id } = user
+    const { CVs } = useGetCVs(_id)
+    const { isConfirmed } = useConfirmModal();
+    const { addCV } = useAddCV(_id)
+
+
+    const uploadCV = (data) => {
+        const cvRef = ref(storage, `CV/${data?.files[0]?.name + new Date().getTime()}`)
+        uploadBytes(cvRef, data?.files[0]).then(snap => {
+            getDownloadURL(snap.ref).then(url => {
+                const { name } = snap.ref
+                addCV({ file: url, name: name })
+            })
+            reset({ files: '' })
+            setIsShow(false)
+        })
     }
+
+    const onSubmit = async (data) => {
+        const confirm = await isConfirmed({
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Thôi',
+            title: 'Xác nhận',
+            subTitle: `Bạn có đồng ý thêm CV này?`,
+        });
+
+        if (confirm) {
+            uploadCV(data)
+        }
+    }
+
+
     return (
 
         <div className="flex flex-col items-center px-0  sm:px-16  bg-[#E5E5E5] min-h-screen">
@@ -95,7 +138,7 @@ function CVManagement() {
 
                             <button
                                 type="submit"
-                                className="my-5 w-full flex justify-center items-center border gap-3 bg-blue-600 text-gray-100 p-3  rounded-2xl tracking-wide font-semibold focus:outline-none focus:shadow-outline  hover:border-green-600 hover:text-green-600 hover:bg-white shadow-lg cursor-pointer transition ease-in duration-300"
+                                className="my-5 w-full flex justify-center items-center border gap-3 bg-blue-400 text-gray-100 p-3  rounded-2xl tracking-wide font-semibold focus:outline-none focus:shadow-outline  hover:border-green-600 hover:text-green-600 hover:bg-white shadow-lg cursor-pointer transition ease-in duration-300"
                             >
 
                                 <span className="text-xl" >Gửi CV lên</span>
@@ -120,7 +163,7 @@ function CVManagement() {
 
             </div>
 
-            <CVItem />
+            <CVItem CVs={CVs?.CVs} />
         </div>
 
 

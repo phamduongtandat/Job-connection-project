@@ -12,7 +12,7 @@ import useListenSocketEvents from './hooks/useListenSocketEvents';
 import JobDetailPage from './pages/job/JobDetailPage';
 import JobListPage from './pages/job/JobListPage';
 
-import CreateProject from './pages/employer/CreateProject';
+
 import CVManagement from './pages/profile/myCV/CVManagement';
 import CreateJob from './pages/job/CreateJob';
 

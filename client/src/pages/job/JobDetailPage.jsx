@@ -4,6 +4,7 @@ import JobDetail from "../../components/job/JobDetail";
 import useGetJobDetail from "./../../react-query/jobs/useGetJobDetail";
 import { useParams } from "react-router-dom";
 import ApplyForm from './../../components/job/ApplyForm';
+import ApplicationForm from "../../components/job/ApplicationForm";
 
 function JobDetailPage() {
   const [isSwitch, setIsSwitch] = useState(true);
@@ -22,7 +23,8 @@ function JobDetailPage() {
         {isSwitch ? (
           <JobDetail jobDetail={jobDetail} />
         ) : (
-          <ApplyForm jobDetail={jobDetail} />
+          // <ApplyForm jobDetail={jobDetail} />
+          <ApplicationForm jobDetail={jobDetail} />
         )}
       </JobTab>
     </div>

@@ -10,13 +10,25 @@ import useConfirmModal from './../../hooks/useConfirmModal';
 import { IoMdCalendar } from 'react-icons/io';
 import formatDate from '../../utils/formatDate';
 import useRemoveCV from './../../react-query/jobs/useRemoveCV';
+import useGetCVs from '../../react-query/cv/useGetCVs';
 
 
 function CvInfoOfThisUser({ jobID, info }) {
+    const { CVs } = useGetCVs()
     const { removeCV } = useRemoveCV(jobID)
+    let isExist = CVs?.CVs.some(i => i.name === info.fileName)
+
     const deleteFile = () => {
+
+        if (isExist) {
+            removeCV()
+            return
+        }
+
         const desertRef = ref(storage, `CV/${info.fileName}`);
         deleteObject(desertRef).then(() => {
+            removeCV()
+        }).catch(() => {
             removeCV()
         })
     }

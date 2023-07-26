@@ -1,4 +1,6 @@
+import mongoose from 'mongoose'
 import { sendNewUserCredentials } from '../emails/index.js';
+import { CV } from '../models/cv.model.js';
 import { User } from '../models/user.model.js';
 import randomString from '../utils/randomString.js';
 import { hashPassword } from './auth.controller.js';
@@ -120,12 +122,82 @@ const getUsers = async (req, res) => {
   });
 };
 
+
+//       _____ CVs _____ 
+const createCVsManagement = async (req, res) => {
+  const { name, file } = req.body;
+  const id = req.params.id;
+
+  const user = await User.findById(id);
+  if (!user)
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Can not find user with provided id',
+    });
+
+  const CVstore = await CV.find({ user: new mongoose.Types.ObjectId(id) })
+
+
+
+  if (CVstore?.length === 0) {
+
+    const result = await CV.create({
+      user: id,
+      CVs: [{ name, file }]
+    });
+    return res.status(200).json({
+      status: 'success',
+
+      data: result,
+    });
+  }
+
+  const result = await CV.updateOne({ user: new mongoose.Types.ObjectId(id) }, { $push: { CVs: { name, file } } }, { new: true })
+
+  return res.status(200).json({
+    status: 'success',
+    data: result,
+  });
+}
+
+const deleteCV = async (req, res) => {
+  const { name } = req.body;
+  const id = req.params.id;
+  const result = await CV.updateOne({ user: new mongoose.Types.ObjectId(id) }, { $pull: { CVs: { name } } }, { new: true })
+
+  return res.status(200).json({
+    status: 'success',
+    data: result,
+  });
+}
+
+const getCVs = async (req, res) => {
+
+  let id = req.params.id
+
+  if (id === 'undefined') {
+    id = req.user._id.toString()
+  }
+
+  const result = await CV.findOne({ user: new mongoose.Types.ObjectId(id) }).select('CVs')
+
+  return res.status(200).json({
+    status: 'success',
+    data: result,
+  });
+
+
+}
+
 const userController = {
   getUsers,
   createNewAdmin,
   getUserById,
   updateUser,
   updateUserStatus,
+  createCVsManagement,
+  deleteCV,
+  getCVs
 };
 
 export default userController;

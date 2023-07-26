@@ -14,7 +14,7 @@ function FieldFilter() {
 
                 <input
                     maxLength={30}
-                    value={selectedF}
+                    value={JSON.parse(localStorage.getItem('fFilter')) || selectedF}
                     onChange={(e) => {
                         setIsShow(true)
                         setselectedF(e.target.value)

@@ -9,7 +9,7 @@ const getFieldById = async (req, res) => {
     res.status(code).json(data);
 };
 
-//       _____ GET ALL _____
+//       _____ GET FIELDS _____
 
 const getFields = async (req, res) => {
     const {
@@ -21,6 +21,15 @@ const getFields = async (req, res) => {
     } = req.query;
 
     const { code, ...data } = await fieldService.getFields(page, pageSize, skip, limit, filter)
+
+    res.status(code).json(data);
+};
+
+//       _____ GET ALL _____ 
+
+const getAllFields = async (req, res) => {
+
+    const { code, ...data } = await fieldService.getAllFields()
 
     res.status(code).json(data);
 };
@@ -51,5 +60,5 @@ const updateField = async (req, res) => {
 };
 
 
-const fieldController = { getFields, createField, updateField, getFieldById }
+const fieldController = { getFields, getAllFields, createField, updateField, getFieldById }
 export default fieldController

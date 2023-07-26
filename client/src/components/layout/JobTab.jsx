@@ -24,7 +24,7 @@ function JobTab({
   }, []);
 
   return (
-    <div className="mx-32 my-10">
+    <div className="sm:mx-32 mx-2 my-10">
       <div className="  text-sm font-medium text-center text-purple-600 ">
         <ul className="w-full flex justify-between  ">
           <li className=" w-[50%]  -mb-px ">
@@ -33,11 +33,10 @@ function JobTab({
                 onClick={() => {
                   setIsSwitch(true);
                 }}
-                className={`block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
-                  isSwitch
-                    ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
-                    : 'text-gray-400 hover:border-r-0'
-                }`}
+                className={`block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${isSwitch
+                  ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+                  : 'text-gray-400 hover:border-r-0'
+                  }`}
               >
                 {tab1}
               </button>
@@ -45,10 +44,9 @@ function JobTab({
               <NavLink
                 to="job-list"
                 className={({ isActive }) =>
-                  `block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
-                    isActive
-                      ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
-                      : 'text-gray-400 hover:border-r-0'
+                  `block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${isActive
+                    ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+                    : 'text-gray-400 hover:border-r-0'
                   }`
                 }
               >
@@ -64,11 +62,10 @@ function JobTab({
                   onClick={() => {
                     setIsSwitch(false);
                   }}
-                  className={`block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
-                    isSwitch
-                      ? 'text-gray-400 hover:border-l-0'
-                      : 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
-                  }`}
+                  className={`block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${isSwitch
+                    ? 'text-gray-400 hover:border-l-0'
+                    : 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+                    }`}
                 >
                   {tab2}
                 </button>
@@ -76,10 +73,9 @@ function JobTab({
                 <NavLink
                   to={`applied-jobs/${user?._id}`}
                   className={({ isActive }) =>
-                    `block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
-                      isActive
-                        ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
-                        : 'text-gray-400 hover:border-l-0'
+                    `block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${isActive
+                      ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+                      : 'text-gray-400 hover:border-l-0'
                     }`
                   }
                 >
@@ -95,11 +91,10 @@ function JobTab({
                   onClick={() => {
                     setIsSwitch(false);
                   }}
-                  className={`block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
-                    isSwitch
-                      ? 'text-gray-400 hover:border-l-0'
-                      : 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
-                  }`}
+                  className={`block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${isSwitch
+                    ? 'text-gray-400 hover:border-l-0'
+                    : 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+                    }`}
                 >
                   {tab3}
                 </button>
@@ -138,10 +133,9 @@ function JobTab({
                 <NavLink
                   to={`posted-jobs`}
                   className={({ isActive }) =>
-                    `block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${
-                      isActive
-                        ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
-                        : 'text-gray-400 hover:border-l-0'
+                    `block text-xl py-7 mx-auto font-bold leading-10 rounded-t-xl hover:border-b-solid  hover:border-dashed hover:border hover:w-full hover:border-b-white hover:border-yellow-400 ${isActive
+                      ? 'font-medium border border-b-white w-full border-yellow-300 hover:border-r'
+                      : 'text-gray-400 hover:border-l-0'
                     }`
                   }
                 >

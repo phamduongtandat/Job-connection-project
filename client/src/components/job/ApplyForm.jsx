@@ -1,37 +1,52 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { BsFillCloudSlashFill } from 'react-icons/bs';
 import { IoMdCloudUpload } from "react-icons/io";
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-
+import { applyFormSchema } from '../../validation/applyForm.schema';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from '../../config/firebase';
+import useApplyForJob from '../../react-query/jobs/useApplyForJob';
+import CvInfoOfThisUser from './CvInfoOfThisUser';
+import useConfirmModal from './../../hooks/useConfirmModal';
 function ApplyForm({ jobDetail }) {
-    const formSchema = yup.object().shape({
-        files: yup.mixed()
-            .test('required', 'CV của bạn chưa được chọn', value => value && value.length)
-            .test(
-                "fileSize",
-                "File đã hơn 100MB",
-                value => value && value?.[0]?.size <= 104857600)
-            .test(
-                "fileFormat",
-                "Định dạng file không được hỗ trợ",
-                value => value && ["application/pdf", "image/jpg", "image/jpeg", "image/png", "text/plain"].includes(value?.[0]?.type)),
-        note: yup.string().required('Mục này được yêu cầu').max(1000, 'Chỉ được 1000 kí tự')
+
+    const { applyForJob } = useApplyForJob(jobDetail._id)
+
+
+    const { register, handleSubmit, watch, reset, formState: { errors } } = useForm({
+        resolver: yupResolver(applyFormSchema)
     })
 
-
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({
-        resolver: yupResolver(formSchema)
-    })
-
-    const onSubmit = (data) => {
-
-        console.log(data)
-
+    const uploadCV = (data) => {
+        const cvRef = ref(storage, `CV/${data?.files[0]?.name + new Date().getTime()}`)
+        uploadBytes(cvRef, data?.files[0]).then(snap => {
+            getDownloadURL(snap.ref).then(url => {
+                const { name } = snap.ref
+                applyForJob({ note: data?.note, file: url, fileName: name })
+            })
+            reset({ note: '', files: '' })
+        })
     }
-    console.log(' watch:', watch('files'), watch('note'))
-    console.log('errors :', errors)
+    const { isConfirmed } = useConfirmModal();
+    const onSubmit = async (data) => {
+        const confirm = await isConfirmed({
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Thôi',
+            title: 'Xác nhận',
+            subTitle: `Bạn có đồng ý ứng tuyển?`,
+        });
+
+        if (confirm) {
+            uploadCV(data)
+        }
+    };
+
+
+
+
+    // console.log(' watch:', watch('files'), watch('note'))
+    // console.log('errors :', errors)
 
     return (
         <div className='m-7'>
@@ -47,7 +62,7 @@ function ApplyForm({ jobDetail }) {
                 {/* LÀM MỜ */}
                 <div className="absolute rounded-3xl bg-gray-400 opacity-60 inset-0 z-0" />
 
-                <div className="sm:max-w-lg w-full p-10 bg-white rounded-xl z-10">
+                {jobDetail?.isApplied ? <CvInfoOfThisUser jobID={jobDetail._id} info={jobDetail?.ApplicationOfThisUser} /> : <div className="sm:max-w-lg w-full p-10 bg-white rounded-xl z-10">
 
                     {/* TIÊU ĐỀ */}
                     <div className="text-center">
@@ -132,21 +147,13 @@ function ApplyForm({ jobDetail }) {
                                 type="submit"
                                 className="my-5 w-full flex justify-center items-center border gap-3 bg-blue-600 text-gray-100 p-3  rounded-2xl tracking-wide font-semibold focus:outline-none focus:shadow-outline  hover:border-green-600 hover:text-green-600 hover:bg-white shadow-lg cursor-pointer transition ease-in duration-300"
                             >
-                                <IoMdCloudUpload color='green' size={40} />
+                                <IoMdCloudUpload className="hidden sm:block" color='green' size={40} />
                                 <span className="text-xl" >Gửi yêu cầu</span>
                             </button>
 
-                            {jobDetail?.isApplied && <button
-                                type="submit"
-                                className="my-5 w-full flex justify-center items-center border gap-3 bg-blue-600 text-gray-100 p-3  rounded-2xl tracking-wide font-semibold focus:outline-none focus:shadow-outline  hover:border-red-600 hover:text-red-600 hover:bg-white shadow-lg cursor-pointer transition ease-in duration-300"
-                            >
-                                <BsFillCloudSlashFill color='red' size={35} />
-                                <span className="text-xl" >Hủy yêu cầu</span>
-                            </button>}
-
                         </div>
                     </form>
-                </div>
+                </div>}
             </div>
 
         </div>

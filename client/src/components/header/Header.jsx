@@ -13,7 +13,7 @@ const Header = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   return (
-    <header>
+    <header >
       <SectionContainer
         className=" flex gap-x-4 items-center justify-between"
         wrapperClassName="py-4 border-b"
@@ -31,7 +31,7 @@ const Header = () => {
         )}
         {isLoggedIn && <AvatarDropDown />}
       </SectionContainer>
-      <SectionContainer wrapperClassName="border-b hidden md:block">
+      <SectionContainer wrapperClassName="border-b bg-teal-50 md:block">
         <FieldsSlider />
       </SectionContainer>
     </header>

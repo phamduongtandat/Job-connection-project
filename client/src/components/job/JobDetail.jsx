@@ -28,8 +28,8 @@ function JobDetail({ jobDetail }) {
       </div>
 
       <div className=" border  p-7 rounded-lg">
-        <div className="flex justify-around ">
-          <div className="">
+        <div className="flex flex-col sm:flex-row sm:justify-around ">
+          <div className="mb-7 sm:mb-0">
             <div className="flex gap-2 mb-7 items-center">
               <BsCalendar3 color="blue" size={20} />
               Ngày đăng:
@@ -43,7 +43,7 @@ function JobDetail({ jobDetail }) {
               <span className="ml-auto">{jobDetail?.field}</span>
             </div>
           </div>
-          <div className="">
+          <div className="mb-7 sm:mb-0">
             <div className="flex mb-7 gap-2 items-center">
               <BsCalendar3 color="red" size={20} />
               Hạn tuyển:

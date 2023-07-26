@@ -27,7 +27,21 @@ const searchField = async (name) => {
 
 //       _____ JOBS _____ 
 
-const searchJobs = async (filter, field = null, sort = ['deadlineDate', 'desc']) => {
+const searchJobs = async (filter, field = null, sort) => {
+    if (!sort) {
+        return {
+            code: 400,
+            status: 'fail',
+            message: `Sorry`,
+        }
+    }
+    if (sort?.length !== 2 || !sort.some((i) => i === 'desc' || i === 'asc')) {
+        return {
+            code: 400,
+            status: 'fail',
+            message: `Sorry!! Please double check sort key`,
+        }
+    }
 
     if (!field) {
         const result = await Job
@@ -46,6 +60,19 @@ const searchJobs = async (filter, field = null, sort = ['deadlineDate', 'desc'])
             .find({ '$or': [{ title: { '$regex': filter } }, { position: { '$regex': filter } }] })
             .find({ field })
             .sort([sort])
+
+        if (result.length === 0) {
+            return {
+                code: 200,
+                status: 'success',
+                pagination: {
+                    returnedResults: result.length,
+                },
+                message: `Sorry!! No finding with keyword ${field} và ${filter}`,
+            }
+        }
+
+
         return {
             code: 200,
             status: 'success',

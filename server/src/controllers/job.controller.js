@@ -1,5 +1,7 @@
+import mongoose from 'mongoose';
 import { Job } from '../models/job.model.js';
 import jobService from '../services/job.service.js';
+
 const getAppliedJobsByUserId = async (req, res) => {
   const { userID } = req.params;
 
@@ -16,34 +18,110 @@ const getAppliedJobsByUserId = async (req, res) => {
   res.status(code).json(data);
 };
 
+//       _____ GET JOB LIST _____ 
 const getJobList = async (req, res) => {
-  const { page, pageSize, skip = 0, limit = 10, filter = {} } = req.query;
+  const { page, pageSize, skip = 0, limit = 10, sort, field = null, filter = {}, word = '' } = req.query;
 
-  const matchingResults = await Job.countDocuments(filter);
+
+  if (!sort) {
+    const matchingResults = await Job.countDocuments(filter);
+    const totalPages = Math.ceil(matchingResults / limit);
+
+    const jobs = await Job.find(filter)
+      .skip(skip)
+      .limit(limit)
+      .select('-status -candidateList ');
+
+    return res.status(200).json({
+      status: 'success',
+      pagination: {
+        matchingResults,
+        totalPages,
+        currentPage: page,
+        pageSize: limit,
+        returnedResults: jobs.length,
+      },
+      data: jobs,
+    });
+  }
+
+  if (sort.length !== 2 || !sort.some((i) => i === 'desc' || i === 'asc')) {
+    return res.status(400).json({
+
+      status: 'fail',
+      message: `Sorry!! Please double check sort key`,
+    })
+  }
+
+  if (!field) {
+
+    const matchingResults = await Job.find({ '$or': [{ title: { '$regex': word } }, { position: { '$regex': word } }] }).countDocuments(filter);
+    const totalPages = Math.ceil(matchingResults / limit);
+
+    const result = await Job
+      .find({ '$or': [{ title: { '$regex': word } }, { position: { '$regex': word } }] })
+      .sort([sort])
+      .skip(skip)
+      .limit(limit)
+      .select('-status -candidateList ');
+
+    return res.status(200).json({
+      status: 'success',
+      pagination: {
+        matchingResults,
+        totalPages,
+        currentPage: page,
+        pageSize: limit,
+        returnedResults: result.length,
+      },
+      data: result,
+    })
+  }
+
+
+  const matchingResults = await Job.find({ '$or': [{ title: { '$regex': word } }, { position: { '$regex': word } }] })
+    .find({ field }).countDocuments(filter);
   const totalPages = Math.ceil(matchingResults / limit);
+  const result = await Job
+    .find({ '$or': [{ title: { '$regex': word } }, { position: { '$regex': word } }] })
+    .find({ field })
+    .sort([sort])
 
-  const jobs = await Job.find(filter)
-    .skip(skip)
-    .limit(limit)
-    .select('-status -candidateList ');
-  res.status(200).json({
+  if (result.length === 0) {
+    return res.status(200).json({
+
+      status: 'success',
+      data: result,
+      message: `Sorry!! No finding with keyword ${field} và ${word}`,
+    })
+  }
+
+
+  return res.status(200).json({
+
     status: 'success',
     pagination: {
       matchingResults,
       totalPages,
       currentPage: page,
       pageSize: limit,
-      returnedResults: jobs.length,
+      returnedResults: result.length,
     },
-    data: jobs,
-  });
-};
+    data: result,
+  })
+}
+
+
 
 const getJobById = async (req, res) => {
   const job = await Job.findById(req.params.id).select('-postedBy ');
+
+
   let isApplied = job.candidateList?.some(
     (i) => i.user?.toString() == req.userID?._id?.toString(),
   );
+
+  const ApplicationOfThisUser = job.candidateList?.find(i => i.user?.toString() === req.userID?._id?.toString())
 
   const {
     _id,
@@ -71,6 +149,7 @@ const getJobById = async (req, res) => {
     description,
     createdAt,
     updatedAt,
+    ApplicationOfThisUser,
     isApplied,
   };
 
@@ -81,6 +160,8 @@ const getJobById = async (req, res) => {
     throw new Error('Job Not Found');
   }
 };
+
+
 const createNewJob = async (req, res) => {
   const job = await Job.create({
     ...req.body,
@@ -114,6 +195,7 @@ const applyJobById = async (req, res) => {
   const job = await Job.findById(req.params.id);
   //Truong hop da apply job!!!
   if (job) {
+
     job.candidateList.push({
       ...req.body,
       status: 'awaiting',
@@ -226,6 +308,28 @@ const getPostedJobsByCurrentUser = async (req, res) => {
     data: jobs,
   });
 };
+const removeCVFromAppliedJob = async (req, res) => {
+
+  const idUser = req.user?._id
+  const { id } = req.params
+  console.log('req.user?._id :', req.user?._id)
+  const AfterRemoving = await Job.findByIdAndUpdate(
+    id,
+    { "$pull": { 'candidateList': { 'user': idUser } } },
+    { new: true }
+  );
+  res.status(201).json({
+    status: 'success',
+    AfterRemoving,
+  });
+}
+
+
+
+
+
+
+
 
 const jobController = {
   getJobList,
@@ -238,5 +342,6 @@ const jobController = {
   getJobWithFilter,
   getAppliedJobsByUserId,
   getPostedJobsByCurrentUser,
+  removeCVFromAppliedJob,
 };
 export default jobController;

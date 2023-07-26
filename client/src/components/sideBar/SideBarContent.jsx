@@ -117,9 +117,8 @@ const SideBarContent = () => {
 
       {isAdminAccount && (
         <Button
-          className={`w-full mt-auto sticky bottom-4 ${
-            isStaticSideBarOpen ? '!bg-dark' : ''
-          }`}
+          className={`w-full mt-auto sticky bottom-4 ${isStaticSideBarOpen ? '!bg-dark' : ''
+            }`}
           onClick={handleToggleStaticSideBar}
         >
           {isStaticSideBarOpen ? 'Ẩn sidebar' : 'Hiện sidebar'}

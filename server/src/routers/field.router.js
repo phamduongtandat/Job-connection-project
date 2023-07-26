@@ -9,7 +9,7 @@ const fieldRouter = express.Router();
 
 
 fieldRouter.get('/', parseReqQuery(), fieldController.getFields);
-
+fieldRouter.get('/all', fieldController.getAllFields);
 // admin only router
 fieldRouter.use(requireLogin());
 fieldRouter.use(requireRole('admin'));

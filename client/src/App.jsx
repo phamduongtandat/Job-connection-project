@@ -12,6 +12,10 @@ import useListenSocketEvents from './hooks/useListenSocketEvents';
 import JobDetailPage from './pages/job/JobDetailPage';
 import JobListPage from './pages/job/JobListPage';
 
+import CreateProject from './pages/employer/CreateProject';
+import CVManagement from './pages/profile/myCV/CVManagement';
+import CreateJob from './pages/job/CreateJob';
+
 export default function App() {
   useConnectSocket();
   useListenSocketEvents();
@@ -23,9 +27,11 @@ export default function App() {
           <Route path="/profile/*" element={<ProfilePage />} />
           <Route path="/jobs/all-jobs/*" element={<JobListPage />} />
           <Route path="/jobs/:id" element={<JobDetailPage />} />
+          <Route path="/CV-management/*" element={<CVManagement />} />
           <Route path="/admin/*" element={<AdminPage />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<LinkNotFound />} />
+          <Route path="/createjob/*" element={<CreateJob />} />
         </Routes>
       </Layout>
       <UIContainer />

@@ -10,9 +10,9 @@ import useConfirmModal from '../../hooks/useConfirmModal';
 
 function CVItem({ CVs }) {
     const { user } = useGetAuthInfo();
-    const { _id } = user
+    //const { _id } = user
 
-    const { deleteCV } = useDeleteCV(_id)
+    const { deleteCV } = useDeleteCV(user?._id)
 
     const deleteFile = (name) => {
         const desertRef = ref(storage, `CV/${name}`);

@@ -8,7 +8,8 @@ function JobItem({ item, status }) {
       <div className="flow-root">
         <ul className="divide-y divide-gray-200">
           <li className="p-3 sm:py-4 tracking-wide  hover:bg-base hover:rounded-t-xl">
-            <div className="flex items-center space-x-4  ">
+
+            <div className="flex sm:flex-row flex-col sm:items-center space-x-4  ">
               <div className="flex-1 min-w-0 ">
                 <div className="flex items-center gap-2 ">
                   <Link

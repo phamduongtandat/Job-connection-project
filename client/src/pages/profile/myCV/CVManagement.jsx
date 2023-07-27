@@ -38,10 +38,10 @@ function CVManagement() {
     })
 
     const { user } = useGetAuthInfo();
-    const { _id } = user
-    const { CVs } = useGetCVs(_id)
+    //const { _id } = user
+    const { CVs } = useGetCVs(user?._id)
     const { isConfirmed } = useConfirmModal();
-    const { addCV } = useAddCV(_id)
+    const { addCV } = useAddCV(user?._id)
 
 
     const uploadCV = (data) => {

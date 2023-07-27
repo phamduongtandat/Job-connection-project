@@ -28,7 +28,7 @@ function JobDetail({ jobDetail }) {
       </div>
 
       <div className=" border  p-7 rounded-lg">
-        <div className="flex flex-col sm:flex-row sm:justify-around ">
+        <div className="flex flex-col md:flex-row sm:justify-around ">
           <div className="mb-7 sm:mb-0">
             <div className="flex gap-2 mb-7 items-center">
               <BsCalendar3 color="blue" size={20} />

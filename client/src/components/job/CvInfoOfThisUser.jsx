@@ -79,7 +79,7 @@ function CvInfoOfThisUser({ jobID, info }) {
                         <img className="w-14 h-14 object-cover rounded-full bg-amber-300 " src="https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/chat-text-dynamic-premium.png" />
                     </div>
                     <div>
-                        <h2 className="text-amber-400 text-3xl font-semibold">Ghi chú của bạn:</h2>
+                        <h2 className="text-amber-400 text-sm md:text-3xl font-semibold">Ghi chú của bạn:</h2>
                         <p className="mt-2 text-gray-600">{info?.note}</p>
                     </div>
                 </div>
@@ -91,8 +91,8 @@ function CvInfoOfThisUser({ jobID, info }) {
                             <img className="w-16 h-16 object-cover rounded-full p-1 bg-purple-400" src="https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/color/file-text-dynamic-color.png" />
                         </div>
 
-                        <h2 className="text-purple-400 text-3xl font-semibold">CV của bạn:</h2>
-                        <div className="mt-2 italic text-gray-600" >Bấm vào để xem CV của bạn</div>
+                        <h2 className="text-purple-400 text-sm md:text-3xl font-semibold">CV của bạn:</h2>
+                        <div className="mt-2 italic text-gray-600" >Bấm để xem CV của bạn</div>
                     </a>
                 </div>
 

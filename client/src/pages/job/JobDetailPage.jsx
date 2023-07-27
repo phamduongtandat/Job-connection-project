@@ -12,12 +12,12 @@ function JobDetailPage() {
   const { jobDetail } = useGetJobDetail({ id });
 
   return (
-    <div>
+    <div className="">
       <JobTab
         isSwitch={isSwitch}
         setIsSwitch={setIsSwitch}
         tab1="Chi tiết tuyển dụng"
-        tab2="Ứng tuyển"
+        tab2="Ứng tuyển công việc"
         tab3="Danh sách ứng viên"
         tabAdmin="Danh sách ứng viên"
         button

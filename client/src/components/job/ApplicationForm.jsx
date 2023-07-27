@@ -147,8 +147,8 @@ function ApplicationForm({ jobDetail }) {
                                     hover:shadow-[5px_5px_10px_#a29374,-5px_-5px_10px_#dcc79c]`}>
 
                                         <div className="text-blue-500 lg:text-lg rounded-md p-2 ">
-                                            <i>{`${isChose ? 'Nhấn bỏ chọn để lựa CV khác' : 'Nhấn để chọn CV từ mục lưu trữ của bạn'}`}</i>
-                                            {isChose && <div onClick={() => { setIsChose(false) }} className='cursor-pointer ml-7 p-2 bg-red-200 rounded-2xl hover:bg-red-300'>Bỏ chọn</div>}
+                                            <i>{`${isChose ? 'Nhấn bỏ chọn để lựa CV khác' : 'Nhấn chọn CV từ mục lưu trữ của bạn'}`}</i>
+                                            {isChose && <div onClick={() => { setIsChose(false) }} className='cursor-pointer p-2 bg-red-200 rounded-2xl hover:bg-red-300'>Bỏ chọn</div>}
                                         </div>
 
                                         <CVDropDown
@@ -179,7 +179,7 @@ function ApplicationForm({ jobDetail }) {
                                                 />
 
                                                 <div className="text-blue-500  lg:text-lg p-2">
-                                                    <i>Nhấn để chọn CV từ máy của bạn</i>
+                                                    <i>Nhấn chọn CV từ máy của bạn</i>
                                                 </div>
                                             </div>}
 
